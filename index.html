@@ -1,20 +1,668 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Telegram TEST</title> <!-- Замените на свой заголовок -->
-  <link rel="icon" href="img/icon.png" type="image/x-icon"> <!-- Замените на свой favicon -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELITE Dating | Сервис премиальных знакомств</title>
+    <style>
+        :root {
+            --primary-dark: #8B0000;
+            --primary: #B22222;
+            --primary-light: #CD5C5C;
+            --secondary: #1A1A1A;
+            --light: #FAFAFA;
+            --gold: #D4AF37;
+            --text-dark: #333;
+            --text-light: #FFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        body {
+            color: var(--text-dark);
+            line-height: 1.8;
+            background-color: var(--light);
+            font-size: 18px;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        h1 strong {
+            font-weight: 600;
+            color: var(--primary-light);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin: 3rem 0 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-weight: 400;
+        }
+        
+        .hero-text {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 15px 40px;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid var(--primary-dark);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-gold {
+            background: var(--gold);
+            color: var(--secondary);
+            border-color: var(--gold);
+            margin-left: 20px;
+        }
+        
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--gold);
+        }
+        
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-dark {
+            background-color: var(--secondary);
+            color: var(--text-light);
+        }
+        
+        .section-dark h2 {
+            color: var(--primary-light);
+        }
+        
+        .how-it-works, .for-whom, .about-us, .stories, .faq {
+            margin: 3rem 0;
+        }
+        
+        .steps {
+            margin-left: 0;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            margin-bottom: 2rem;
+            list-style-type: none;
+            position: relative;
+            padding-left: 80px;
+            font-size: 1.1rem;
+        }
+        
+        .steps li:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-weight: bold;
+            font-size: 1.5rem;
+            font-family: 'Times New Roman', serif;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 3rem 0;
+        }
+        
+        .benefit-item {
+            padding: 2rem;
+            background-color: var(--light);
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--primary-dark);
+        }
+        
+        .benefit-item:before {
+            content: '✓';
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            font-weight: bold;
+        }
+        
+        .benefit-item.warning:before {
+            content: '⚠';
+            color: var(--gold);
+        }
+        
+        .story {
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            background-color: var(--light);
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--primary-dark);
+        }
+        
+        .story-quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        
+        .faq-item {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 2rem;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .faq-question:before {
+            content: 'Q.';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        .faq-answer {
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .faq-answer:before {
+            content: 'A.';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .contact {
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: var(--text-light);
+            padding: 5rem 0;
+        }
+        
+        .contact h2 {
+            color: var(--text-light);
+        }
+        
+        .contact h2:after {
+            background: var(--gold);
+        }
+        
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 2.5rem;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: transparent;
+            color: var(--text-light);
+            padding: 12px 30px;
+            border-radius: 0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .contact-btn:hover {
+            background-color: var(--gold);
+            color: var(--secondary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: var(--secondary);
+            color: var(--text-light);
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+        
+        .footer-text {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 1rem 0;
+            }
+            
+            .btn-gold {
+                margin-left: 0;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .steps li {
+                padding-left: 60px;
+            }
+            
+            .steps li:before {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .telegram-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background-color: #0088cc;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: width 0.3s ease, border-radius 0.3s ease;
+            z-index: 9999;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .telegram-button img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .telegram-label {
+            color: white;
+            font-size: 15px;
+            white-space: nowrap;
+            opacity: 0;
+            margin-left: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .telegram-button:hover {
+            width: 180px;
+            border-radius: 40px;
+        }
+
+        .telegram-button:hover .icon-wrapper {
+            transform: rotate(360deg);
+        }
+
+        .telegram-button:hover .telegram-label {
+            opacity: 1;
+        }
+
+    </style>
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <h1 class="fade-in"><strong>ELITE</strong> DATING SERVICE</h1>
+            <p class="hero-text fade-in delay-1">🙍🏻‍♀️ Устал тратить время в дейтинге?</p>
+            <p class="hero-text fade-in delay-1">✅ Мы найдём девушек, готовых пойти на свидание именно с тобой</p>
+            <div class="fade-in delay-2">
+                <button class="btn">Получить свидания</button>
+                <button class="btn btn-gold">Узнать больше</button>
+            </div>
+        </div>
+    </header>
+    
+    <section class="container">
+        <div class="how-it-works">
+            <h2>Как это работает?</h2>
+            <ul class="steps">
+                <li class="fade-in">Подготовим твои профайлы в самых эффективных дейтинг-приложениях</li>
+                <li class="fade-in delay-1">Сделаем свайпы, мэтчи — подберем девушек по твоему вкусу</li>
+                <li class="fade-in delay-2">Проведем переписку от твоего имени и доведем до готовности к свиданию</li>
+                <li class="fade-in delay-3">🔫 Перед встречей — подготовим тебя, как агента 007</li>
+            </ul>
+        </div>
+    </section>
+    
+    <section class="section-dark">
+        <div class="container">
+            <div class="for-whom">
+                <h2>Для кого сервис?</h2>
+                <div class="benefits">
+                    <div class="benefit-item fade-in">
+                        <h3>Для ценителей времени</h3>
+                        <p>Мужчины, которые ценят своё время и ищут настоящих девушек без бесконечных переписок и пустых свиданий</p>
+                    </div>
+                    <div class="benefit-item fade-in delay-1">
+                        <h3>Гарантированный результат</h3>
+                        <p>20 мэтчей в неделю и 10 реальных свиданий в месяц — наша минимальная планка</p>
+                    </div>
+                    <div class="benefit-item warning fade-in delay-2">
+                        <h3>Этичный подход</h3>
+                        <p>Мы не предоставляем 18+ услуги. Только реальные знакомства с достойными девушками</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <div class="about-us">
+            <h2>👋 Кто мы и откуда</h2>
+            <p class="fade-in">Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.</p>
+            <p class="fade-in delay-1">Сначала — помощь друзьям, несколько первых клиентов, индивидуальный подход. ✨ И пошло: один нашёл своё, другой прошёл 30 свиданий, третий — просто вернул веру в себя 🙌. 📈 За полгода мы помогли более 60 мужчинам познакомиться с девушками, которые им действительно подходили.</p>
+            <p class="fade-in delay-2">Многие говорили: «Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился.» 😌</p>
+            <p class="fade-in delay-3">Для кого-то наш сервис — способ перебороть внутренние зажимы 🤐. Для других — экономия колоссального количества времени ⏳. Но для ВСЕХ — это просто взлом системы 🔓, чтобы получить доступ к широкой, качественной воронке знакомств 💑.</p>
+            <p class="fade-in delay-3">Сегодня мы расширяем команду, оттачиваем процессы и переходим на новый уровень 🚀. Возможно, следующий шаг — твой 👉</p>
+        </div>
+    </section>
+    
+    <section class="section-dark">
+        <div class="container">
+            <div class="stories">
+                <h2>Истории клиентов</h2>
+                <div class="story fade-in">
+                    <h3>💬 История Ивана: 24 свидания за 2 месяца</h3>
+                    <p class="story-quote">"Иван — аналитик из Минска. В 2022 переехал в Москву, устроился в топовую IT-компанию, стал Хедом Аналитики. Всё круто, но в личном — пустота.</p>
+                    <p class="story-quote">📱 Переписываться? Искать? — сплошная потеря фокуса.</p>
+                    <p class="story-quote">🍂 В ноябре 2024 он наткнулся на нас. Мы взяли его профиль, переписку и фильтрацию на себя.</p>
+                    <p class="story-quote">📅 За два месяца — 24 свидания. Сейчас Иван в отношениях и подыскивает квартиру побольше. Без выматывающего дейтинга. С уважением ко времени Ивана 🕒"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="container">
+        <div class="faq">
+            <h2>FAQ</h2>
+            <div class="faq-item fade-in">
+                <div class="faq-question">С кем я встречусь?</div>
+                <div class="faq-answer">С девушками, которых выберешь ты. Мы подберем по твоим критериям внешности, образования, интересов и ценностей.</div>
+            </div>
+            <div class="faq-item fade-in delay-1">
+                <div class="faq-question">Вы пишете вместо меня?</div>
+                <div class="faq-answer">Да, это основа сервиса. Наши профессиональные коммуникаторы ведут переписку от твоего имени, но всё в рамках уважения и этики, согласно твоим пожеланиям.</div>
+            </div>
+            <div class="faq-item fade-in delay-2">
+                <div class="faq-question">Сколько времени это занимает у меня?</div>
+                <div class="faq-answer">Почти 0. Мы сделаем всё, а ты — просто идёшь на свидание. Ты лишь утверждаешь кандидаток и получаешь подготовку перед встречей.</div>
+            </div>
+            <div class="faq-item fade-in delay-3">
+                <div class="faq-question">Как вы отбираете девушек?</div>
+                <div class="faq-answer">По твоим фильтрам и с помощью ручной модерации. Каждая кандидатка проверяется на адекватность и соответствие твоим критериям.</div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">Гарантируете ли вы результат?</div>
+                <div class="faq-answer">Да, 20 мэтчей и 10 свиданий в месяц — наша минимальная планка. Если не выполним — продлим обслуживание бесплатно.</div>
+            </div>
+            <div class="faq-item fade-in delay-1">
+                <div class="faq-question">Сколько это стоит?</div>
+                <div class="faq-answer">3000 руб за регистрацию + 15000 руб/мес — оплата только после подтверждения первых результатов.</div>
+            </div>
+            <div class="faq-item fade-in delay-2">
+                <div class="faq-question">Вы работаете в моем городе?</div>
+                <div class="faq-answer">Да, мы подбираем девушек по геолокации. Работаем в Москве, СПб и других крупных городах России и СНГ.</div>
+            </div>
+            <div class="faq-item fade-in delay-3">
+                <div class="faq-question">Можно ли всё обсуждать лично?</div>
+                <div class="faq-answer">Конечно, напиши нам — всё расскажем и покажем. Первая консультация бесплатна и ни к чему не обязывает.</div>
+            </div>
+            <div class="faq-item fade-in">
+                <div class="faq-question">Это анонимно?</div>
+                <div class="faq-answer">Да. Мы не разглашаем твоё имя или данные ни при каких условиях. Конфиденциальность — наш принцип.</div>
+            </div>
+            <div class="faq-item fade-in delay-1">
+                <div class="faq-question">Я стесняюсь, мне неудобно...</div>
+                <div class="faq-answer">Это нормально. Мы — команда профессионалов. И мы не судим, а помогаем. 80% наших клиентов сначала испытывали подобные чувства.</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact">
+        <div class="container">
+            <h2 class="fade-in">Хочешь попробовать?</h2>
+            <p class="hero-text fade-in delay-1">Напиши нам прямо сейчас для бесплатной консультации</p>
+            <div class="contact-buttons fade-in delay-2">
+                <a href="#" class="contact-btn">Telegram</a>
+                <a href="#" class="contact-btn">WhatsApp</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-logo"><span>ELITE</span> DATING SERVICE</div>
+            <p class="footer-text">© 2024 Все права защищены. Конфиденциальность гарантирована.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Анимация появления элементов при скролле
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        
+        // Плавная прокрутка для якорей
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Обработчик для кнопок
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const form = document.createElement('div');
+                form.style.position = 'fixed';
+                form.style.top = '0';
+                form.style.left = '0';
+                form.style.width = '100%';
+                form.style.height = '100%';
+                form.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                form.style.display = 'flex';
+                form.style.justifyContent = 'center';
+                form.style.alignItems = 'center';
+                form.style.zIndex = '1000';
+                
+                form.innerHTML = `
+                    <div style="background: white; padding: 2rem; max-width: 500px; width: 90%; position: relative;">
+                        <button style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">×</button>
+                        <h3 style="margin-bottom: 1.5rem; color: var(--primary-dark);">Заявка на консультацию</h3>
+                        <form style="display: grid; gap: 1rem;">
+                            <input type="text" placeholder="Ваше имя" style="padding: 10px; border: 1px solid #ddd;">
+                            <input type="tel" placeholder="Телефон" style="padding: 10px; border: 1px solid #ddd;">
+                            <button type="submit" style="background: var(--primary-dark); color: white; padding: 12px; border: none; cursor: pointer;">Отправить</button>
+                        </form>
+                    </div>
+                `;
+                
+                document.body.appendChild(form);
+                
+                form.querySelector('button').addEventListener('click', () => {
+                    document.body.removeChild(form);
+                });
+                
+                form.querySelector('form').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
+                    document.body.removeChild(form);
+                });
+            });
+        });
+        
+        // Инициализация анимации
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+    </script>
 
-<a class="telegram-button" href="https://t.me/----" target="_blank">
-  <div class="icon-wrapper">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
-  </div>
-  <span class="telegram-label">Перейти в TG</span>
-</a>
+    <a class="telegram-button" href="https://t.me/----" target="_blank">
+        <div class="icon-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+        </div>
+        <span class="telegram-label">Перейти в TG</span>
+    </a>
 
 </body>
 </html>
