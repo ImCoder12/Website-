@@ -8,17 +8,17 @@
     window.onload = function () {
       const userAgent = navigator.userAgent.toLowerCase();
 
-      const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry|opera mini|mobile/i.test(userAgent);
+      const isMobile = /iphone|ipod|android.*mobile|windows phone|blackberry|opera mini|mobile/i.test(userAgent); // Проверка на мобильное устройство
       
       if (isMobile) {
-        window.location.href = "index_TEL.html";
+        window.location.href = "index_TEL.html"; // Перенаправление на мобильную версию
       } else {
-        window.location.href = "index_PC.html";
+        window.location.href = "index_PC.html"; // Перенаправление на версию для ПК
       }
     };
   </script>
 </head>
 <body>
-  <p>Переход на нужную версию сайта...</p>
+  <p>Переход на нужную версию сайта...</p> 
 </body>
 </html>
