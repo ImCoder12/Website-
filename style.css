@@ -20,15 +20,39 @@ body {
     justify-content: center;
     align-items: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
+    transition: transform 0.4s ease;
     z-index: 9999;
+    text-decoration: none;
+    overflow: hidden;
 }
 
 .telegram-button:hover {
-    transform: scale(1.1);
+    transform: rotate(360deg);
 }
 
 .telegram-button img {
     width: 40px;
     height: 40px;
+    transition: transform 0.4s ease;
+}
+
+.telegram-tooltip {
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+    background-color: #0088cc;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.telegram-button:hover .telegram-tooltip {
+    opacity: 1;
+    transform: translateY(0);
 }
