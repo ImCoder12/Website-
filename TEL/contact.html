@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Контакты | Автоматизация Дейтинга</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e11d48;
+            --primary-dark: #9f1239;
+            --primary-light: #fda4af;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --accent: #7dd3fc;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-secondary: rgba(248, 250, 252, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(at 80% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 20% 80%, rgba(125, 211, 252, 0.15) 0px, transparent 50%);
+        }
+
+        .container {
+            width: 100%;
+            padding: 1.5rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-light);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .contacts-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contacts-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .contacts-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .contact-icon {
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .contact-info {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .map-container {
+            height: 250px;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .social-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        .form-section {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border: 1px solid var(--glass-border);
+            background: rgba(15, 23, 42, 0.5);
+            color: var(--light);
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-decoration: none;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Вернуться назад
+        </a>
+
+        <div class="contacts-header">
+            <h1 class="contacts-title">Наши контакты</h1>
+            <p class="contacts-subtitle">Свяжитесь с нами удобным для вас способом</p>
+        </div>
+
+        <div class="contacts-grid">
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <h3 class="contact-title">Адрес</h3>
+                <p class="contact-info">Где то вроде есть<br></p>
+                <a href="https://maps.google.com" target="_blank" class="contact-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Открыть карту</span>
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                <h3 class="contact-title">Email</h3>
+                <p class="contact-info">Пишите нам на почту</p>
+                <a href="mailto:info@dating-auto.ru" class="contact-link">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>info@dating-auto.ru</span>
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+                <h3 class="contact-title">Телефон</h3>
+                <p class="contact-info">Звоните с 10:00 до 20:00</p>
+                <a href="tel:+357" class="contact-link">
+                    <i class="fas fa-phone"></i>
+                    <span>+357 ###########</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="social-section">
+            <h3 class="social-title">Мы в соцсетях</h3>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+            </div>
+        </div>
+
+        <div class="form-section" id="form">
+            <h3 class="form-title">Остались вопросы?</h3>
+            <form>
+                <div class="form-group">
+                    <label for="name" class="form-label">Ваше имя</label>
+                    <input type="text" id="name" class="form-input" placeholder="Ваше имя">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Электронная почта</label>
+                    <input type="email" id="email" class="form-input" placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Ваш вопрос</label>
+                    <textarea id="message" class="form-input form-textarea" placeholder="Напишите ваш вопрос"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane" style="margin-right: 0.5rem;"></i>
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
