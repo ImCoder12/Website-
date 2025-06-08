@@ -1,4 +1,4 @@
 AUTHOR: ImCoder12 | [TG]: @ImCoder12
 DATE: 2025-08-06
-VERSION: V2.4
+VERSION: V2.5
 Thanks!
