@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Автоматизация Дейтинга | VIP-знакомства</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e11d48;
+            --primary-dark: #9f1239;
+            --primary-light: #fda4af;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --accent: #7dd3fc;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-secondary: rgba(248, 250, 252, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 80% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 20% 80%, rgba(125, 211, 252, 0.15) 0px, transparent 50%);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        header {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            width: 100%;
+            padding-top: 60px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 9999px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            color: var(--light);
+            border: 1px solid var(--glass-border);
+        }
+
+        section {
+            padding: 4rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            border-radius: 3px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--light);
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .testimonial {
+            width: 100%;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid var(--glass-border);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-light);
+            font-size: 0.95rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cta-subtitle {
+            font-size: 1.1rem;
+            margin: 0 auto 2rem;
+            opacity: 0.8;
+        }
+
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            background-color: var(--dark);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-link {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-light);
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            color: var(--light);
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            opacity: 0.7;
+        }
+
+        .social-link:hover {
+            color: var(--primary-light);
+            opacity: 1;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* Мобильное меню */
+        .mobile-menu-btn {
+            display: flex;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            height: 100vh;
+            background: var(--dark);
+            z-index: 999;
+            padding: 80px 20px;
+            transition: right 0.3s ease;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .mobile-menu-link {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: color 0.3s;
+        }
+
+        .mobile-menu-link:hover {
+            color: var(--primary-light);
+        }
+
+        /* Кнопка Telegram */
+        .telegram-button {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            width: 50px;
+            height: 50px;
+            background-color: #0088cc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            text-decoration: none;
+        }
+
+        .telegram-button img {
+            width: 25px;
+            height: 25px;
+        }
+
+        /* Анимации при прокрутке */
+        [data-aos] {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        [data-aos="fade-up"] {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-aos].aos-animate {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        /* Улучшения для очень маленьких экранов */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .cta-title {
+                font-size: 1.8rem;
+            }
+            
+            .feature-card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Мобильное меню -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-links">
+            <a href="#how" class="mobile-menu-link" onclick="closeMobileMenu()">Как это работает?</a>
+            <a href="#for-whom" class="mobile-menu-link" onclick="closeMobileMenu()">Для кого</a>
+            <a href="#reviews" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
+            <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Оставить заявку</a>
+            <a href="#" class="mobile-menu-link" onclick="closeMobileMenu()">Контакты</a>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div data-aos="fade-up">
+                <h1>Знакомства без компромиссов</h1>
+                <p class="tagline">Мы находим идеальных спутниц для успешных мужчин. Без игр, без пустой траты времени — только реальные встречи с достойными девушками.</p>
+                <div class="btn-group">
+                    <a href="#cta" class="btn btn-primary">Начать сейчас</a>
+                    <a href="#how" class="btn btn-secondary">Как это работает?</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="how">
+        <h2 class="section-title" data-aos="fade-up">Как это работает?</h2>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-user-edit"></i></div>
+                <h3 class="feature-title">Профиль под ключ</h3>
+                <p class="feature-desc">Создаем привлекательные анкеты в топовых приложениях с профессиональными фото и продуманным описанием</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                <h3 class="feature-title">Умный подбор</h3>
+                <p class="feature-desc">Алгоритмы анализируют ваши предпочтения + ручная модерация каждой кандидатки</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <h3 class="feature-title">Идеальная переписка</h3>
+                <p class="feature-desc">Наши эксперты ведут диалоги от вашего имени — естественно и без шаблонов</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-glass-cheers"></i></div>
+                <h3 class="feature-title">Подготовка к свиданию</h3>
+                <p class="feature-desc">Разбор профиля девушки, советы по месту встречи и темам для разговора</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="for-whom" style="background: var(--dark);">
+        <h2 class="section-title" data-aos="fade-up">Для кого этот сервис?</h2>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
+                <h3 class="feature-title">Занятые профессионалы</h3>
+                <p class="feature-desc">У вас нет времени на бесконечные переписки и пустые свидания</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                <h3 class="feature-title">Ценители качества</h3>
+                <p class="feature-desc">Вы ищете достойную спутницу, а не случайные знакомства</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                <h3 class="feature-title">Для тех, кто ценит конфиденциальность</h3>
+                <p class="feature-desc">Ваши данные и переписки остаются в полной безопасности</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <div class="testimonial" data-aos="fade-up">
+            <p class="testimonial-text">"За 2 месяца работы с сервисом я побывал на 18 свиданиях с потрясающими девушками. Сейчас встречаюсь с Аней — мы идеально подходим друг другу. Без этого сервиса мы бы никогда не встретились!"</p>
+            <p class="testimonial-author">— Михаил, 32 года, предприниматель</p>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section">
+        <h2 class="cta-title" data-aos="fade-up">Готовы к новым знакомствам?</h2>
+        <p class="cta-subtitle" data-aos="fade-up">Оставьте заявку и наш менеджер свяжется с вами в течение 15 минут</p>
+        <div data-aos="fade-up">
+            <a href="#" class="btn btn-primary">Оставить заявку</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Автоматизация Дейтинга</div>
+        <div class="footer-links">
+            <a href="#" class="footer-link">О нас</a>
+            <a href="#" class="footer-link">Услуги</a>
+            <a href="#reviews" class="footer-link">Отзывы</a>
+            <a href="#" class="footer-link">FAQ</a>
+            <a href="#" class="footer-link">Контакты</a>
+        </div>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p class="copyright">© 2025 Автоматизация Дейтинга. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Простая реализация AOS (Animate On Scroll)
+        document.addEventListener('DOMContentLoaded', () => {
+            const aosElements = document.querySelectorAll('[data-aos]');
+            
+            const animateOnScroll = () => {
+                aosElements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        element.classList.add('aos-animate');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
+        });
+        
+        // Плавный скролл для якорей
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 60,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Мобильное меню
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        function toggleMobileMenu() {
+            mobileMenuBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function closeMobileMenu() {
+            mobileMenuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        
+        // Закрытие меню при клике вне его области
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && e.target !== mobileMenuBtn) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+
+    <a class="telegram-button" href="https://t.me/----" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+    </a>
+</body>
+</html>
