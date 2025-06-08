@@ -213,15 +213,16 @@
             position: relative;
         }
 
+        .section-title-wrapper {
+            text-align: center;
+        }
+
         .section-title {
             font-size: clamp(1.8rem, 5vw, 3rem);
             font-weight: 700;
             margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
             display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
         }
 
         .section-title::after {
@@ -234,6 +235,7 @@
             background: linear-gradient(90deg, var(--primary), transparent);
             border-radius: 3px;
         }
+
 
         .features-grid {
             display: grid;
@@ -769,30 +771,34 @@
     </header>
 
     <section id="how">
+    <div class="section-title-wrapper">
         <h2 class="section-title" data-aos="fade-up">Как это работает?</h2>
-        <div class="features-grid">
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-icon"><i class="fas fa-user-edit"></i></div>
-                <h3 class="feature-title">Профиль под ключ</h3>
-                <p class="feature-desc">Создаем привлекательные анкеты в топовых приложениях с профессиональными фото и продуманным описанием</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-icon"><i class="fas fa-brain"></i></div>
-                <h3 class="feature-title">Умный подбор</h3>
-                <p class="feature-desc">Алгоритмы анализируют ваши предпочтения + ручная модерация каждой кандидатки</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-icon"><i class="fas fa-comments"></i></div>
-                <h3 class="feature-title">Идеальная переписка</h3>
-                <p class="feature-desc">Наши эксперты ведут диалоги от вашего имени — естественно и без шаблонов</p>
-            </div>
-            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="feature-icon"><i class="fas fa-glass-cheers"></i></div>
-                <h3 class="feature-title">Подготовка к свиданию</h3>
-                <p class="feature-desc">Разбор профиля девушки, советы по месту встречи и темам для разговора</p>
-            </div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon"><i class="fas fa-user-edit"></i></div>
+            <h3 class="feature-title">Профиль под ключ</h3>
+            <p class="feature-desc">Создаем привлекательные анкеты в топовых приложениях с профессиональными фото и продуманным описанием</p>
         </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+            <h3 class="feature-title">Умный подбор</h3>
+            <p class="feature-desc">Алгоритмы анализируют ваши предпочтения + ручная модерация каждой кандидатки</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon"><i class="fas fa-comments"></i></div>
+            <h3 class="feature-title">Идеальная переписка</h3>
+            <p class="feature-desc">Наши эксперты ведут диалоги от вашего имени — естественно и без шаблонов</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-icon"><i class="fas fa-glass-cheers"></i></div>
+            <h3 class="feature-title">Подготовка к свиданию</h3>
+            <p class="feature-desc">Разбор профиля девушки, советы по месту встречи и темам для разговора</p>
+        </div>
+    </div>
     </section>
+
 
     <section id="for-whom" style="background: var(--dark);">
         <h2 class="section-title" data-aos="fade-up">Для кого этот сервис?</h2>
