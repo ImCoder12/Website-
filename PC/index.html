@@ -1,4 +1,3 @@
-<!--     PC       -->
 <!DOCTYPE html>
 <html lang="ru" class="dark">
 <head>
@@ -24,8 +23,6 @@
         @font-face {
             font-family: 'Neue Montreal';
             src: url('https://fonts.cdnfonts.com/css/neue-montreal') format('woff2');
-            font-weight: normal;
-            font-style: normal;
             font-display: swap;
         }
 
@@ -50,6 +47,12 @@
                 radial-gradient(at 80% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
                 radial-gradient(at 20% 80%, rgba(125, 211, 252, 0.15) 0px, transparent 50%);
             -webkit-tap-highlight-color: transparent;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .gradient-bg {
@@ -95,28 +98,41 @@
             100% { transform: translateY(0) translateX(0); }
         }
 
+        /* Основные элементы */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Хедер */
         header {
             min-height: 100vh;
             min-height: 100dvh;
             display: flex;
             align-items: center;
-            padding: 0 5%;
             position: relative;
             overflow: hidden;
         }
 
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
             position: relative;
             z-index: 2;
             padding-top: 80px;
         }
 
-        h1 {
+        .header-content h1 {
             font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
             margin-bottom: 1.5rem;
             background: linear-gradient(90deg, var(--light), var(--primary-light));
             -webkit-background-clip: text;
@@ -133,6 +149,19 @@
             opacity: 0.9;
         }
 
+        .badge {
+            display: inline-block;
+            background: rgba(225, 29, 72, 0.2);
+            color: var(--primary-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+        }
+
+        /* Кнопки */
         .btn-group {
             display: flex;
             gap: 1rem;
@@ -144,10 +173,10 @@
             align-items: center;
             justify-content: center;
             padding: 1rem 2rem;
-            border-radius: 9999px;
+            border-radius: 50px;
             font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             border: none;
@@ -163,25 +192,8 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary-dark), var(--primary));
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: -1;
-        }
-
-        .btn-primary:hover::before {
-            opacity: 1;
         }
 
         .btn-secondary {
@@ -193,138 +205,391 @@
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
         }
 
-        .floating-emoji {
-            position: absolute;
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            opacity: 0.7;
-            animation: floatEmoji 8s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes floatEmoji {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-
-        section {
-            padding: 8rem 5%;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-            border-radius: 3px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
+        /* Карточки */
+        .card {
             background: var(--glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            border-radius: 1rem;
+            border-radius: 16px;
             padding: 2rem;
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
-        .feature-card:hover {
+        .card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             border-color: var(--primary);
         }
 
-        .feature-icon {
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
             color: var(--primary-light);
         }
 
-        .feature-title {
+        .card-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--light);
         }
 
-        .feature-desc {
+        .card-text {
             color: var(--text-secondary);
             opacity: 0.8;
-            flex-grow: 1;
         }
 
-        .testimonial {
-            max-width: 800px;
+        /* Сетки */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Как это работает */
+        .how-it-works {
+            background: rgba(225, 29, 72, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .timeline {
+            max-width: 700px;
             margin: 0 auto;
-            text-align: center;
-            padding: 3rem;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 35px;
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .timeline-number {
+            width: 70px;
+            height: 70px;
+            background: var(--dark);
+            color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 30px;
+            z-index: 2;
+            border: 2px solid var(--primary);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        /* Отзывы */
+        .reviews {
+            background: var(--dark);
+            position: relative;
+        }
+
+        .review-slider-container {
+            position: relative;
+        }
+
+        .review-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+            padding: 2rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+            scroll-behavior: smooth;
+        }
+
+        .review-slider:active {
+            cursor: grabbing;
+        }
+
+        .review-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .review-card {
+            flex: 0 0 85%;
+            scroll-snap-align: start;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            min-height: 400px;
+            user-select: none;
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(225, 29, 72, 0.25);
+            border-color: rgba(225, 29, 72, 0.3);
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .review-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .review-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .review-title span {
+            background: linear-gradient(90deg, rgba(225, 29, 72, 0.2), rgba(125, 211, 252, 0.2));
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(125, 211, 252, 0.1);
+        }
+
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .review-text em {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .review-footer {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary-light);
+            font-size: 0.95rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .review-author {
+            font-weight: 700;
+        }
+
+        /* Стрелки навигации */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .slider-arrow:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .prev-arrow {
+            left: -24px;
+        }
+
+        .next-arrow {
+            right: -24px;
+        }
+
+        @media (max-width: 768px) {
+            .slider-arrow {
+                display: none;
+            }
+        }
+        
+        /* FAQ */
+        .faq-item {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            border-radius: 1rem;
             border: 1px solid var(--glass-border);
-            position: relative;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
         }
 
-        .testimonial::before {
-            content: '"';
-            position: absolute;
-            top: 1rem;
-            left: 2rem;
-            font-size: 5rem;
-            color: var(--primary);
-            opacity: 0.2;
-            font-family: serif;
-            line-height: 1;
+        .faq-item:hover {
+            border-color: var(--primary);
         }
 
-        .testimonial-text {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            font-style: italic;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
+        .faq-question {
+            font-size: 1.2rem;
             font-weight: 600;
+            color: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
             color: var(--primary-light);
         }
 
-        .cta-section {
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* О нас */
+        .about-image {
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            height: 400px;
+            background: linear-gradient(45deg, var(--primary), var(--darker));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image i {
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-list {
+            list-style-type: none;
+            margin-bottom: 2rem;
+        }
+
+        .about-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .about-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+        }
+
+        /* CTA */
+        .cta {
             text-align: center;
             background: linear-gradient(135deg, var(--darker), var(--dark));
             position: relative;
             overflow: hidden;
         }
 
-        .cta-section::before {
+        .cta::before {
             content: '';
             position: absolute;
             top: 0;
@@ -352,152 +617,7 @@
             opacity: 0.8;
         }
 
-        footer {
-            padding: 3rem 5%;
-            text-align: center;
-            background-color: var(--dark);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .footer-logo {
-            font-size: clamp(1.5rem, 4vw, 1.8rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: var(--light);
-            text-decoration: none;
-            transition: color 0.3s;
-            opacity: 0.7;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-        }
-
-        .footer-link:hover {
-            color: var(--primary-light);
-            opacity: 1;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-link {
-            color: var(--light);
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            transition: all 0.3s;
-            opacity: 0.7;
-        }
-
-        .social-link:hover {
-            color: var(--primary-light);
-            transform: translateY(-3px);
-            opacity: 1;
-        }
-
-        .copyright {
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
-            opacity: 0.5;
-        }
-
-        /* Анимации */
-        [data-aos] {
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        [data-aos="fade-up"] {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        [data-aos="fade-down"] {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-
-        [data-aos="fade-left"] {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-
-        [data-aos="fade-right"] {
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-
-        [data-aos].aos-animate {
-            opacity: 1;
-            transform: translate(0);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .btn-group {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .btn {
-                width: 100%;
-                padding: 0.8rem 1.5rem;
-            }
-            
-            section {
-                padding: 5rem 5%;
-            }
-            
-            .feature-card {
-                padding: 1.5rem;
-            }
-            
-            .header-content {
-                padding-top: 60px;
-            }
-            
-            .testimonial {
-                padding: 2rem 1.5rem;
-            }
-            
-            .floating-emoji {
-                display: none;
-            }
-        }
-
-        /* Кастомный скроллбар */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-light);
-        }
-
-        /* Кнопка Telegram */
+        /* Telegram кнопка */
         .telegram-button {
             position: fixed;
             bottom: 20px;
@@ -515,6 +635,11 @@
             text-decoration: none;
         }
 
+        .telegram-button:hover {
+            width: 160px;
+            border-radius: 30px;
+        }
+
         .icon-wrapper {
             width: 60px;
             height: 60px;
@@ -523,6 +648,10 @@
             align-items: center;
             flex-shrink: 0;
             transition: transform 0.5s ease;
+        }
+
+        .telegram-button:hover .icon-wrapper {
+            transform: rotate(360deg);
         }
 
         .telegram-button img {
@@ -538,15 +667,6 @@
             margin-left: 10px;
             transition: opacity 0.3s ease;
             padding-right: 15px;
-        }
-
-        .telegram-button:hover {
-            width: 160px;
-            border-radius: 30px;
-        }
-
-        .telegram-button:hover .icon-wrapper {
-            transform: rotate(360deg);
         }
 
         .telegram-button:hover .telegram-label {
@@ -630,74 +750,74 @@
             color: var(--primary-light);
         }
 
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 60px;
+            }
+            
+            .timeline-number {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                margin-right: 20px;
+            }
+            
+            .timeline::before {
+                left: 25px;
+            }
+            
+            .review-card {
+                min-height: auto;
+                padding: 1.5rem;
+            }
+            
             .mobile-menu-btn {
                 display: flex;
             }
-        }
-
-        /* Улучшенные карточки */
-        .feature-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--primary);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* Анимация при наведении на кнопки */
-        .btn {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-        }
-
-        /* Плавное появление элементов */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        body {
-            animation: fadeIn 0.5s ease;
-        }
-
-        /* Улучшенный хедер */
-        header::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(transparent, var(--darker));
-            z-index: 1;
-        }
-
-        /* Адаптивные отступы */
-        @media (max-width: 480px) {
-            section {
-                padding: 3rem 5%;
+            
+            .btn {
+                width: 100%;
             }
             
-            .header-content {
-                padding-top: 40px;
+            .about-image {
+                height: 300px;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content h1 {
+                font-size: 2.8rem;
+            }
+            
+            .timeline {
+                padding-left: 40px;
+            }
+            
+            .timeline-number {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                margin-right: 15px;
+            }
+            
+            .timeline::before {
+                left: 20px;
             }
             
             .telegram-button {
@@ -722,599 +842,53 @@
             }
         }
 
-        .faq-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .faq-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .faq-subtitle {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .faq-item {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .faq-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .faq-question {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .faq-answer {
-            color: var(--text-secondary);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--glass-border);
-            display: none;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-
-        .faq-icon {
-            transition: transform 0.3s ease;
-            color: var(--primary-light);
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .cta-section {
-            text-align: center;
-            margin-top: 4rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, var(--darker), var(--dark));
-            border-radius: 1rem;
-        }
-
-        .cta-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--light), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
         /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        [data-aos] {
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Основные стили */
-        .reviews-wrapper {
-            padding: 4rem 1rem;
-            overflow: hidden;
-            max-width: 1600px;
-            margin: 0 auto;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .reviews-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            position: relative;
-            display: inline-block;
-        }
-
-        .reviews-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .reviews-subtitle {
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            line-height: 1.7;
-        }
-
-        /* Контейнер карточек */
-        .reviews-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 2rem;
-            padding: 2rem 1rem;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .reviews-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        /* Карточка отзыва */
-        .review-card {
-            flex: 0 0 85%;
-            scroll-snap-align: start;
-            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            min-height: 550px;
-        }
-
-        .review-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(225, 29, 72, 0.25);
-            border-color: rgba(225, 29, 72, 0.3);
-        }
-
-        .review-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 6px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-        }
-
-        .review-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(225, 29, 72, 0.1) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
+        [data-aos="fade-up"] {
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transform: translateY(30px);
         }
 
-        .review-card:hover::after {
+        [data-aos="fade-down"] {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        [data-aos="fade-left"] {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        [data-aos="fade-right"] {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        [data-aos].aos-animate {
             opacity: 1;
+            transform: translate(0);
         }
 
-        /* Эмодзи сверху */
-        .review-emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            animation: float 4s ease-in-out infinite;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
-        }
-
-        /* Заголовок отзыва */
-        .review-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .review-title span {
-            background: linear-gradient(90deg, rgba(225, 29, 72, 0.2), rgba(125, 211, 252, 0.2));
-            color: var(--accent);
-            padding: 0.4rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(125, 211, 252, 0.1);
-        }
-
-        /* Контент отзыва (текст + фишки) */
-        .review-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2.5rem;
-        }
-
-        .review-text {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-
-        .review-text em {
-            color: var(--accent);
-            font-style: normal;
-            font-weight: 500;
-        }
-
-        /* Фишки отзыва */
-        .review-highlights {
-            display: flex;
-            flex-direction: column;
-            gap: 1.8rem;
-        }
-
-        .highlight-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.2rem;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .highlight-item:hover {
-            background: rgba(225, 29, 72, 0.08);
-            border-color: rgba(225, 29, 72, 0.2);
-            transform: translateX(5px);
-        }
-
-        .highlight-icon {
-            color: var(--accent);
-            font-size: 1.5rem;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .highlight-text {
-            color: var(--light);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        /* Подвал карточки */
-        .review-footer {
-            margin-top: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--primary-light);
-            font-size: 0.95rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .review-author {
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .review-author::before {
-            content: '';
-            display: block;
+        /* Кастомный скроллбар */
+        ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
-            background-color: var(--success);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--success);
         }
 
-        .review-date {
-            opacity: 0.8;
-            font-weight: 500;
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
         }
 
-        /* Навигация */
-        .reviews-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
         }
 
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: var(--glass-border);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
         }
-
-        .nav-dot.active {
-            background-color: var(--primary);
-            transform: scale(1.3);
-        }
-
-        .about-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .about-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-subtitle {
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-        }
-
-        .about-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 5rem;
-        }
-
-        .about-image {
-            border-radius: 1.5rem;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-            height: 400px;
-            background: linear-gradient(45deg, var(--primary), var(--darker));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 20%, rgba(225, 29, 72, 0.3) 0%, transparent 70%);
-        }
-
-        .about-image i {
-            font-size: 8rem;
-            color: rgba(255, 255, 255, 0.1);
-        }
-
-        .about-content {
-            padding: 1rem;
-        }
-
-        .section-title {
-            text-align: right;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-            border-radius: 3px;
-        }
-
-        .about-text {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary-light), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .team-section {
-            margin: 5rem 0;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .team-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: var(--primary);
-        }
-
-        .team-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(45deg, var(--primary), var(--darker));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-
-        .team-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--light);
-        }
-
-        .team-position {
-            color: var(--primary-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .team-bio {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .values-section {
-            margin: 5rem 0;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .value-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .value-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .value-icon {
-            font-size: 2rem;
-            color: var(--primary-light);
-            margin-bottom: 1.5rem;
-        }
-
-        .value-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-
-        .value-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-
     </style>
 </head>
 <body>
@@ -1328,355 +902,228 @@
         <span></span>
     </button>
 
-    <!--
-    #------------------------------------------------------#
-    #                   Мобильное меню                     #
-    #------------------------------------------------------#   
-    -->
-
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-links">
             <a href="#how" class="mobile-menu-link" onclick="closeMobileMenu()">Как это работает?</a>
             <a href="#for-whom" class="mobile-menu-link" onclick="closeMobileMenu()">Для кого?</a>
             <a href="#reviews" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
             <a href="#faq" class="mobile-menu-link" onclick="closeMobileMenu()">FAQ</a>
-            <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Телеграм</a>
             <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Контакты</a>
         </div>
     </div>
 
-    <!-- 1 блок (I) -->
+    <!-- Хедер -->
     <header>
-        <div class="header-content">
-            <div data-aos="fade-down" data-aos-delay="100">
-                <span style="display: inline-block; background: rgba(225, 29, 72, 0.2); color: var(--primary-light); padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.9rem; margin-bottom: 1rem; backdrop-filter: blur(5px); border: 1px solid rgba(225, 29, 72, 0.3);">VIP-знакомства 2025</span>
-                <h1>Устал тратить время <br>в дейтинге?</h1>
-                <p class="tagline">Мы найдем девушек готовых пойти на свидание именно с тобой!</p>
-                <div class="btn-group">
+        <div class="container">
+            <div class="header-content">
+                <h1 data-aos="fade-up">Устал тратить время <br>в дейтинге?</h1>
+                <p class="tagline" data-aos="fade-up" data-aos-delay="100">Мы найдем девушек готовых пойти на свидание именно с тобой!</p>
+                <div class="btn-group" data-aos="fade-up" data-aos-delay="200">
                     <a href="#cta" class="btn btn-primary">Начать сейчас</a>
                 </div>
             </div>
         </div>
-        
-        <div class="floating-emoji" style="top: 20%; left: 10%; animation-delay: 0s;">💃</div>
-        <div class="floating-emoji" style="top: 70%; left: 85%; animation-delay: 1s;">🕺</div>
-        <div class="floating-emoji" style="top: 40%; left: 75%; animation-delay: 2s;">✨</div>
-        <div class="floating-emoji" style="top: 80%; left: 15%; animation-delay: 3s;">🥂</div>
     </header>
 
-    <!-- Блок 2 (II) -->
-     
-    <section style="background: rgba(225, 29, 72, 0.2); color: var(--primary-light); padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 1rem; backdrop-filter: blur(5px); padding: 80px 20px; font-family: 'Arial', sans-serif;">
-    <div style="max-width: 700px; margin: 0 auto; position: relative;">
-      <h2 style="text-align: center; font-size: 36px; font-weight: bold; margin-bottom: 80px; color: #ffffff;">
-        Как это работает?
-      </h2>
-  
-      <!-- Вертикальная линия -->
-      <div style="position: absolute; top: 100px; left: 35px; width: 2px; height: calc(100% - 100px); background-color: #000;"></div>
-  
-      <!-- Элемент (1) -->
-      <div style="display: flex; align-items: flex-start; margin-bottom: 70px; position: relative;">
-        <div style="z-index: 2; width: 70px; height: 70px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">
-          👤
-        </div>
-        <div style="margin-left: 30px; max-width: 550px;">
-          <h3 style="margin: 0 0 10px; font-size: 20px;">СОЗДАЕМ ПРОФИЛИ</h3>
-          <p style="margin: 0;">на самых эффективных приложениях для дейтинга.</p>
-        </div>
-      </div>
-  
-      <!-- Элемент (2) -->
-      <div style="display: flex; align-items: flex-start; margin-bottom: 70px; position: relative;">
-        <div style="z-index: 2; width: 70px; height: 70px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">
-          ❤️
-        </div>
-        <div style="margin-left: 30px; max-width: 550px;">
-          <h3 style="margin: 0 0 10px; font-size: 20px;">ПОДБИРАЕМ ДЕВУШЕК ПО ТВОЕМУ ВКУСУ</h3>
-          <p style="margin: 0;">начала мы сделаем кучу свайпов и мэтчей, и передадим тебе лучших для выбора.</p>
-        </div>
-      </div>
-  
-      <!-- Элемент (3) -->
-      <div style="display: flex; align-items: flex-start; margin-bottom: 70px; position: relative;">
-        <div style="z-index: 2; width: 70px; height: 70px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">
-          🥰
-        </div>
-        <div style="margin-left: 30px; max-width: 550px;">
-          <h3 style="margin: 0 0 10px; font-size: 20px;">ДОГОВАРИВАЕМСЯ О СВИДАНИИ С ТОБОЙ</h3>
-          <p style="margin: 0;">для этого мы проведем переписку со всеми из них от твоего лица и "прогреем" их до желания увидеться.</p>
-        </div>
-      </div>
-  
-      <!-- Элемент (4) -->
-      <div style="display: flex; align-items: flex-start; position: relative;">
-        <div style="z-index: 2; width: 70px; height: 70px; background: #000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">
-          🔫
-        </div>
-        <div style="margin-left: 30px; max-width: 550px;">
-          <h3 style="margin: 0 0 10px; font-size: 20px;">КО ВСТРЕЧЕ ПОДГОТОВИМ ТЕБЯ</h3>
-          <p style="margin: 0;">как Агента 007 к ЗАДАНИЮ. мы передадим тебе переписку, и расскажем, о чем вы уже пообщались :)</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-    <!-- Блок 3 (III) --> 
-    
-      <section id="for-whom" style="background: var(--dark);">
-      <h2 class="section-title" data-aos="fade-up">Для кого нужна автоматизация дейтинга?</h2>
-      <div class="features-grid">
-  
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-              <div class="feature-icon"><i class="fas fa-user-clock"></i></div>
-              <h3 class="feature-title">Мужчины, которые ценят своё время</h3>
-              <p class="feature-desc">
-                  Ищете настоящих девушек для живого общения без пустой переписки? Мы всё организуем за вас.
-              </p>
-          </div>
-  
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-              <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
-              <h3 class="feature-title">До 10 свиданий в месяц — гарантированно</h3>
-              <p class="feature-desc">
-                  Если кто-то откажется — найдём замену. Мы действительно обеспечиваем встречи.
-              </p>
-          </div>
-  
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="300" style="position: relative;">
-              <div class="feature-icon"><i class="fas fa-coins"></i></div>
-              <h3 class="feature-title">Прозрачные цены</h3>
-              <p class="feature-desc">
-                  Узнайте, что входит в стоимость. Без скрытых платежей или подписок.
-              </p>
-              <a href="#pricing" style="margin-top: 10px; display: inline-block; background: #7a4fff; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none;">
-                  Посмотреть цены
-              </a>
-          </div>
-  
-          <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
-              <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-              <h3 class="feature-title">Без 18+ услуг</h3>
-              <p class="feature-desc">
-                  Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.
-              </p>
-          </div>
+        <!-- Как это работает -->
+    <section id="how" class="how-it-works">
+        <div class="container">
+            <h2 class="text-center mb-12" data-aos="fade-up">Как это работает?</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-number">👤</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">СОЗДАЕМ ПРОФИЛИ</h3>
+                        <p class="card-text">на самых эффективных приложениях для дейтинга.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-number">❤️</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">ПОДБИРАЕМ ДЕВУШЕК ПО ТВОЕМУ ВКУСУ</h3>
+                        <p class="card-text">начала мы сделаем кучу свайпов и мэтчей, и передадим тебе лучших для выбора.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-number">🥰</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">ДОГОВАРИВАЕМСЯ О СВИДАНИИ С ТОБОЙ</h3>
+                        <p class="card-text">для этого мы проведем переписку со всеми из них от твоего лица и "прогреем" их до желания увидеться.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-number">🔫</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">КО ВСТРЕЧЕ ПОДГОТОВИМ ТЕБЯ</h3>
+                        <p class="card-text">как Агента 007 к ЗАДАНИЮ. мы передадим тебе переписку, и расскажем, о чем вы уже пообщались :)</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Блок 4 (IV) -->    
-    
-    <div class="about-header">
-        <h1 class="about-title">Кто мы и откуда</h1>
-        <p class="about-subtitle">Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга</p>
-    </div>
-
-    <div class="about-section">
-        <div class="about-image">
-            <i class="fas fa-heart-broken"></i>
-        </div>
-        <div class="about-content">
-            <p class="about-text">Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.</p>
-
-            <p class="about-text">И пошло:</p>
-            <ul class="about-text" style="list-style-type: '✨ '; padding-left: 1.5em;">
-                <li>Один нашёл своё.</li>
-                <li>Второй прошёл 30 свиданий.</li>
-                <li>Третий — просто вернул веру в себя 🙌.</li>
-            </ul>
-
-            <p class="about-text">📈 За полгода мы помогли более 60 мужчинам познакомиться с девушками, которые им действительно подходили. Многие говорили: «Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился.» 😌</p>
-
-            <p class="about-text">Для кого-то наш сервис — способ перебороть внутренние зажимы 🤐. Для других — экономия колоссального количества времени ⏳. Но для всех — это просто взлом системы 🔓, чтобы получить доступ к широкой, качественной воронке знакомств 💑.</p>
-
-            <p class="about-text"><strong>Возможно, следующий шаг — <a href="https://t.me/dating_automation">твой</a>?</strong> 🚀</p>
-        </div>
-    </div>
-
- 
-    <!-- Блок 5 (V) -->
-     
-    <div class="reviews-wrapper">
-        <div class="section-header">
-            <h2 class="reviews-title">Реальные истории успеха</h2>
-            <p class="reviews-subtitle">Отзывы клиентов, которые доверили нам свою личную жизнь и получили результат</p>
-        </div>
-
-        <div class="reviews-container">
-            <!-- История Ивана -->
-            <div class="review-card">
-                <div class="review-emoji">💑</div>
-                <div class="review-title">
-                    История Ивана <span>24 свидания за 2 месяца</span>
+    <!-- Для кого -->
+    <section id="for-whom" class="bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-6" data-aos="fade-up" style="padding-bottom: 25px; padding-left: 5px;">
+                Для кого нужна автоматизация дейтинга?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card" data-aos="fade-up">
+                    <div class="card-icon"><i class="fas fa-user-clock"></i></div>
+                    <h3 class="card-title">Мужчины, которые ценят своё время</h3>
+                    <p class="card-text">Ищете настоящих девушек для живого общения без пустой переписки? Мы всё организуем за вас.</p>
                 </div>
-                <div class="review-content">
-                    <div class="review-text">
-                        <em>👨‍💼 Иван — аналитик из Минска.</em> В 2022 переехал в Москву, устроился в топовую IT-компанию, снял квартиру <em>🏙</em>, закрыл бытовые вопросы <em>🧾</em> и стал Хедом Аналитики.<br><br>
-                        Всё круто: <em>✅ карьера есть, ✅ уровень жизни есть.</em> Но в личном — пустота <em>😶</em>.<br><br>
-                        <em>📱 Свайпы, переписки — трата фокуса 🎯.</em> <br><br>
-                        <em>🍂 В ноябре 2024 он нашёл нас.</em> Мы взяли на себя профиль, переписку и фильтрацию.<br><br>
-                        <em>📅 За два месяца — 24 свидания.</em> <br><br>
-                        <em>❤️ Сейчас — уже 4 месяца в отношениях.</em> Подыскивает квартиру побльше.
-                    </div>
-                    <div class="review-highlights">
-                        <div class="highlight-item">
-                            <div class="highlight-icon">🧠</div>
-                            <div class="highlight-text">Фокус на карьере, делегирование дейтинга</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-icon">📅</div>
-                            <div class="highlight-text">24 свидания за 2 месяца</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-icon">❤️</div>
-                            <div class="highlight-text">Отношения без выматывающего дейтинга</div>
-                        </div>
-                    </div>
+                    
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3 class="card-title">До 10 свиданий в месяц — гарантированно</h3>
+                    <p class="card-text">Если кто-то откажется — найдём замену. Мы действительно обеспечиваем встречи.</p>
                 </div>
-                <div class="review-footer">
-                    <div class="review-author">Иван, Москва</div>
-                    <div class="review-date">Ноябрь 2024</div>
+                    
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon"><i class="fas fa-coins"></i></div>
+                    <h3 class="card-title">Прозрачные цены</h3>
+                    <p class="card-text">Узнайте, что входит в стоимость. Без скрытых платежей или подписок.</p>
+                </div>
+                    
+                <div class="card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="card-title">Без 18+ услуг</h3>
+                    <p class="card-text">Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- История Сергея -->
-            <div class="review-card">
-                <div class="review-emoji">💬</div>
-                <div class="review-title">
-                    История Сергея <span>практикой к уверенности</span>
+    <!-- О нас -->
+    <section>
+        <div class="container">
+            <h2 class="text-center mb-12" data-aos="fade-up">Кто мы и откуда</h2>
+            <p class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="100">Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга</p>
+            
+            <div class="grid grid-cols-2 items-center gap-8">
+                <div class="about-image" data-aos="fade-right">
+                    <i class="fas fa-heart-broken"></i>
                 </div>
-                <div class="review-content">
-                    <div class="review-text">
-                        <em>🎓 Сергей, 31 — выпускник ВМК МГУ,</em> работает разработчиком в Яндексе <em>💻</em>, офис — Москва-Сити <em>🏢</em>.<br><br>
-                        Всё при нём: доход, статус, репутация. Кроме одного — личной жизни <em>💔</em>.<br><br>
-                        Он не псих, не «ботаник», но сомневался:<br>
-                        <em>«А будет ли у меня лёгкое общение с женщинами?»</em><br><br>
-                        <em>📚 Смотрел психологов, читал «Базу»,</em> разочаровался — мол, женщины неадекватны <em>🙄</em>.<br><br>
-                        <em>🧩 Но мы увидели:</em> у него был просто ограниченный опыт.<br><br>
-                        <em>🛠 Мы взяли на себя анкеты, переписку и договорённости.</em> И началась настоящая практика общения.
-                    </div>
-                    <div class="review-highlights">
-                        <div class="highlight-item">
-                            <div class="highlight-icon">🧩</div>
-                            <div class="highlight-text">Недостаток опыта и иллюзии о женщинах</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-icon">📚</div>
-                            <div class="highlight-text">Переход от теории к реальной практике</div>
-                        </div>
-                        <div class="highlight-item">
-                            <div class="highlight-icon">💬</div>
-                            <div class="highlight-text">Регулярные свидания и рост уверенности</div>
+                
+                <div data-aos="fade-left">
+                    <p class="about-text">Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.</p>
+                    
+                    <p class="about-text">И пошло:</p>
+                    <ul class="about-list">
+                        <li>Один нашёл своё.</li>
+                        <li>Второй прошёл 30 свиданий.</li>
+                        <li>Третий — просто вернул веру в себя 🙌.</li>
+                    </ul>
+                    
+                    <p class="about-text">📈 За полгода мы помогли более 60 мужчинам познакомиться с девушками, которые им действительно подходили. Многие говорили: «Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился.» 😌</p>
+                    
+                    <p class="about-text">Для кого-то наш сервис — способ перебороть внутренние зажимы 🤐. Для других — экономия колоссального количества времени ⏳. Но для всех — это просто взлом системы 🔓, чтобы получить доступ к широкой, качественной воронке знакомств 💑.</p>
+                    
+                    <p class="about-text"><strong>Возможно, следующий шаг — <a href="https://t.me/dating_automation" class="text-primary-light">твой</a>?</strong> 🚀</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="text-center mb-16">
+                <h2 class="mb-4" data-aos="fade-up">Реальные истории успеха</h2>
+                <p class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">Отзывы клиентов, которые доверили нам свою личную жизнь и получили результат</p>
+            </div>
+            
+            <div class="review-slider-container">
+                <button class="slider-arrow prev-arrow" aria-label="Previous review">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                
+                <div class="review-slider">
+                    <div class="review-card" data-aos="fade-up">
+                        <div class="review-emoji">💑</div>
+                        <h3 class="review-title">История Ивана <span>24 свидания за 2 месяца</span></h3>
+                        <p class="review-text">
+                            <em>👨‍💼 Иван — аналитик из Минска.</em> В 2022 переехал в Москву, устроился в топовую IT-компанию, снял квартиру <em>🏙</em>, закрыл бытовые вопросы <em>🧾</em> и стал Хедом Аналитики.<br><br>
+                            Всё круто: <em>✅ карьера есть, ✅ уровень жизни есть.</em> Но в личном — пустота <em>😶</em>.<br><br>
+                            <em>📱 Свайпы, переписки — трата фокуса 🎯.</em> <br><br>
+                            <em>🍂 В ноябре 2024 он нашёл нас.</em> Мы взяли на себя профиль, переписку и фильтрацию.<br><br>
+                            <em>📅 За два месяца — 24 свидания.</em> <br><br>
+                            <em>❤️ Сейчас — уже 4 месяца в отношениях.</em> Подыскивает квартиру побльше.
+                        </p>
+                        <div class="review-footer">
+                            <div class="review-author">Иван, Москва</div>
+                            <div class="review-date">Ноябрь 2024</div>
                         </div>
                     </div>
+                    
+                    <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="review-emoji">💬</div>
+                        <h3 class="review-title">История Сергея <span>практикой к уверенности</span></h3>
+                        <p class="review-text">
+                            <em>🎓 Сергей, 31 — выпускник ВМК МГУ,</em> работает разработчиком в Яндексе <em>💻</em>, офис — Москва-Сити <em>🏢</em>.<br><br>
+                            Всё при нём: доход, статус, репутация. Кроме одного — личной жизни <em>💔</em>.<br><br>
+                            Он не псих, не «ботаник», но сомневался:<br>
+                            <em>«А будет ли у меня лёгкое общение с женщинами?»</em><br><br>
+                            <em>📚 Смотрел психологов, читал «Базу»,</em> разочаровался — мол, женщины неадекватны <em>🙄</em>.<br><br>
+                            <em>🧩 Но мы увидели:</em> у него был просто ограниченный опыт.<br><br>
+                            <em>🛠 Мы взяли на себя анкеты, переписку и договорённости.</em> И началась настоящая практика общения.
+                        </p>
+                        <div class="review-footer">
+                            <div class="review-author">Сергей, Москва</div>
+                            <div class="review-date">Февраль 2025</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="review-footer">
-                    <div class="review-author">Сергей, Москва</div>
-                    <div class="review-date">Февраль 2025</div>
-                </div>
+                
+                <button class="slider-arrow next-arrow" aria-label="Next review">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
             </div>
         </div>
+</section>
 
-        <div class="reviews-nav">
-            <div class="nav-dot active"></div>
-            <div class="nav-dot"></div>
-        </div>
-    
-    <!-- Блок 6 (VI) -->    
-    
-        <div class="faq-header">
-            <h1 class="faq-title">Часто задаваемые вопросы</h1>
-            <p class="faq-subtitle">Мы полностью берём на себя весь процесс: создаём твои профили в топовых приложениях для знакомств, подбираем девушек по твоим предпочтениям и ведём с ними переписку до момента, когда они готовы встретиться именно с тобой.</p>
-        </div>
+    <!-- FAQ -->
+    <section id="faq" class="bg-dark">
+        <div class="container">
+            <h2 class="text-center mb-4" data-aos="fade-up">Часто задаваемые вопросы</h2>
+            <p class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100"></p>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        <span>Что нужно от меня, чтобы стартануть?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        От тебя нужны:
+                        <li>Описание себя: увлечения, работа, характер и стиль общения</li>
+                        <li>Пожелания к девушкам</li>
+                        <li>Твои лучшие фотки (иногда нужна будет верификация в дейтинг-приложениях)</li>
+                        <li>Далее мы показываем тебе девушек, которые уже "прогреты" перепиской, а ты просто выбираешь, с кем хочешь встретиться.</li>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question">
+                        <span>Как именно вы общаетесь с девушками? Что пишете?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        С нашей стороны переписку ведут агенты с психологическим образованием, мы общаемся максимально естественно, от твоего имени. Говорим только правду, без сказок про яхты и самолёты, если их у тебя реально нет :)
+                    </div>
+                </div>
 
-        <div class="faq-grid">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Что нужно от меня, чтобы стартануть?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    От тебя нужны:
-                    <li>Описание себя: увлечения, работа, характер и стиль общения</li>
-                    <li>Пожелания к девушкам</li>
-                    <li>Твои лучшие фотки (иногда нужна будет верификация в дейтинг-приложениях)</li>
-                    <li>Далее мы показываем тебе девушек, которые уже "прогреты" перепиской, а ты просто выбираешь, с кем хочешь встретиться.</li>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Как именно вы общаетесь с девушками? Что пишете?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    С нашей стороны переписку ведут агенты с психологическим образованием, мы общаемся максимально естественно, от твоего имени. Говорим только правду, без сказок про яхты и самолёты, если их у тебя реально нет :)
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Что за девушки и где вы их находите?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Ты расскажешь нам свои предпочтения. Мы делаем 100+ мэтчей, фильтруем самых интересных и показываем тебе. Из них ты выбираешь 10 лучших, с которыми встречаешься в течение месяца.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Что делать, когда я получу контакты девушки? Как готовиться к свиданию?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Просто напиши ей, она уже ждёт встречи! Мы заранее передадим тебе переписку и ключевые моменты общения, так что ты будешь подготовлен на 100%, будто вёл беседу сам.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Что, если девушка откажется от свидания?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Такое бывает, ведь девушки настоящие. Без паники, мы быстро найдём тебе классную замену!
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Девушки точно не поймут, что общаются не со мной?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Наши менеджеры отлично подстраиваются под твой стиль общения и никогда не палятся. Мы мастера естественной переписки, поверь!
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Это вообще законно?</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Абсолютно. Мы ничего не выдумываем, общаемся открыто, дружелюбно и без фейков. В итоге девушки идут на свидание именно с тобой, а это самое важное!
-                    Незаконно только то, насколько хитро мы ломаем систему и как экономим твое время!
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Что делать на самом свидании? :)</span>
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </div>
-                <div class="faq-answer">
-                    Будь собой, расслабься и получай удовольствие. Всё получится! :)
-                </div>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="faq-question">
                         <span>Что конкретно входит в сервис?</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
@@ -1685,27 +1132,100 @@
                         Мы полностью берём на себя весь процесс: создаём твои профили в топовых приложениях для знакомств, подбираем девушек по твоим предпочтениям и ведём с ними переписку до момента, когда они готовы встретиться именно с тобой.
                     </div>
                 </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        <span>Что за девушки и где вы их находите?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Ты расскажешь нам свои предпочтения. Мы делаем 100+ мэтчей, фильтруем самых интересных и показываем тебе. Из них ты выбираешь 10 лучших, с которыми встречаешься в течение месяца.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="faq-question">
+                        <span>Что делать, когда я получу контакты девушки? Как готовиться к свиданию?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Просто напиши ей, она уже ждёт встречи! Мы заранее передадим тебе переписку и ключевые моменты общения, так что ты будешь подготовлен на 100%, будто вёл беседу сам.
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="faq-question">
+                        <span>Что, если девушка откажется от свидания?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Такое бывает, ведь девушки настоящие. Без паники, мы быстро найдём тебе классную замену!
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+                    <div class="faq-question">
+                        <span>Девушки точно не поймут, что общаются не со мной?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Наши менеджеры отлично подстраиваются под твой стиль общения и никогда не палятся. Мы мастера естественной переписки, поверь!
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                    <div class="faq-question">
+                        <span>Это вообще законно?</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Абсолютно. Мы ничего не выдумываем, общаемся открыто, дружелюбно и без фейков. В итоге девушки идут на свидание именно с тобой, а это самое важное!
+                        Незаконно только то, насколько хитро мы ломаем систему и как экономим твое время!
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="700">
+                    <div class="faq-question">
+                        <span>Что делать на самом свидании? :)</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Будь собой, расслабься и получай удовольствие. Всё получится! :)
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-    <section id="cta" class="cta-section">
-        <h2 class="cta-title" data-aos="fade-up">Готовы к новым знакомствам?</h2>
-        <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Перейдите в наш Телеграм!</p>
-        <div data-aos="fade-up" data-aos-delay="200">
-            <a href="https://t.me/dating_automation" class="btn btn-primary" style="padding: 1.2rem 3rem; font-size: 1.1rem;">Telegram</a>
+    <!-- CTA -->
+    <section id="cta" class="cta">
+        <div class="container">
+            <h2 class="cta-title" data-aos="fade-up">Готовы к новым знакомствам?</h2>
+            <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Перейдите в наш Телеграм!</p>
+            <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://t.me/dating_automation" class="btn btn-primary" style="padding: 1.2rem 3rem; font-size: 1.1rem;">Telegram</a>
+            </div>
         </div>
     </section>
+
+
+    <!-- Telegram кнопка -->
+    <a class="telegram-button" href="https://t.me/dating_automation" target="_blank">
+        <div class="icon-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+        </div>
+        <span class="telegram-label">Перейти в TG</span>
+    </a>
+
     <script>
-        const test_version_number = '3.0.0'; // Версия теста, не трогать
         // Создание плавающих частиц
         const particlesContainer = document.getElementById('particles');
-        const particleCount = window.innerWidth < 768 ? 15 : 20; // Количество частиц зависит от ширины экрана (ПРОСТО ТАК НЕ ТРОГАТЬ)
+        const particleCount = window.innerWidth < 768 ? 15 : 20;
         
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             
-            // Случайные параметры
             const size = Math.random() * 5 + 2; 
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
@@ -1722,7 +1242,7 @@
             particlesContainer.appendChild(particle);
         }
         
-        // Простая реализация AOS (Animate On Scroll)
+        // Анимация при скролле
         document.addEventListener('DOMContentLoaded', () => {
             const aosElements = document.querySelectorAll('[data-aos]');
             
@@ -1739,12 +1259,10 @@
             
             window.addEventListener('scroll', animateOnScroll);
             window.addEventListener('load', animateOnScroll);
-            
-            // Инициализация анимации для элементов, уже видимых при загрузке
             animateOnScroll();
         });
         
-        // Плавный скролл для якорей
+        // Плавный скролл
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1784,73 +1302,14 @@
         
         mobileMenuBtn.addEventListener('click', toggleMobileMenu);
         
-        // Закрытие меню при клике вне его области
+        // Закрытие меню при клике вне его
         document.addEventListener('click', (e) => {
             if (!mobileMenu.contains(e.target) && e.target !== mobileMenuBtn) {
                 closeMobileMenu();
             }
         });
-        
-        // Анимация при наведении на кнопки
-        const buttons = document.querySelectorAll('.btn');
-        buttons.forEach(button => {
-            button.addEventListener('mousemove', (e) => {
-                const rect = button.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                button.style.setProperty('--mouse-x', `${x}px`);
-                button.style.setProperty('--mouse-y', `${y}px`);
-            });
-        });
 
-         // Простая навигация для точек
-        const dots = document.querySelectorAll('.nav-dot');
-        const cards = document.querySelectorAll('.review-card');
-        
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                // Удаляем активный класс у всех точек
-                dots.forEach(d => d.classList.remove('active'));
-                // Добавляем активный класс текущей точке
-                dot.classList.add('active');
-                
-                // Прокручиваем к соответствующей карточке
-                cards[index].scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'nearest',
-                    inline: 'center'
-                });
-            });
-        });
-        
-        // Автоматическое обновление активной точки при прокрутке
-        const reviewsContainer = document.querySelector('.reviews-container');
-        
-        reviewsContainer.addEventListener('scroll', () => {
-            const scrollPosition = reviewsContainer.scrollLeft;
-            const cardWidth = cards[0].offsetWidth + 32; // + gap
-            
-            const activeIndex = Math.round(scrollPosition / cardWidth);
-            
-            dots.forEach((dot, index) => {
-                if (index === activeIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        });
-        
-        // Анимация при загрузке
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.review-card');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-            });
-        });
-
-        // Работа аккордеона FAQ
+        // FAQ аккордеон
         document.querySelectorAll('.faq-item').forEach(item => {
             item.addEventListener('click', () => {
                 item.classList.toggle('active');
@@ -1863,15 +1322,57 @@
                 });
             });
         });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.review-slider');
+            const prevArrow = document.querySelector('.prev-arrow');
+            const nextArrow = document.querySelector('.next-arrow');
+            
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+            
+            // Drag-scroll функциональность
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+            
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+            
+            slider.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Навигация стрелками
+            prevArrow.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: -slider.offsetWidth * 0.85,
+                    behavior: 'smooth'
+                });
+            });
+            
+            nextArrow.addEventListener('click', () => {
+                slider.scrollBy({
+                    left: slider.offsetWidth * 0.85,
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
-
-    <!-- Кружок с телеграмом -->
-
-    <a class="telegram-button" href="https://t.me/https://t.me/dating_automation" target="_blank"> <!-- Ссылка на Telegram -->
-        <div class="icon-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram"> <!-- Логотип Telegram -->
-        </div>
-        <span class="telegram-label">Перейти в TG</span> <!-- Текстовая метка -->
-    </a> 
 </body>
 </html>
