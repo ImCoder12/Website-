@@ -541,44 +541,57 @@
 
         /* О нас */
         .about-image {
-            border-radius: 1.5rem;
+            border-radius: 2rem;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             position: relative;
-            height: 400px;
-            background: linear-gradient(45deg, var(--primary), var(--darker));
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-dark), var(--darker));
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
+        
+        .about-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px -10px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(var(--primary-rgb), 0.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
         .about-image i {
             font-size: 8rem;
             color: rgba(255, 255, 255, 0.1);
+            transition: transform 0.5s ease;
         }
-
-        .about-text {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
+        
+        .about-image:hover i {
+            transform: scale(1.05);
         }
-
-        .about-list {
-            list-style-type: none;
-            margin-bottom: 2rem;
+        
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
-
-        .about-list li {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
+        
+        .about-image .floating-icon {
+            animation: float 6s ease-in-out infinite;
         }
-
-        .about-list li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
+        
+        .about-image .floating-icon:nth-child(2) {
+            animation-delay: 1s;
+        }
+        
+        .about-image .floating-icon:nth-child(3) {
+            animation-delay: 2s;
         }
 
         /* CTA */
@@ -1001,32 +1014,66 @@
     </section>
 
     <!-- О нас -->
-    <section>
-        <div class="container">
-            <h2 class="text-center mb-12" data-aos="fade-up">Кто мы и откуда</h2>
-            <p class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="100">Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга</p>
+    <section class="py-20 bg-gradient-to-b from-dark to-darker overflow-hidden">
+        <div class="container px-6 mx-auto">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <span class="inline-block py-1 px-3 mb-4 text-xs font-semibold text-primary-light bg-primary-dark/20 rounded-full">НАША ИСТОРИЯ</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Кто мы и откуда</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-300 opacity-90" data-aos="fade-up" data-aos-delay="100">
+                    Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга
+                </p>
+            </div>
             
-            <div class="grid grid-cols-2 items-center gap-8">               
-                <div data-aos="fade-left">
-                    <p class="about-text">Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.</p>
-                    
-                    <p class="about-text">И пошло:</p>
-                    <ul class="about-list">
-                        <li>Один нашёл своё.</li>
-                        <li>Второй прошёл 30 свиданий.</li>
-                        <li>Третий — просто вернул веру в себя 🙌.</li>
-                    </ul>
-                    
-                    <p class="about-text">📈 За полгода мы помогли более 60 мужчинам познакомиться с девушками, которые им действительно подходили. Многие говорили: «Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился.» 😌</p>
-                    
-                    <p class="about-text">Для кого-то наш сервис — способ перебороть внутренние зажимы 🤐. Для других — экономия колоссального количества времени ⏳. Но для всех — это просто взлом системы 🔓, чтобы получить доступ к широкой, качественной воронке знакомств 💑.</p>
-                    
-                    <p class="about-text"><strong>Возможно, следующий шаг — <a href="#cta" class="text-primary-light">твой</a>?</strong> 🚀</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-16">
+                <!-- Текстовая часть -->
+                <div class="relative" data-aos="fade-right">
+                    <div class="absolute -left-8 -top-8 w-32 h-32 bg-primary/10 rounded-full blur-xl"></div>
+                    <div class="relative space-y-6">
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
+                        </p>
+                        
+                        <p class="text-lg text-gray-300 leading-relaxed font-medium">
+                            И пошло:
+                        </p>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 mr-4 text-primary-light bg-primary-dark/30 rounded-full">✨</span>
+                                <span class="text-lg text-gray-300">Один нашёл своё счастье</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 mr-4 text-primary-light bg-primary-dark/30 rounded-full">🔥</span>
+                                <span class="text-lg text-gray-300">Второй прошёл 30 свиданий за месяц</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 mr-4 text-primary-light bg-primary-dark/30 rounded-full">🙌</span>
+                                <span class="text-lg text-gray-300">Третий — просто вернул веру в себя</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="p-6 bg-dark/50 border border-gray-800 rounded-xl backdrop-blur-sm">
+                            <p class="text-lg text-gray-300 italic leading-relaxed">
+                                "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился."
+                            </p>
+                        </div>
+                        
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. Но для всех — это взлом системы, чтобы получить доступ к широкой, качественной воронке знакомств.
+                        </p>
+                        
+                        <div class="pt-4">
+                            <a href="#cta" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-primary to-primary-dark rounded-full text-white font-semibold shadow-lg hover:shadow-primary/30 transition-all duration-300 group">
+                                <span>Возможно, следующий шаг — твой?</span>
+                                <span class="ml-3 group-hover:translate-x-1 transition-transform duration-300">🚀</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Отзывы -->
     <section id="reviews" class="reviews">
         <div class="container">
@@ -1091,7 +1138,7 @@
     <!-- FAQ -->
     <section id="faq" class="bg-dark">
         <div class="container">
-            <h2 class="text-center mb-4 aos-animate" data-aos="fade-up" style="padding-bottom: 20px;">Часто задаваемые вопросы</h2>
+            <h2 class="text-center mb-4" data-aos="fade-up">Часто задаваемые вопросы</h2>
             <p class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100"></p>
             
             <div class="max-w-3xl mx-auto">
