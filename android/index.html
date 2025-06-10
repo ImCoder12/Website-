@@ -774,6 +774,32 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-light);
         }
+
+            /* Анимации (оптимизированные для мобильных) */
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            @keyframes float-delay {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+            
+            @keyframes float-delay-2 {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-12px); }
+            }
+                        
+            /* Оптимизация для Android */
+            @supports not (-webkit-touch-callout: none) {
+                .backdrop-blur-sm {
+                    backdrop-filter: blur(6px);
+                }
+                .backdrop-blur-md {
+                    backdrop-filter: blur(10px);
+                }
+            }
     </style>
 </head>
 <body>
@@ -883,59 +909,95 @@
         </div>
     </section>
 
-    <!-- О нас -->
-    <section class="py-12 bg-gradient-to-b from-dark to-darker overflow-hidden">
-        <div class="container px-4 mx-auto">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <span class="inline-block py-1 px-3 mb-3 text-xs font-semibold text-primary-light bg-primary-dark/20 rounded-full">НАША ИСТОРИЯ</span>
-                <h2 class="text-3xl font-bold text-white mb-3">Кто мы и откуда</h2>
-                <p class="mx-auto text-base text-gray-300 opacity-90" data-aos="fade-up" data-aos-delay="100">
-                    Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга
-                </p>
+    <!-- О нас - с адаптацией под мобильные устройства -->
+    <section class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
+        <!-- Декоративные элементы (только для десктопа) -->
+        <div class="hidden md:block absolute inset-0 overflow-hidden">
+            <div class="absolute -right-20 -top-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute left-10 bottom-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-2xl animate-float-delay"></div>
+            <div class="absolute right-1/3 top-1/2 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-float-delay-2"></div>
+        </div>
+        
+        <div class="container px-4 mx-auto relative z-10">
+            <div class="text-center mb-12 md:mb-24" data-aos="fade-up">
+                <span class="inline-block py-1.5 px-3 mb-3 md:mb-4 text-xs md:text-sm font-semibold text-primary-light bg-primary-dark/20 rounded-full backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/10 tracking-wider">
+                    НАША ИСТОРИЯ
+                </span>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 leading-tight">
+                    Кто мы <span class="text-primary-light">и откуда</span>
+                </h2>
+                <div class="max-w-2xl mx-auto">
+                    <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/30 md:bg-gray-900/30 backdrop-blur-sm px-4 py-3 md:px-6 md:py-4 rounded-xl border border-gray-800 shadow-lg md:shadow-xl" 
+                    data-aos="fade-up" 
+                    data-aos-delay="100">
+                        Проект, родившийся из боли, чтобы помочь другим — тем, кто устал от бесконечного дейтинга
+                    </p>
+                </div>
             </div>
             
-            <div class="flex flex-col gap-8">                              
+            <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 md:gap-16 lg:gap-20">
                 <!-- Текстовая часть -->
-                <div class="relative" data-aos="fade-up" data-aos-delay="100">
-                    <div class="space-y-4">
-                        <p class="text-base text-gray-300 leading-relaxed">
+                <div class="relative" data-aos="fade-right">
+                    <div class="hidden md:block absolute -left-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl animate-pulse"></div>
+                    <div class="relative space-y-5 md:space-y-8">
+                        <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/40 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-gray-800/50 shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
                             Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
                         </p>
                         
-                        <p class="text-base text-gray-300 leading-relaxed font-medium">
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
                             И пошло:
                         </p>
                         
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <span class="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 mr-3 text-primary-light bg-primary-dark/30 rounded-full text-xs">✨</span>
-                                <span class="text-base text-gray-300">Один нашёл своё счастье</span>
+                        <ul class="space-y-3 md:space-y-5">
+                            <li class="flex items-start group">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 mr-3 md:mr-4 text-primary-light bg-primary-dark/40 rounded-lg md:rounded-xl backdrop-blur-md border border-primary/20 shadow-lg group-hover:bg-primary/30 group-hover:scale-110 transition-all duration-300">✨</span>
+                                <span class="text-base md:text-xl text-gray-300/90 pt-0.5 md:pt-1 group-hover:text-primary-light transition-colors duration-300">Один нашёл своё счастье</span>
                             </li>
-                            <li class="flex items-start">
-                                <span class="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 mr-3 text-primary-light bg-primary-dark/30 rounded-full text-xs">🔥</span>
-                                <span class="text-base text-gray-300">Второй прошёл 30 свиданий за месяц</span>
+                            <li class="flex items-start group">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 mr-3 md:mr-4 text-primary-light bg-primary-dark/40 rounded-lg md:rounded-xl backdrop-blur-md border border-primary/20 shadow-lg group-hover:bg-primary/30 group-hover:scale-110 transition-all duration-300">🔥</span>
+                                <span class="text-base md:text-xl text-gray-300/90 pt-0.5 md:pt-1 group-hover:text-primary-light transition-colors duration-300">Второй прошёл 30 свиданий за месяц</span>
                             </li>
-                            <li class="flex items-start">
-                                <span class="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 mr-3 text-primary-light bg-primary-dark/30 rounded-full text-xs">🙌</span>
-                                <span class="text-base text-gray-300">Третий — просто вернул веру в себя</span>
+                            <li class="flex items-start group">
+                                <span class="flex-shrink-0 inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 mr-3 md:mr-4 text-primary-light bg-primary-dark/40 rounded-lg md:rounded-xl backdrop-blur-md border border-primary/20 shadow-lg group-hover:bg-primary/30 group-hover:scale-110 transition-all duration-300">🙌</span>
+                                <span class="text-base md:text-xl text-gray-300/90 pt-0.5 md:pt-1 group-hover:text-primary-light transition-colors duration-300">Третий — просто вернул веру в себя</span>
                             </li>
                         </ul>
                         
-                        <div class="p-4 bg-dark/50 border border-gray-800 rounded-xl backdrop-blur-sm">
-                            <p class="text-base text-gray-300 italic leading-relaxed">
+                        <div class="p-5 md:p-7 bg-gray-900/50 backdrop-blur-md border border-gray-800/70 rounded-xl md:rounded-2xl shadow-lg md:shadow-xl hover:shadow-primary/20 transition-all duration-500 hover:border-primary/40">
+                            <p class="text-base md:text-xl text-gray-300/90 italic leading-relaxed">
                                 "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я бы вряд ли с ними познакомился."
                             </p>
+                            <div class="mt-3 md:mt-4 flex items-center">
+                                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center mr-2 md:mr-3">
+                                    👨‍💼
+                                </div>
+                                <span class="text-gray-400 text-xs md:text-sm">Алексей, 32 года</span>
+                            </div>
                         </div>
                         
-                        <p class="text-base text-gray-300 leading-relaxed">
+                        <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/40 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-gray-800/50 shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
                             Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. Но для всех — это взлом системы, чтобы получить доступ к широкой, качественной воронке знакомств.
                         </p>
                         
-                        <div class="pt-3">
-                            <a href="#cta" class="inline-flex items-center justify-center w-full px-6 py-3 bg-gradient-to-r from-primary to-primary-dark rounded-full text-white underline font-semibold text-sm shadow-lg hover:shadow-primary/30 transition-all duration-300 group">
+                        <div class="pt-2" data-aos="fade-up" data-aos-delay="300">
+                            <a href="#cta" class="inline-flex items-center px-6 py-3 md:px-10 md:py-5 bg-gradient-to-r from-primary to-primary-dark rounded-full text-white font-semibold text-base md:text-lg shadow-lg md:shadow-2xl hover:shadow-primary/40 transition-all duration-500 group transform hover:-translate-y-0.5 md:hover:-translate-y-1">
                                 <span>Возможно, следующий шаг — твой?</span>
-                                <span class="ml-2 group-hover:translate-x-1 transition-transform duration-300">🚀</span>
+                                <span class="ml-2 md:ml-4 group-hover:translate-x-1 md:group-hover:translate-x-2 transition-transform duration-500">🚀</span>
                             </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Изображение/графика (скрыто на маленьких экранах) -->
+                <div class="relative hidden md:block" data-aos="fade-left" data-aos-delay="200">
+                    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-500/10 rounded-full blur-2xl"></div>
+                    <div class="relative rounded-3xl overflow-hidden border-2 border-gray-800/70 shadow-2xl transform perspective-1000 rotate-y-6 hover:rotate-y-0 transition-all duration-700">
+                        <!-- Placeholder для изображения -->
+                        <div class="aspect-w-16 aspect-h-9 bg-gray-800/50 backdrop-blur-sm flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <div class="text-6xl mb-6">💑</div>
+                                <p class="text-xl text-gray-300">Здесь может быть ваше фото/графика</p>
+                            </div>
                         </div>
                     </div>
                 </div>
