@@ -1412,55 +1412,116 @@
             });
         });
         
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.review-slider');
-            const prevArrow = document.querySelector('.prev-arrow');
-            const nextArrow = document.querySelector('.next-arrow');
-            
-            let isDown = false;
-            let startX;
-            let scrollLeft;
-            
-            // Drag-scroll функциональность
-            slider.addEventListener('mousedown', (e) => {
-                isDown = true;
-                slider.classList.add('active');
-                startX = e.pageX - slider.offsetLeft;
-                scrollLeft = slider.scrollLeft;
+        const slider = document.querySelector('.review-slider');
+        const prevBtn = document.querySelector('.slider-arrow-left');
+        const nextBtn = document.querySelector('.slider-arrow-right');
+        const dotsContainer = document.querySelector('.slider-dots');
+        const cards = document.querySelectorAll('.review-card');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let isDragging = false;
+
+        // Создаем точки навигации
+        cards.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('slider-dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(index);
             });
-            
-            slider.addEventListener('mouseleave', () => {
-                isDown = false;
-                slider.classList.remove('active');
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.slider-dot');
+
+        function updateDots() {
+            const scrollPosition = slider.scrollLeft;
+            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
+            const activeIndex = Math.round(scrollPosition / cardWidth);
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
             });
-            
-            slider.addEventListener('mouseup', () => {
-                isDown = false;
-                slider.classList.remove('active');
+        }
+
+        function goToSlide(index) {
+            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
+            slider.scrollTo({
+                left: index * cardWidth,
+                behavior: 'smooth'
             });
-            
-            slider.addEventListener('mousemove', (e) => {
-                if(!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - slider.offsetLeft;
-                const walk = (x - startX) * 2;
-                slider.scrollLeft = scrollLeft - walk;
+        }
+
+        // Навигация стрелками
+        prevBtn.addEventListener('click', () => {
+            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
+            slider.scrollBy({
+                left: -cardWidth,
+                behavior: 'smooth'
             });
-            
-            // Навигация стрелками
-            prevArrow.addEventListener('click', () => {
-                slider.scrollBy({
-                    left: -slider.offsetWidth * 0.85,
-                    behavior: 'smooth'
-                });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
+            slider.scrollBy({
+                left: cardWidth,
+                behavior: 'smooth'
             });
-            
-            nextArrow.addEventListener('click', () => {
-                slider.scrollBy({
-                    left: slider.offsetWidth * 0.85,
-                    behavior: 'smooth'
-                });
-            });
+        });
+
+        // Обработчики для мыши
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            isDragging = false;
+            slider.classList.add('dragging');
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.classList.remove('dragging');
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.classList.remove('dragging');
+            // Если нужно — можно добавить "корректировку" позиции здесь
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            isDragging = true;
+            const x = e.pageX - slider.offsetLeft;
+            const walk = startX - x;
+            slider.scrollLeft = scrollLeft + walk;
+        });
+
+        // Обновляем точки при прокрутке
+        slider.addEventListener('scroll', () => {
+            updateDots();
+        });
+
+        // Поддержка тач-событий
+        slider.addEventListener('touchstart', (e) => {
+            isDown = true;
+            isDragging = false;
+            startX = e.touches[0].pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            const walk = startX - x;
+            if (Math.abs(walk) > 5) isDragging = true;
+            slider.scrollLeft = scrollLeft + walk;
+        });
+
+        slider.addEventListener('touchend', () => {
+            isDown = false;
         });
     </script>
 </body>

@@ -1347,9 +1347,7 @@
             });
         });
         
-        // Слайдер отзывов с touch-событиями и навигацией
         const slider = document.querySelector('.review-slider');
-        const sliderContainer = document.querySelector('.review-slider-container');
         const prevBtn = document.querySelector('.slider-arrow-left');
         const nextBtn = document.querySelector('.slider-arrow-right');
         const dotsContainer = document.querySelector('.slider-dots');
@@ -1376,7 +1374,7 @@
             const scrollPosition = slider.scrollLeft;
             const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
             const activeIndex = Math.round(scrollPosition / cardWidth);
-            
+
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === activeIndex);
             });
@@ -1424,48 +1422,42 @@
         slider.addEventListener('mouseup', () => {
             isDown = false;
             slider.classList.remove('dragging');
-            if (isDragging) {
-                e.preventDefault();
-            }
+            // Если нужно — можно добавить "корректировку" позиции здесь
         });
 
         slider.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
+            isDragging = true;
             const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 1.2;
-            if (Math.abs(walk) > 5) isDragging = true;
-            slider.scrollLeft = scrollLeft - walk;
+            const walk = startX - x;
+            slider.scrollLeft = scrollLeft + walk;
         });
 
-        // Touch события для слайдера
+        // Обновляем точки при прокрутке
+        slider.addEventListener('scroll', () => {
+            updateDots();
+        });
+
+        // Поддержка тач-событий
         slider.addEventListener('touchstart', (e) => {
             isDown = true;
             isDragging = false;
-            slider.classList.add('dragging');
             startX = e.touches[0].pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
-        }, { passive: false });
-
-        slider.addEventListener('touchend', () => {
-            isDown = false;
-            slider.classList.remove('dragging');
         });
 
         slider.addEventListener('touchmove', (e) => {
             if (!isDown) return;
-            e.preventDefault();
             const x = e.touches[0].pageX - slider.offsetLeft;
-            const walk = (x - startX) * 1.2;
+            const walk = startX - x;
             if (Math.abs(walk) > 5) isDragging = true;
-            slider.scrollLeft = scrollLeft - walk;
-        }, { passive: false });
+            slider.scrollLeft = scrollLeft + walk;
+        });
 
-        // Обновление точек при прокрутке
-        slider.addEventListener('scroll', updateDots);
-
-        // Инициализация
-        updateDots();
+        slider.addEventListener('touchend', () => {
+            isDown = false;
+        });
     </script>
 </body>
 </html>
