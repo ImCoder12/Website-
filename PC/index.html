@@ -341,11 +341,14 @@
             color: var(--light);
         }
 
-        /* Отзывы */
+         /* Отзывы */
         .reviews {
             background: var(--dark);
             position: relative;
             overflow: hidden;
+            padding: 40px 0;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .review-slider-container {
@@ -389,13 +392,13 @@
             border-radius: 1.2rem;
             padding: 1.5rem;
             position: relative;
-            overflow: hidden;
             overflow-x: hidden;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            min-height: auto;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .review-card:hover, .review-card:active {
@@ -412,6 +415,7 @@
             width: 6px;
             height: 100%;
             background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 1.2rem 0 0 1.2rem;
         }
 
         .review-emoji {
@@ -425,17 +429,6 @@
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--light);
-        }
-
-        .review-title span {
-            background: linear-gradient(90deg, rgba(225, 29, 72, 0.2), rgba(125, 211, 252, 0.2));
-            color: var(--accent);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(125, 211, 252, 0.1);
         }
 
         .review-text {
@@ -482,6 +475,7 @@
             z-index: 10;
             transition: all 0.3s ease;
             color: var(--light);
+            user-select: none;
         }
 
         .slider-arrow:hover {
@@ -491,16 +485,21 @@
         }
 
         .slider-arrow-left {
-            left: 0;
+            left: 10px;
         }
 
         .slider-arrow-right {
-            right: 0;
+            right: 10px;
         }
 
         .slider-arrow svg {
             width: 24px;
             height: 24px;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: currentColor;
+            fill: none;
         }
 
         /* Точки навигации */
@@ -1136,67 +1135,84 @@
         </div>
     </section>
     
-    <!-- Отзывы -->
-    <section id="reviews" class="reviews">
-        <div class="container">
-            <div class="text-center mb-16">
-                <h2 class="mb-4" data-aos="fade-up">Реальные истории успеха</h2>
-            </div>
-            
-            <div class="review-slider-container">
-                <button class="slider-arrow slider-arrow-left" aria-label="Previous review">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                
-                <div class="review-slider">
-                    <div class="review-card" data-aos="fade-up">
-                        <div class="review-emoji">💑</div>
-                        <h3 class="review-title">История Ивана 24 свидания за 2 месяца</h3>
-                        <p class="review-text">
-                            <em>👨‍💼 Иван — аналитик из Минска.</em> В 2022 переехал в Москву, устроился в топовую IT-компанию, снял квартиру <em>🏙</em>, закрыл бытовые вопросы <em>🧾</em> и стал Хедом Аналитики.<br><br>
-                            Всё круто: <em>✅ карьера есть, ✅ уровень жизни есть.</em> Но в личном — пустота <em>😶</em>.<br><br>
-                            <em>📱 Свайпы, переписки — трата фокуса 🎯.</em> <br><br>
-                            <em>🍂 В ноябре 2024 он нашёл нас.</em> Мы взяли на себя профиль, переписку и фильтрацию.<br><br>
-                            <em>📅 За два месяца — 24 свидания.</em> <br><br>
-                            <em>❤️ Сейчас — уже 4 месяца в отношениях.</em> Подыскивает квартиру побльше.
-                        </p>
-                        <div class="review-footer">
-                            <div class="review-author">Иван, Москва</div>
-                            <div class="review-date">Ноябрь 2024</div>
-                        </div>
-                    </div>
-                    
-                    <div class="review-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="review-emoji">💬</div>
-                        <h3 class="review-title">История Сергея практикой к уверенности</h3>
-                        <p class="review-text">
-                            <em>🎓 Сергей, 31 — выпускник ВМК МГУ,</em> работает разработчиком в Яндексе <em>💻</em>, офис — Москва-Сити <em>🏢</em>.<br><br>
-                            Всё при нём: доход, статус, репутация. Кроме одного — личной жизни <em>💔</em>.<br><br>
-                            Он не псих, не «ботаник», но сомневался:<br>
-                            <em>«А будет ли у меня лёгкое общение с женщинами?»</em><br><br>
-                            <em>📚 Смотрел психологов, читал «Базу»,</em> разочаровался — мол, женщины неадекватны <em>🙄</em>.<br><br>
-                            <em>🧩 Но мы увидели:</em> у него был просто ограниченный опыт.<br><br>
-                            <em>🛠 Мы взяли на себя анкеты, переписку и договорённости.</em> И началась настоящая практика общения.
-                        </p>
-                        <div class="review-footer">
-                            <div class="review-author">Сергей, Москва</div>
-                            <div class="review-date">Февраль 2025</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="slider-arrow slider-arrow-right" aria-label="Next review">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="slider-dots"></div>
+    <section class="reviews">
+    <div class="review-slider-container">
+
+        <div class="slider-arrow slider-arrow-left" onclick="scrollSlider(-1)">
+            <svg viewBox="0 0 24 24"><path d="M15 18L9 12L15 6" /></svg>
         </div>
-    </section>
+
+        <div class="review-slider" tabindex="0" role="list">
+            <article class="review-card" data-aos="fade-up" role="listitem" aria-label="История Ивана 24 свидания за 2 месяца">
+                <div class="review-emoji" aria-hidden="true">💑</div>
+                <h3 class="review-title">История Ивана 24 свидания за 2 месяца</h3>
+                <p class="review-text">
+                    <em>👨‍💼 Иван — аналитик из Минска.</em> В 2022 переехал в Москву, устроился в топовую IT-компанию, снял квартиру <em>🏙</em>, закрыл бытовые вопросы <em>🧾</em> и стал Хедом Аналитики.<br><br>
+                    Всё круто: <em>✅ карьера есть, ✅ уровень жизни есть.</em> Но в личном — пустота <em>😶</em>.<br><br>
+                    <em>📱 Свайпы, переписки — трата фокуса 🎯.</em> <br><br>
+                    <em>🍂 В ноябре 2024 он нашёл нас.</em> Мы взяли на себя профиль, переписку и фильтрацию.<br><br>
+                    <em>📅 За два месяца — 24 свидания.</em> <br><br>
+                    <em>❤️ Сейчас — уже 4 месяца в отношениях.</em> Подыскивает квартиру побльше.
+                </p>
+                <div class="review-footer">
+                    <div class="review-author">Иван, Москва</div>
+                    <div class="review-date">Ноябрь 2024</div>
+                </div>
+            </article>
+
+            <article class="review-card" data-aos="fade-up" data-aos-delay="100" role="listitem" aria-label="История Сергея практикой к уверенности">
+                <div class="review-emoji" aria-hidden="true">💬</div>
+                <h3 class="review-title">История Сергея практикой к уверенности</h3>
+                <p class="review-text">
+                    <em>🎓 Сергей, 31 — выпускник ВМК МГУ,</em> работает разработчиком в Яндексе <em>💻</em>, офис — Москва-Сити <em>🏢</em>.<br><br>
+                    Всё при нём: доход, статус, репутация. Кроме одного — личной жизни <em>💔</em>.<br><br>
+                    Он не псих, не «ботаник», но сомневался:<br>
+                    <em>«А будет ли у меня лёгкое общение с женщинами?»</em><br><br>
+                    <em>📚 Смотрел психологов, читал «Базу»,</em> разочаровался — мол, женщины неадекватны <em>🙄</em>.<br><br>
+                    <em>🧩 Но мы увидели:</em> у него был просто ограниченный опыт.<br><br>
+                    <em>🛠 Мы взяли на себя анкеты, переписку и договорённости.</em> И началась настоящая практика — быстро и комфортно.<br><br>
+                    Сейчас Сергей полон энергии и кайфа от знакомства.
+                </p>
+                <div class="review-footer">
+                    <div class="review-author">Сергей, Москва</div>
+                    <div class="review-date">Декабрь 2024</div>
+                </div>
+            </article>
+
+            <article class="review-card" data-aos="fade-up" data-aos-delay="300" role="listitem" aria-label="История Олега: не соглашаться на меньшее">
+                <div class="review-emoji" aria-hidden="true">💬</div>
+                <h3 class="review-title">История Олега: не соглашаться на меньшее</h3>
+                <p class="review-text">
+                    <em>👨‍⚖️ Олегу 43 года, он успешный адвокат в Москве,</em> отец двух детей и человек, привыкший добиваться своего. Он вложил силы в мечту своей жены — сеть престижных салонов красоты. 💅🏼<br><br>
+
+                    <em>🗯 «Ты меня контролируешь, а мне нужна свобода»</em>, — сказала она, оставив Олега с болью и разочарованием.<br><br>
+
+                    <em>💔 Полгода он мучительно перебирал мысли:</em> «Что я сделал не так?» Но затем осознал: нужна не борьба за власть, а искренняя семья, где он — опора и смысл.<br><br>
+
+                    <em>📲 Случайно наткнулся на наше объявление на Авито</em> и чётко сформулировал запрос: молодая девушка, для которой семья — главное.<br><br>
+
+                    <em>🛠 Мы взяли на себя всё:</em> анкеты, переписки, отбор. Олегу оставалось лишь выбрать свою единственную.<br><br>
+
+                    <em>✨ Через месяц он встретил Катю, 28 лет,</em> с ясными приоритетами и искренним желанием построить семью.<br><br>
+
+                    <em>👶🏻 Сегодня у него трое детей,</em> гармония и уверенность в себе: «Теперь я точно знаю, моя единственная ошибка в прошлом — бывшая жена».
+                </p>
+                <div class="review-footer">
+                    <div class="review-author">Олег, Москва</div>
+                    <div class="review-date">Май 2025</div>
+                </div>
+            </article>
+        </div>
+
+        <div class="slider-arrow slider-arrow-right" onclick="scrollSlider(1)">
+            <svg viewBox="0 0 24 24"><path d="M9 18L15 12L9 6" /></svg>
+        </div>
+    </div>
+
+    <div class="slider-dots" aria-label="Навигация по отзывам" role="tablist">
+        <!-- Точки будут добавлены через JS -->
+    </div>
+</section>
 
     <!-- FAQ -->
     <section id="faq" class="bg-dark">
@@ -1439,125 +1455,76 @@
             });
         });
         
-        // Слайдер отзывов с touch-событиями и навигацией
-        const slider = document.querySelector('.review-slider');
-        const sliderContainer = document.querySelector('.review-slider-container');
-        const prevBtn = document.querySelector('.slider-arrow-left');
-        const nextBtn = document.querySelector('.slider-arrow-right');
-        const dotsContainer = document.querySelector('.slider-dots');
-        const cards = document.querySelectorAll('.review-card');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        let isDragging = false;
+            const slider = document.querySelector('.review-slider');
+    const dotsContainer = document.querySelector('.slider-dots');
+    const cards = Array.from(document.querySelectorAll('.review-card'));
+    const totalCards = cards.length;
 
-        // Создаем точки навигации
-        cards.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('slider-dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(index);
-            });
-            dotsContainer.appendChild(dot);
+    // Создаем точки навигации
+    for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('button');
+        dot.classList.add('slider-dot');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-selected', 'false');
+        dot.setAttribute('aria-label', `Отзыв ${i + 1}`);
+        dot.addEventListener('click', () => {
+            cards[i].scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+            setActiveDot(i);
         });
+        dotsContainer.appendChild(dot);
+    }
 
-        const dots = document.querySelectorAll('.slider-dot');
+    const dots = Array.from(document.querySelectorAll('.slider-dot'));
 
-        function updateDots() {
-            const scrollPosition = slider.scrollLeft;
-            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
-            const activeIndex = Math.round(scrollPosition / cardWidth);
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === activeIndex);
-            });
-        }
-
-        function goToSlide(index) {
-            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
-            slider.scrollTo({
-                left: index * cardWidth,
-                behavior: 'smooth'
-            });
-        }
-
-        // Навигация стрелками
-        prevBtn.addEventListener('click', () => {
-            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
-            slider.scrollBy({
-                left: -cardWidth,
-                behavior: 'smooth'
-            });
-        });
-
-        nextBtn.addEventListener('click', () => {
-            const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
-            slider.scrollBy({
-                left: cardWidth,
-                behavior: 'smooth'
-            });
-        });
-
-        // Обработчики для мыши
-        slider.addEventListener('mousedown', (e) => {
-            isDown = true;
-            isDragging = false;
-            slider.classList.add('dragging');
-            startX = e.pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        });
-
-        slider.addEventListener('mouseleave', () => {
-            isDown = false;
-            slider.classList.remove('dragging');
-        });
-
-        slider.addEventListener('mouseup', () => {
-            isDown = false;
-            slider.classList.remove('dragging');
-            if (isDragging) {
-                e.preventDefault();
+    // Обновляем активную точку
+    function setActiveDot(index) {
+        dots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.add('active');
+                dot.setAttribute('aria-selected', 'true');
+            } else {
+                dot.classList.remove('active');
+                dot.setAttribute('aria-selected', 'false');
             }
         });
+    }
 
-        slider.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 1.2;
-            if (Math.abs(walk) > 5) isDragging = true;
-            slider.scrollLeft = scrollLeft - walk;
+    // Изначально активируем первую точку
+    setActiveDot(0);
+
+    // Функция для скролла на один слайд влево или вправо
+    function scrollSlider(direction) {
+        const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(cards[0]).marginRight);
+        slider.scrollBy({left: direction * cardWidth, behavior: 'smooth'});
+    }
+
+    // Обновляем активную точку при скролле
+    slider.addEventListener('scroll', () => {
+        const scrollLeft = slider.scrollLeft;
+        let index = 0;
+        let closestDistance = Infinity;
+        cards.forEach((card, i) => {
+            const cardLeft = card.offsetLeft;
+            const distance = Math.abs(cardLeft - scrollLeft);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                index = i;
+            }
         });
+        setActiveDot(index);
+    });
 
-        // Touch события для слайдера
-        slider.addEventListener('touchstart', (e) => {
-            isDown = true;
-            isDragging = false;
-            slider.classList.add('dragging');
-            startX = e.touches[0].pageX - slider.offsetLeft;
-            scrollLeft = slider.scrollLeft;
-        }, { passive: false });
-
-        slider.addEventListener('touchend', () => {
-            isDown = false;
-            slider.classList.remove('dragging');
-        });
-
-        slider.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
+    // Для удобства: навигация клавишами
+    slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
             e.preventDefault();
-            const x = e.touches[0].pageX - slider.offsetLeft;
-            const walk = (x - startX) * 1.2;
-            if (Math.abs(walk) > 5) isDragging = true;
-            slider.scrollLeft = scrollLeft - walk;
-        }, { passive: false });
-
-        // Обновление точек при прокрутке
-        slider.addEventListener('scroll', updateDots);
-
-        // Инициализация
-        updateDots();
+            scrollSlider(1);
+        }
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            scrollSlider(-1);
+        }
+    });
     </script>
 </body>
 </html>
