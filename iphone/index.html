@@ -406,8 +406,9 @@
             border-radius: 1.2rem;
             padding: 1.5rem;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
             overflow-x: hidden;
+            max-height: 350px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             min-height: auto;
@@ -1502,6 +1503,24 @@
 
         slider.addEventListener('touchend', () => {
             isDown = false;
+        });
+
+        // Отключаем горизонтальную прокрутку слайдера, когда внутри карточки идет вертикальный скролл
+        slider.addEventListener('wheel', (e) => {
+            const card = e.target.closest('.review-card');
+            if (card) {
+                // Если вертикальный скролл (deltaY) больше горизонтального (deltaX)
+                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    // Проверяем, можно ли ещё скроллить вертикально внутри карточки
+                    const canScrollUp = card.scrollTop > 0;
+                    const canScrollDown = card.scrollTop + card.clientHeight < card.scrollHeight;
+
+                    if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
+                        // Прокручиваем вертикально внутри карточки, отменяем горизонтальный скролл слайдера
+                        e.stopPropagation();
+                    }
+                }
+            }
         });
     </script>
 </body>
