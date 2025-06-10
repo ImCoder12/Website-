@@ -386,9 +386,8 @@
             border-radius: 1.2rem;
             padding: 1.5rem;
             position: relative;
-            overflow-y: auto;
+            overflow: hidden;
             overflow-x: hidden;
-            max-height: 350px;
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             min-height: auto;
@@ -1054,12 +1053,6 @@
             </div>
             
             <div class="review-slider-container">
-                <button class="slider-arrow slider-arrow-left" aria-label="Previous review">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                
                 <div class="review-slider">
                     <div class="review-card" data-aos="fade-up">
                         <div class="review-emoji">💑</div>
@@ -1096,12 +1089,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <button class="slider-arrow slider-arrow-right" aria-label="Next review">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
             </div>
             
             <div class="slider-dots"></div>
@@ -1348,7 +1335,9 @@
             });
         });
         
+        // Слайдер отзывов с touch-событиями и навигацией
         const slider = document.querySelector('.review-slider');
+        const sliderContainer = document.querySelector('.review-slider-container');
         const prevBtn = document.querySelector('.slider-arrow-left');
         const nextBtn = document.querySelector('.slider-arrow-right');
         const dotsContainer = document.querySelector('.slider-dots');
@@ -1375,7 +1364,7 @@
             const scrollPosition = slider.scrollLeft;
             const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(slider).gap);
             const activeIndex = Math.round(scrollPosition / cardWidth);
-
+            
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === activeIndex);
             });
@@ -1423,60 +1412,48 @@
         slider.addEventListener('mouseup', () => {
             isDown = false;
             slider.classList.remove('dragging');
-            // Если нужно — можно добавить "корректировку" позиции здесь
+            if (isDragging) {
+                e.preventDefault();
+            }
         });
 
         slider.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
-            isDragging = true;
             const x = e.pageX - slider.offsetLeft;
-            const walk = startX - x;
-            slider.scrollLeft = scrollLeft + walk;
+            const walk = (x - startX) * 1.2;
+            if (Math.abs(walk) > 5) isDragging = true;
+            slider.scrollLeft = scrollLeft - walk;
         });
 
-        // Обновляем точки при прокрутке
-        slider.addEventListener('scroll', () => {
-            updateDots();
-        });
-
-        // Поддержка тач-событий
+        // Touch события для слайдера
         slider.addEventListener('touchstart', (e) => {
             isDown = true;
             isDragging = false;
+            slider.classList.add('dragging');
             startX = e.touches[0].pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
+        }, { passive: false });
+
+        slider.addEventListener('touchend', () => {
+            isDown = false;
+            slider.classList.remove('dragging');
         });
 
         slider.addEventListener('touchmove', (e) => {
             if (!isDown) return;
+            e.preventDefault();
             const x = e.touches[0].pageX - slider.offsetLeft;
-            const walk = startX - x;
+            const walk = (x - startX) * 1.2;
             if (Math.abs(walk) > 5) isDragging = true;
-            slider.scrollLeft = scrollLeft + walk;
-        });
+            slider.scrollLeft = scrollLeft - walk;
+        }, { passive: false });
 
-        slider.addEventListener('touchend', () => {
-            isDown = false;
-        });
+        // Обновление точек при прокрутке
+        slider.addEventListener('scroll', updateDots);
 
-        // Отключаем горизонтальную прокрутку слайдера, когда внутри карточки идет вертикальный скролл
-        slider.addEventListener('wheel', (e) => {
-            const card = e.target.closest('.review-card');
-            if (card) {
-                // Если вертикальный скролл (deltaY) больше горизонтального (deltaX)
-                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                    // Проверяем, можно ли ещё скроллить вертикально внутри карточки
-                    const canScrollUp = card.scrollTop > 0;
-                    const canScrollDown = card.scrollTop + card.clientHeight < card.scrollHeight;
-
-                    if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
-                        // Прокручиваем вертикально внутри карточки, отменяем горизонтальный скролл слайдера
-                        e.stopPropagation();
-                    }
-                }
-            }
-        });
+        // Инициализация
+        updateDots();
     </script>
 </body>
 </html>
