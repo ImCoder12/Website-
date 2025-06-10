@@ -848,16 +848,6 @@
             50% { transform: translateY(-12px); }
         }
         
-        /* Оптимизация для iOS */
-        @supports (-webkit-touch-callout: none) {
-            .backdrop-blur-sm {
-                -webkit-backdrop-filter: blur(8px);
-            }
-            .backdrop-blur-md {
-                -webkit-backdrop-filter: blur(12px);
-            }
-        }
-        
     </style>
     </style>
 </head>
@@ -1343,11 +1333,6 @@
             });
         });
         
-        // Оптимизация для iOS - предотвращение "прыгающего" скролла
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-        
         // Слайдер отзывов с touch-событиями
         const slider = document.querySelector('.review-slider');
         let isDown = false;
@@ -1407,22 +1392,6 @@
           if (Math.abs(walk) > 5) isDragging = true;
           slider.scrollLeft = scrollLeft - walk;
         }, { passive: false });
-        
-        // Исправление для iPhone - предотвращение масштабирования
-        document.addEventListener('gesturestart', function (e) {
-            e.preventDefault();
-        });
-        
-        // Исправление для iPhone - безопасные области
-        function updateSafeArea() {
-            document.documentElement.style.setProperty('--safe-area-inset-top', 'env(safe-area-inset-top)');
-            document.documentElement.style.setProperty('--safe-area-inset-bottom', 'env(safe-area-inset-bottom)');
-            document.documentElement.style.setProperty('--safe-area-inset-left', 'env(safe-area-inset-left)');
-            document.documentElement.style.setProperty('--safe-area-inset-right', 'env(safe-area-inset-right)');
-        }
-        
-        window.addEventListener('resize', updateSafeArea);
-        updateSafeArea();
     </script>
 </body>
 </html>
