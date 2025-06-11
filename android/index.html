@@ -539,15 +539,13 @@
 
         /* Навигация */
         .navigation-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            position: relative; /* вместо fixed */
             width: 100%;
             padding: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            z-index: 10;
             background: linear-gradient(to top, var(--darker), transparent);
             pointer-events: none;
         }
@@ -565,7 +563,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             pointer-events: auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .nav-button:hover {
@@ -582,6 +580,7 @@
             color: var(--light);
             font-size: 1.2rem;
         }
+
 
         /* Индикатор прогресса */
         .progress-container {
