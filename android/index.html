@@ -343,16 +343,13 @@
         .reviews {
             position: relative;
             width: 100%;
-            height: 100vh;
-            max-height: 100dvh;
-            overflow: hidden;
             background: var(--darker);
             color: var(--light);
         }
 
         .stories-container {
             display: flex;
-            overflow-x: auto;
+            overflow: auto;
             scroll-snap-type: x mandatory;
             height: 100%;
             scroll-behavior: smooth;
@@ -369,12 +366,10 @@
             position: relative;
             flex: 0 0 100%;
             scroll-snap-align: start;
-            height: 50vh;
             padding: 1.5rem;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             scroll-snap-align: start;
         }
 
