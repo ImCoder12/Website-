@@ -379,8 +379,8 @@
         /* Контейнер для историй */
         .stories-wrapper {
             position: relative;
-            width: 100%;
-            max-width: 500px;
+            width: 95%;
+            max-width: 800px;
             margin: 0 auto;
             overflow: hidden;
         }
@@ -404,9 +404,9 @@
 
         /* Карточка истории */
         .story-card {
-            flex: 0 0 100%;
+            flex: 0 0 95%;
             scroll-snap-align: start;
-            padding: 0 1.5rem;
+            padding: 0 1rem;
             position: relative;
         }
 
@@ -1589,6 +1589,18 @@
                 });
             });
         });
+
+        /*
+        ====================================================================================================
+        
+        
+    
+        
+        
+        
+        
+        ====================================================================================================
+        */
         
         document.addEventListener('DOMContentLoaded', () => {
             const storiesContainer = document.getElementById('stories');
@@ -1604,10 +1616,12 @@
             let isDragging = false;
             let startX = 0;
             let scrollLeft = 0;
-            let isScrolling = false;
-            let scrollTimeout;
             let touchStartX = 0;
-            let isTouchMoving = false;
+            let touchStartTime = 0;
+            let velocity = 0;
+            let lastPosition = 0;
+            let lastTime = 0;
+            let animationId = null;
             
             // Инициализация
             function init() {
@@ -1615,6 +1629,11 @@
                 updateNavigation();
                 autoHideHint();
                 setupTextContainers();
+                
+                // Для мобильных - добавляем инерцию
+                if ('ontouchstart' in window) {
+                    setupTouchInertia();
+                }
             }
             
             // Настройка обработчиков событий
@@ -1647,6 +1666,83 @@
                 
                 // Клавиатура
                 document.addEventListener('keydown', handleKeyDown);
+            }
+            
+            // Настройка инерции для тач-устройств
+            function setupTouchInertia() {
+                let touchStartX = 0;
+                let touchStartTime = 0;
+                let lastPosition = 0;
+                let lastTime = 0;
+                let velocity = 0;
+                
+                storiesContainer.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartTime = Date.now();
+                    lastPosition = storiesContainer.scrollLeft;
+                    lastTime = touchStartTime;
+                    velocity = 0;
+                    cancelAnimationFrame(animationId);
+                }, { passive: false });
+                
+                storiesContainer.addEventListener('touchmove', (e) => {
+                    const x = e.touches[0].clientX;
+                    const dx = x - touchStartX;
+                    storiesContainer.scrollLeft = lastPosition - dx;
+                    
+                    // Рассчитываем скорость для инерции
+                    const now = Date.now();
+                    const deltaTime = now - lastTime;
+                    if (deltaTime > 0) {
+                        velocity = (storiesContainer.scrollLeft - lastPosition) / deltaTime;
+                        lastPosition = storiesContainer.scrollLeft;
+                        lastTime = now;
+                    }
+                }, { passive: false });
+                
+                storiesContainer.addEventListener('touchend', () => {
+                    applyInertia();
+                });
+            }
+            
+            // Применение инерции после жеста
+            function applyInertia() {
+                if (Math.abs(velocity) < 0.1) {
+                    snapToNearestStory();
+                    return;
+                }
+                
+                const startTime = Date.now();
+                const startPosition = storiesContainer.scrollLeft;
+                const deceleration = velocity > 0 ? -0.0005 : 0.0005;
+                
+                function animate() {
+                    const now = Date.now();
+                    const elapsed = now - startTime;
+                    const delta = velocity * elapsed + deceleration * elapsed * elapsed;
+                    
+                    storiesContainer.scrollLeft = startPosition + delta;
+                    
+                    if ((velocity > 0 && delta < 0) || (velocity < 0 && delta > 0)) {
+                        snapToNearestStory();
+                        return;
+                    }
+                    
+                    if (Math.abs(delta) > 0) {
+                        animationId = requestAnimationFrame(animate);
+                    } else {
+                        snapToNearestStory();
+                    }
+                }
+                
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Притягивание к ближайшей истории
+            function snapToNearestStory() {
+                const storyWidth = storiesContainer.offsetWidth;
+                const newIndex = Math.round(storiesContainer.scrollLeft / storyWidth);
+                goToStory(newIndex);
             }
             
             // Настройка текстовых контейнеров
@@ -1695,6 +1791,8 @@
                 stories.forEach((story, index) => {
                     if (index === currentIndex) {
                         story.classList.add('active');
+                        // Прокручиваем текст в начало при смене карточки
+                        textContainers[index].scrollTop = 0;
                     } else {
                         story.classList.remove('active');
                     }
@@ -1725,7 +1823,7 @@
                 
                 // Определение текущего индекса
                 const newIndex = Math.round(storiesContainer.scrollLeft / storiesContainer.offsetWidth);
-                if (newIndex !== currentIndex && !isDragging && !isTouchMoving) {
+                if (newIndex !== currentIndex && !isDragging) {
                     currentIndex = newIndex;
                     updateActiveStory();
                     updateNavigation();
@@ -1753,6 +1851,7 @@
                 scrollLeft = storiesContainer.scrollLeft;
                 storiesContainer.style.cursor = 'grabbing';
                 storiesContainer.style.scrollBehavior = 'auto';
+                cancelAnimationFrame(animationId);
             }
             
             function drag(e) {
@@ -1767,35 +1866,43 @@
                 isDragging = false;
                 storiesContainer.style.cursor = 'grab';
                 storiesContainer.style.scrollBehavior = 'smooth';
-                
-                // Определяем ближайшую историю
-                const storyWidth = storiesContainer.offsetWidth;
-                const newIndex = Math.round(storiesContainer.scrollLeft / storyWidth);
-                goToStory(newIndex);
+                snapToNearestStory();
             }
             
-            // Обработка тач событий 1
+            // Обработка тач событий
             function handleTouchStart(e) {
                 touchStartX = e.touches[0].clientX;
-                isTouchMoving = false;
+                touchStartTime = Date.now();
+                lastPosition = storiesContainer.scrollLeft;
+                lastTime = touchStartTime;
+                velocity = 0;
+                isDragging = true;
                 storiesContainer.style.scrollBehavior = 'auto';
+                cancelAnimationFrame(animationId);
             }
             
             function handleTouchMove(e) {
-                if (!isTouchMoving && Math.abs(e.touches[0].clientX - touchStartX) > 10) {
-                    isTouchMoving = true;
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.touches[0].clientX;
+                const dx = x - touchStartX;
+                storiesContainer.scrollLeft = lastPosition - dx;
+                
+                // Рассчитываем скорость для инерции
+                const now = Date.now();
+                const deltaTime = now - lastTime;
+                if (deltaTime > 0) {
+                    velocity = (storiesContainer.scrollLeft - lastPosition) / deltaTime;
+                    lastPosition = storiesContainer.scrollLeft;
+                    lastTime = now;
                 }
             }
             
             function handleTouchEnd() {
-                if (!isTouchMoving) return;
-                isTouchMoving = false;
+                if (!isDragging) return;
+                isDragging = false;
                 storiesContainer.style.scrollBehavior = 'smooth';
-                
-                // Определяем ближайшую историю
-                const storyWidth = storiesContainer.offsetWidth;
-                const newIndex = Math.round(storiesContainer.scrollLeft / storyWidth);
-                goToStory(newIndex);
+                applyInertia();
             }
             
             // Автоматическое скрытие подсказки
