@@ -1111,7 +1111,104 @@
             text-decoration: underline;
         }
         /* ===================================== */
+    
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
         
+        .scroll-hint:hover {
+            transform: translateX(-50%) translateY(5px);
+        }
+        
+        .scroll-hint-text {
+            margin-bottom: 15px;
+            color: --text-secondary;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scroll-hint-arrow {
+            width: 40px;
+            height: 70px;
+            border: 2px solid #b35c5c;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .scroll-hint-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(90deg, #b35c5c 0%, #b35c5c 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            animation: scroll 2.2s infinite;
+        }
+        
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+        
+        .mouse {
+            width: 25px;
+            height: 40px;
+            border: 2px solid #b35c5c;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .mouse-wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #b35c5c;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            animation: wheel 2.2s infinite;
+        }
+        
+        @keyframes wheel {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .scroll-hint-arrow {
+                display: none;
+            }
+            .mouse {
+                display: block;
+            }
+        }        
     </style>
 </head>
 <body>
@@ -1130,6 +1227,7 @@
             <a href="#how" class="mobile-menu-link" onclick="closeMobileMenu()">Как это работает?</a>
             <a href="#for-whom" class="mobile-menu-link" onclick="closeMobileMenu()">Для кого?</a>
             <a href="#reviews" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
+            <a href="#about" class="mobile-menu-link" onclick="closeMobileMenu()">О нас</a>
             <a href="#faq" class="mobile-menu-link" onclick="closeMobileMenu()">FAQ</a>
             <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Контакты</a>
         </div>
@@ -1144,6 +1242,16 @@
                 <div class="btn-group" data-aos="fade-up" data-aos-delay="200">
                     <a href="#cta" class="btn btn-primary">Начать сейчас</a>
                 </div>
+            </div>
+        </div>
+        
+        <div class="scroll-hint" id="scrollHint" style="background-color: rgba(225, 29, 72, 0.2);">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <div class="scroll-hint-text">Листайте вниз</div>
+            <div class="scroll-hint-arrow">
+                <div class="scroll-hint-dot"></div>
             </div>
         </div>
     </header>
@@ -1222,7 +1330,7 @@
     </section>
     
     <!-- О нас - с адаптацией под мобильные устройства -->
-    <section class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
+    <section id="about" class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
         <!-- Декоративные элементы (только для десктопа) -->
         <div class="hidden md:block absolute inset-0 overflow-hidden">
             <div class="absolute -right-20 -top-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
@@ -1248,10 +1356,8 @@
                         <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/40 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-gray-800/50 shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
                             Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
                         </p>
-
-                        <br></br>
-
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
                             Сначала - помощь друзьям, несколько первых клиентов, индивидуальный подход.
                         </p>
                         
@@ -1275,11 +1381,11 @@
                         </ul>
 
                         <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые готовы им действительно подходили. Многие говорили: "Я даже не знал, что сколько адекватных и красивых девушек вообще есть - без вас я вряд ли с ними познакомился!"
+                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые действительно им подходили. Многие говорили: "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я вряд ли с ними познакомился!"
                         </p>
-                        <br></br>
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            Для кого-то наш сервис - способ перебороть внутренние зажимы. Для других - экономия колоссального количества времени. <b>Но для ВСЕХ - это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
+                            Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. <b>Но для ВСЕХ — это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
                         </p>
                         
                         <div class="pt-2" data-aos="fade-up" data-aos-delay="300">
@@ -1295,7 +1401,7 @@
     </section>
 
     <!-- Отзывы -->
-    <section class="reviews-container">
+    <section id="rewiews" class="reviews-container">
         <h2 class="section-title">Реальные истории наших клиентов</h2>
 
         <!-- Навигационные кнопки -->
@@ -1856,6 +1962,50 @@
             
             // Инициализация
             init();
+        });
+            
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollHint = document.getElementById('scrollHint');
+            const content = document.querySelector('.content');
+            
+            // Плавный скролл при клике на подсказку
+            scrollHint.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Анимация "пульсации" при клике
+                this.style.transform = 'translateX(-50%) scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'translateX(-50%) scale(1)';
+                }, 300);
+                
+                // Плавный скролл
+                window.scrollBy({
+                    top: window.innerHeight - 100,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Параллакс-эффект для контента при скролле
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                content.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+                
+                // Исчезновение подсказки при скролле вниз
+                if (scrollPosition > 100) {
+                    scrollHint.style.opacity = '0';
+                    scrollHint.style.visibility = 'hidden';
+                    scrollHint.style.transition = 'all 0.5s ease';
+                } else {
+                    scrollHint.style.opacity = '1';
+                    scrollHint.style.visibility = 'visible';
+                }
+            });
+            
+            // Анимация при загрузке страницы
+            setTimeout(() => {
+                content.style.transition = 'all 0.5s ease';
+                scrollHint.style.transition = 'all 0.5s ease';
+            }, 500);
         });
     </script>
 </body>
