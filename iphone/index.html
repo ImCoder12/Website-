@@ -1111,7 +1111,68 @@
             text-decoration: underline;
         }
         /* ===================================== */
-        
+    
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 40%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+
+        .scroll-down-arrows {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .arrow {
+            padding: 40px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(209, 15, 57, 0.889);
+            border-width: 0 5px 5px 0;
+            transform: rotate(45deg);
+            animation: pulse 2s infinite;
+        }
+
+        .arrow:nth-child(2) {
+            animation-delay: 0.3s;
+            opacity: 0.7;
+        }
+
+        .scroll-text {
+            margin-top: 10px;
+            color: rgba(209, 15, 57, 0.889);
+            font-size: 600;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: rotate(45deg) translateY(0);
+            }
+            50% {
+                transform: rotate(45deg) translateY(10px);
+                opacity: 0.5;
+            }
+        }
+
+        .scroll-down:hover .arrow {
+            border-color: #ff6b6b;
+        }
+
+        .scroll-down:hover .scroll-text {
+            color: #ff6b6b;
+        }
+
     </style>
 </head>
 <body>
@@ -1130,6 +1191,7 @@
             <a href="#how" class="mobile-menu-link" onclick="closeMobileMenu()">Как это работает?</a>
             <a href="#for-whom" class="mobile-menu-link" onclick="closeMobileMenu()">Для кого?</a>
             <a href="#reviews" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
+            <a href="#about" class="mobile-menu-link" onclick="closeMobileMenu()">О нас</a>
             <a href="#faq" class="mobile-menu-link" onclick="closeMobileMenu()">FAQ</a>
             <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Контакты</a>
         </div>
@@ -1145,6 +1207,14 @@
                     <a href="#cta" class="btn btn-primary">Начать сейчас</a>
                 </div>
             </div>
+        </div>
+        
+        <div class="scroll-down" onclick="scrollToNextSection()">
+            <div class="scroll-down-arrows">
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+            </div>
+            <span class="scroll-text">Листайте вниз</span>
         </div>
     </header>
 
@@ -1222,7 +1292,7 @@
     </section>
     
     <!-- О нас - с адаптацией под мобильные устройства -->
-    <section class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
+    <section id="about" class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
         <!-- Декоративные элементы (только для десктопа) -->
         <div class="hidden md:block absolute inset-0 overflow-hidden">
             <div class="absolute -right-20 -top-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
@@ -1248,10 +1318,8 @@
                         <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/40 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-gray-800/50 shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
                             Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
                         </p>
-
-                        <br></br>
-
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
                             Сначала - помощь друзьям, несколько первых клиентов, индивидуальный подход.
                         </p>
                         
@@ -1275,11 +1343,11 @@
                         </ul>
 
                         <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые готовы им действительно подходили. Многие говорили: "Я даже не знал, что сколько адекватных и красивых девушек вообще есть - без вас я вряд ли с ними познакомился!"
+                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые действительно им подходили. Многие говорили: "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я вряд ли с ними познакомился!"
                         </p>
-                        <br></br>
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            Для кого-то наш сервис - способ перебороть внутренние зажимы. Для других - экономия колоссального количества времени. <b>Но для ВСЕХ - это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
+                            Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. <b>Но для ВСЕХ — это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
                         </p>
                         
                         <div class="pt-2" data-aos="fade-up" data-aos-delay="300">
@@ -1295,7 +1363,7 @@
     </section>
 
     <!-- Отзывы -->
-    <section class="reviews-container">
+    <section id="rewiews" class="reviews-container">
         <h2 class="section-title">Реальные истории наших клиентов</h2>
 
         <!-- Навигационные кнопки -->
@@ -1856,6 +1924,49 @@
             
             // Инициализация
             init();
+        });
+            
+        /*
+        ==========================================================================
+
+        Подсказка по скроллу
+
+        ========================================================================== 
+        */
+
+        function scrollToNextSection() {
+            const header = document.querySelector('header');
+            const scrollDown = document.querySelector('.scroll-down');
+            const nextSection = header.nextElementSibling;
+
+            if (nextSection) {
+                // Анимация стрелок
+                const arrows = document.querySelectorAll('.arrow');
+                arrows.forEach(arrow => {
+                    arrow.style.animation = 'none';
+                    setTimeout(() => {
+                        arrow.style.animation = 'pulse 2s infinite';
+                    }, 10);
+                });
+
+                // Плавный скролл
+                nextSection.scrollIntoView({
+                    behavior: 'smooth',
+                });
+
+                // Скрытие стрелки после прокрутки
+                setTimeout(() => {
+                    scrollDown.style.opacity = '0';
+                    scrollDown.style.pointerEvents = 'none';
+                }, 1000); // Дать время на прокрутку
+            }
+        }
+
+        // Можно добавить обработчик события клика на стрелки
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY > 0) {
+                scrollToNextSection();
+            }
         });
     </script>
 </body>
