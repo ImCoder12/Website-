@@ -278,7 +278,7 @@
         }
 
         .card-title {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--light);
@@ -1117,6 +1117,7 @@
             bottom: 30px;
             left: 40%;
         }
+        
         .scroll-hint {
             position: absolute;
             bottom: 40px;
@@ -1222,6 +1223,47 @@
             }
         }
         
+        .mouse {
+            width: 25px;
+            height: 40px;
+            border: 2px solid #b35c5c;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .mouse-wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #b35c5c;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            animation: wheel 2.2s infinite;
+        }
+        
+        @keyframes wheel {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .scroll-hint-arrow {
+                display: none;
+            }
+            .mouse {
+                display: block;
+            }
+        }        
     </style>
 </head>
 <body>
@@ -1327,14 +1369,14 @@
                     
                 <div class="card" data-aos="fade-up" data-aos-delay="200">
                     <div class="card-icon"><i class="fas fa-coins"></i></div>
-                    <h3 class="card-title" style="margin-bottom: 8px;">Прозрачные цены</h3>
-                    <span class="card-text" style="line-height: 1.8;">Узнайте, что входит в стоимость. Без скрытых платежей или подписок.</span>
+                    <h3 class="card-title" style="margin-top: 10px;">Прозрачные цены</h3>
+                    <span class="card-text" style="line-height: 1.8;"><br>Узнайте, что входит в стоимость. Без скрытых платежей или подписок.</span>
                 </div>
                     
                 <div class="card" data-aos="fade-up" data-aos-delay="300">
                     <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3 class="card-title">Без 18+ услуг</h3>
-                    <span class="card-text" style="line-height: 1.8;">Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</span>
+                    <h3 class="card-title" style="margin-top: 10px;">Без 18+ услуг</h3>
+                    <span class="card-text" style="line-height: 1.8;"><br>Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</span>
                 </div>
             </div>
         </div>
@@ -1351,7 +1393,7 @@
         
         <div class="container px-4 mx-auto relative z-10">
             <div class="font-bold text-center mb-12 md:mb-24" data-aos="fade-up">
-                <span class="inline-block py-1.5 px-3 mb-3 md:mb-4 text-xs md:text-sm font-semibold text-primary-light bg-primary-dark/20 rounded-full backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/10 tracking-wider">
+                <span class="inline-block py-1.5 px-3 mb-3 md:mb-4 text-xs md:text-sm font-semibold text-primary-light bg-primary-dark/20 rounded-full backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/10 tracking-wider" style="font-size: 1rem;">
                     <h1> Наша История: </h1>
                 </span>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 leading-tight">
