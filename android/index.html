@@ -1111,24 +1111,20 @@
             text-decoration: underline;
         }
         /* ===================================== */
-    
-<<<<<<< HEAD
+
         .scroll-down {
             position: absolute;
             bottom: 30px;
             left: 40%;
-=======
         .scroll-hint {
             position: absolute;
             bottom: 40px;
             left: 50%;
->>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-<<<<<<< HEAD
             z-index: 10;
             transition: opacity 0.5s ease;
         }
@@ -1180,11 +1176,7 @@
         .scroll-down:hover .scroll-text {
             color: #ff6b6b;
         }
-
-=======
-            transition: all 0.3s ease;
-        }
-        
+       
         .scroll-hint:hover {
             transform: translateX(-50%) translateY(5px);
         }
@@ -1270,7 +1262,6 @@
                 display: block;
             }
         }        
->>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
     </style>
 </head>
 <body>
@@ -1307,14 +1298,12 @@
             </div>
         </div>
         
-<<<<<<< HEAD
         <div class="scroll-down" onclick="scrollToNextSection()">
             <div class="scroll-down-arrows">
                 <div class="arrow"></div>
                 <div class="arrow"></div>
             </div>
             <span class="scroll-text">Листайте вниз</span>
-=======
         <div class="scroll-hint" id="scrollHint" style="background-color: rgba(225, 29, 72, 0.2);">
             <div class="mouse">
                 <div class="mouse-wheel"></div>
@@ -1323,7 +1312,6 @@
             <div class="scroll-hint-arrow">
                 <div class="scroll-hint-dot"></div>
             </div>
->>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
         </div>
     </header>
 
@@ -2035,7 +2023,6 @@
             init();
         });
             
-<<<<<<< HEAD
         /*
         ==========================================================================
 
@@ -2077,7 +2064,8 @@
             if (e.deltaY > 0) {
                 scrollToNextSection();
             }
-=======
+        });
+            
         document.addEventListener('DOMContentLoaded', function() {
             const scrollHint = document.getElementById('scrollHint');
             const content = document.querySelector('.content');
@@ -2120,7 +2108,6 @@
                 content.style.transition = 'all 0.5s ease';
                 scrollHint.style.transition = 'all 0.5s ease';
             }, 500);
->>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
         });
     </script>
 </body>
