@@ -461,17 +461,11 @@
         }
 
         .review-emoji {
-           font-size: 3rem;
-            /*margin-bottom, так как теперь выравнивание по flex */
+            font-size: 3rem;
             display: inline-block;
             transition: transform 0.3s ease;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
             flex-shrink: 0;
-        }
-
-        .story-card.active .review-emoji {
-            transform: scale(1.1);
-            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
