@@ -1112,15 +1112,23 @@
         }
         /* ===================================== */
     
+<<<<<<< HEAD
         .scroll-down {
             position: absolute;
             bottom: 30px;
             left: 40%;
+=======
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+>>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
+<<<<<<< HEAD
             z-index: 10;
             transition: opacity 0.5s ease;
         }
@@ -1173,6 +1181,96 @@
             color: #ff6b6b;
         }
 
+=======
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-hint:hover {
+            transform: translateX(-50%) translateY(5px);
+        }
+        
+        .scroll-hint-text {
+            margin-bottom: 15px;
+            color: --text-secondary;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scroll-hint-arrow {
+            width: 40px;
+            height: 70px;
+            border: 2px solid #b35c5c;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .scroll-hint-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(90deg, #b35c5c 0%, #b35c5c 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            animation: scroll 2.2s infinite;
+        }
+        
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+        
+        .mouse {
+            width: 25px;
+            height: 40px;
+            border: 2px solid #b35c5c;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .mouse-wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #b35c5c;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            animation: wheel 2.2s infinite;
+        }
+        
+        @keyframes wheel {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .scroll-hint-arrow {
+                display: none;
+            }
+            .mouse {
+                display: block;
+            }
+        }        
+>>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
     </style>
 </head>
 <body>
@@ -1209,12 +1307,23 @@
             </div>
         </div>
         
+<<<<<<< HEAD
         <div class="scroll-down" onclick="scrollToNextSection()">
             <div class="scroll-down-arrows">
                 <div class="arrow"></div>
                 <div class="arrow"></div>
             </div>
             <span class="scroll-text">Листайте вниз</span>
+=======
+        <div class="scroll-hint" id="scrollHint" style="background-color: rgba(225, 29, 72, 0.2);">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <div class="scroll-hint-text">Листайте вниз</div>
+            <div class="scroll-hint-arrow">
+                <div class="scroll-hint-dot"></div>
+            </div>
+>>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
         </div>
     </header>
 
@@ -1926,6 +2035,7 @@
             init();
         });
             
+<<<<<<< HEAD
         /*
         ==========================================================================
 
@@ -1967,6 +2077,50 @@
             if (e.deltaY > 0) {
                 scrollToNextSection();
             }
+=======
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollHint = document.getElementById('scrollHint');
+            const content = document.querySelector('.content');
+            
+            // Плавный скролл при клике на подсказку
+            scrollHint.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Анимация "пульсации" при клике
+                this.style.transform = 'translateX(-50%) scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'translateX(-50%) scale(1)';
+                }, 300);
+                
+                // Плавный скролл
+                window.scrollBy({
+                    top: window.innerHeight - 100,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Параллакс-эффект для контента при скролле
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                content.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+                
+                // Исчезновение подсказки при скролле вниз
+                if (scrollPosition > 100) {
+                    scrollHint.style.opacity = '0';
+                    scrollHint.style.visibility = 'hidden';
+                    scrollHint.style.transition = 'all 0.5s ease';
+                } else {
+                    scrollHint.style.opacity = '1';
+                    scrollHint.style.visibility = 'visible';
+                }
+            });
+            
+            // Анимация при загрузке страницы
+            setTimeout(() => {
+                content.style.transition = 'all 0.5s ease';
+                scrollHint.style.transition = 'all 0.5s ease';
+            }, 500);
+>>>>>>> 31f8a9e889bb1fff8d30e34b898a504e095f2571
         });
     </script>
 </body>
