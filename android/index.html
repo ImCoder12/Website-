@@ -1116,6 +1116,7 @@
             position: absolute;
             bottom: 30px;
             left: 40%;
+        }
         .scroll-hint {
             position: absolute;
             bottom: 40px;
@@ -1221,47 +1222,6 @@
             }
         }
         
-        .mouse {
-            width: 25px;
-            height: 40px;
-            border: 2px solid #b35c5c;
-            border-radius: 15px;
-            position: relative;
-            margin-bottom: 10px;
-            display: none;
-        }
-        
-        .mouse-wheel {
-            width: 4px;
-            height: 8px;
-            background-color: #b35c5c;
-            border-radius: 2px;
-            position: absolute;
-            left: 50%;
-            top: 8px;
-            transform: translateX(-50%);
-            animation: wheel 2.2s infinite;
-        }
-        
-        @keyframes wheel {
-            0% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .scroll-hint-arrow {
-                display: none;
-            }
-            .mouse {
-                display: block;
-            }
-        }        
     </style>
 </head>
 <body>
@@ -1304,14 +1264,6 @@
                 <div class="arrow"></div>
             </div>
             <span class="scroll-text">Листайте вниз</span>
-        <div class="scroll-hint" id="scrollHint" style="background-color: rgba(225, 29, 72, 0.2);">
-            <div class="mouse">
-                <div class="mouse-wheel"></div>
-            </div>
-            <div class="scroll-hint-text">Листайте вниз</div>
-            <div class="scroll-hint-arrow">
-                <div class="scroll-hint-dot"></div>
-            </div>
         </div>
     </header>
 
