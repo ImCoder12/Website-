@@ -2,10 +2,13 @@
 <html lang="ru" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Автоматизация Дейтинга</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
     <style>
         :root {
             --primary: #e11d48;
@@ -19,6 +22,8 @@
             --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-secondary: rgba(248, 250, 252, 0.7);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-area-inset-top: env(safe-area-inset-top, 0px);
         }
 
         @font-face {
@@ -31,11 +36,15 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: none;
         }
 
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 60px;
+            height: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         body {
@@ -44,11 +53,20 @@
             color: var(--light);
             line-height: 1.7;
             overflow-x: hidden;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
             background-image: 
                 radial-gradient(at 80% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
                 radial-gradient(at 20% 80%, rgba(125, 211, 252, 0.15) 0px, transparent 50%);
-            -webkit-tap-highlight-color: transparent;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             animation: fadeIn 0.5s ease;
+        }
+
+        @supports (padding: max(0px)) {
+            body {
+                padding-left: max(15px, env(safe-area-inset-left));
+                padding-right: max(15px, env(safe-area-inset-right));
+            }
         }
 
         @keyframes fadeIn {
@@ -104,36 +122,39 @@
             width: 100%;
             margin: 0 auto;
             padding: 0 15px;
+            max-width: 100%;
         }
 
         section {
-            padding: 60px 0;
+            padding: 30px 0;
             position: relative;
         }
 
         h1, h2, h3 {
             font-weight: 700;
             line-height: 1.2;
+            word-break: break-word;
         }
 
         /* Хедер */
         header {
             min-height: 60vh;
-            min-height: 60dvh;
+            min-height: -webkit-fill-available;
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
+            padding-top: var(--safe-area-inset-top);
         }
 
         .header-content {
             position: relative;
             z-index: 2;
-            padding-top: 60px;
+            padding-top: 20px;
         }
 
         .header-content h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 1.5rem;
             background: linear-gradient(90deg, var(--light), var(--primary-light));
             -webkit-background-clip: text;
@@ -143,7 +164,7 @@
         }
 
         .tagline {
-            font-size: 2rem;
+            font-size: 1.3rem;
             color: var(--primary-light);
             margin-bottom: 2rem;
             max-width: 100%;
@@ -186,7 +207,6 @@
             width: auto;
             max-width: 100%;
             box-sizing: border-box;
-            
         }
 
         .btn-primary {
@@ -195,7 +215,7 @@
             box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-primary:active {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
         }
@@ -207,23 +227,10 @@
             border: 1px solid var(--glass-border);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover, .btn-secondary:active {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-3px);
         }
-
-        /* ===================================== */
-        .custom-link {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .custom-link:hover {
-            color: white;
-            text-decoration: underline;
-        }
-        /* ===================================== */
-
 
         /* Карточки */
         .card {
@@ -238,7 +245,7 @@
             margin-bottom: 1rem;
         }
 
-        .card:hover {
+        .card:hover, .card:active {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             border-color: var(--primary);
@@ -257,7 +264,7 @@
             transition: transform 0.3s ease;
         }
 
-        .card:hover::after {
+        .card:hover::after, .card:active::after {
             transform: scaleX(1);
         }
 
@@ -286,7 +293,7 @@
         /* Сетки */
         .grid {
             display: grid;
-            gap: 0.1rem;
+            gap: 0px;
         }
 
         .grid-cols-1 {
@@ -297,7 +304,7 @@
         .how-it-works {
             background: rgba(225, 29, 72, 0.2);
             backdrop-filter: blur(5px);
-            padding: 60px 0;
+            padding: 10px 0;
             position: relative;
         }
 
@@ -346,7 +353,7 @@
         }
 
         .timeline-title {
-            font-size: 1.9rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
             color: var(--light);
         }
@@ -730,9 +737,10 @@
             transition: all 0.3s ease;
             cursor: pointer;
             margin-bottom: 1rem;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .faq-item:hover {
+        .faq-item:hover, .faq-item:active {
             border-color: var(--primary);
         }
 
@@ -802,12 +810,20 @@
             }
             
             section {
-                padding-top: 3rem;
-                padding-bottom: 3rem;
+                padding-top: 2rem;
+                padding-bottom: 2rem;
             }
             
             h2 {
                 font-size: 1.8rem;
+            }
+            
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .review-card {
+                flex: 0 0 85%;
             }
         }
 
@@ -817,6 +833,7 @@
             background: linear-gradient(135deg, var(--darker), var(--dark));
             position: relative;
             overflow: hidden;
+            padding-bottom: calc(40px + var(--safe-area-inset-bottom));
         }
 
         .cta::before {
@@ -832,7 +849,7 @@
         }
 
         .cta-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 1.2rem;
             background: linear-gradient(90deg, var(--light), var(--accent));
             -webkit-background-clip: text;
@@ -850,7 +867,7 @@
         /* Telegram кнопка */
         .telegram-button {
             position: fixed;
-            bottom: 15px;
+            bottom: calc(15px + var(--safe-area-inset-bottom));
             right: 15px;
             width: 50px;
             height: 50px;
@@ -863,6 +880,7 @@
             z-index: 9999;
             overflow: hidden;
             text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .telegram-button:hover {
@@ -907,7 +925,7 @@
         .mobile-menu-btn {
             display: flex;
             position: fixed;
-            top: 15px;
+            top: calc(15px + var(--safe-area-inset-top));
             right: 15px;
             width: 45px;
             height: 45px;
@@ -921,6 +939,7 @@
             align-items: center;
             gap: 4px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .mobile-menu-btn span {
@@ -952,7 +971,7 @@
             height: 100vh;
             background: var(--dark);
             z-index: 999;
-            padding: 70px 20px;
+            padding: calc(70px + var(--safe-area-inset-top)) 20px calc(20px + var(--safe-area-inset-bottom));
             transition: right 0.3s ease;
             border-left: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -965,6 +984,9 @@
             display: flex;
             flex-direction: column;
             gap: 1.2rem;
+            height: 100%;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .mobile-menu-link {
@@ -976,7 +998,7 @@
             transition: color 0.3s;
         }
 
-        .mobile-menu-link:hover {
+        .mobile-menu-link:hover, .mobile-menu-link:active {
             color: var(--primary-light);
         }
 
@@ -1042,32 +1064,151 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-light);
         }
+        
+        /* iOS специфичные исправления */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
+            
+            .btn, .faq-item, .mobile-menu-link {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .review-slider {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .mobile-menu-links {
+                padding-bottom: var(--safe-area-inset-bottom);
+            }
+        }
 
-            /* Анимации (оптимизированные для мобильных) */
-            @keyframes float {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
+        /* Анимации (оптимизированные для мобильных) */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes float-delay {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes float-delay-2 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ===================================== */
+        a.custom-link {
+            color: white;
+            text-decoration: underline;
+        }
+
+        a.custom-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        /* ===================================== */
+    
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-hint:hover {
+            transform: translateX(-50%) translateY(5px);
+        }
+        
+        .scroll-hint-text {
+            margin-bottom: 15px;
+            color: --text-secondary;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scroll-hint-arrow {
+            width: 40px;
+            height: 70px;
+            border: 2px solid #b35c5c;
+            border-radius: 25px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .scroll-hint-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(90deg, #b35c5c 0%, #b35c5c 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            animation: scroll 2.2s infinite;
+        }
+        
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
             }
-            
-            @keyframes float-delay {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-8px); }
+            100% {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            
-            @keyframes float-delay-2 {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-12px); }
+        }
+        
+        .mouse {
+            width: 25px;
+            height: 40px;
+            border: 2px solid #b35c5c;
+            border-radius: 15px;
+            position: relative;
+            margin-bottom: 10px;
+            display: none;
+        }
+        
+        .mouse-wheel {
+            width: 4px;
+            height: 8px;
+            background-color: #b35c5c;
+            border-radius: 2px;
+            position: absolute;
+            left: 50%;
+            top: 8px;
+            transform: translateX(-50%);
+            animation: wheel 2.2s infinite;
+        }
+        
+        @keyframes wheel {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
             }
-                        
-            /* Оптимизация для Android */
-            @supports not (-webkit-touch-callout: none) {
-                .backdrop-blur-sm {
-                    backdrop-filter: blur(6px);
-                }
-                .backdrop-blur-md {
-                    backdrop-filter: blur(10px);
-                }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
             }
+        }
+        
+        @media (max-width: 768px) {
+            .scroll-hint-arrow {
+                display: none;
+            }
+            .mouse {
+                display: block;
+            }
+        }        
     </style>
 </head>
 <body>
@@ -1085,7 +1226,8 @@
         <div class="mobile-menu-links">
             <a href="#how" class="mobile-menu-link" onclick="closeMobileMenu()">Как это работает?</a>
             <a href="#for-whom" class="mobile-menu-link" onclick="closeMobileMenu()">Для кого?</a>
-            <a href="#reviews-container" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
+            <a href="#reviews" class="mobile-menu-link" onclick="closeMobileMenu()">Отзывы</a>
+            <a href="#about" class="mobile-menu-link" onclick="closeMobileMenu()">О нас</a>
             <a href="#faq" class="mobile-menu-link" onclick="closeMobileMenu()">FAQ</a>
             <a href="#cta" class="mobile-menu-link" onclick="closeMobileMenu()">Контакты</a>
         </div>
@@ -1096,10 +1238,20 @@
         <div class="container">
             <div class="header-content">
                 <h1 data-aos="fade-up">Устал тратить время <br>в дейтинге?</h1>
-                <p class="tagline" data-aos="fade-up" data-aos-delay="100" style="font-size: 29;">Мы найдем девушек готовых пойти на свидание именно с тобой!</p>
+                <p class="tagline" data-aos="fade-up" data-aos-delay="100" style="font-size: 50;">Мы найдем девушек готовых пойти на свидание именно с тобой!</p>
                 <div class="btn-group" data-aos="fade-up" data-aos-delay="200">
                     <a href="#cta" class="btn btn-primary">Начать сейчас</a>
                 </div>
+            </div>
+        </div>
+        
+        <div class="scroll-hint" id="scrollHint" style="background-color: rgba(225, 29, 72, 0.2);">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <div class="scroll-hint-text">Листайте вниз</div>
+            <div class="scroll-hint-arrow">
+                <div class="scroll-hint-dot"></div>
             </div>
         </div>
     </header>
@@ -1153,32 +1305,32 @@
                 <div class="card" data-aos="fade-up">
                     <div class="card-icon"><i class="fas fa-user-clock"></i></div>
                     <h3 class="card-title">Мужчины, которые ценят своё время</h3>
-                    <p class="card-text">Ищете настоящих девушек для живого общения без пустой переписки? Мы всё организуем за вас.</p>
+                    <span class="card-text" style="line-height: 1.8;">Ищете настоящих девушек для живого общения без пустой переписки? Мы всё организуем за вас.</span>
                 </div>
                     
                 <div class="card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-icon"><i class="fas fa-calendar-check"></i></div>
                     <h3 class="card-title">До 10 свиданий в месяц — гарантированно</h3>
-                    <p class="card-text">Если кто-то откажется — найдём замену. Мы действительно обеспечиваем встречи.</p>
+                    <span class="card-text" style="line-height: 1.8;">Если кто-то откажется — найдём замену. Мы действительно обеспечиваем встречи.</span>
                 </div>
                     
                 <div class="card" data-aos="fade-up" data-aos-delay="200">
                     <div class="card-icon"><i class="fas fa-coins"></i></div>
-                    <h3 class="card-title">Прозрачные цены</h3>
-                    <p class="card-text">Узнайте, что входит в стоимость. Без скрытых платежей или подписок.</p>
+                    <h3 class="card-title" style="margin-bottom: 8px;">Прозрачные цены</h3>
+                    <span class="card-text" style="line-height: 1.8;">Узнайте, что входит в стоимость. Без скрытых платежей или подписок.</span>
                 </div>
                     
                 <div class="card" data-aos="fade-up" data-aos-delay="300">
                     <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3 class="card-title">Без 18+ услуг</h3>
-                    <p class="card-text">Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</p>
+                    <span class="card-text" style="line-height: 1.8;">Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</span>
                 </div>
             </div>
         </div>
     </section>
-
+    
     <!-- О нас - с адаптацией под мобильные устройства -->
-    <section class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
+    <section id="about" class="py-16 md:py-28 bg-gradient-to-br from-dark via-space-900 to-darker overflow-hidden relative">
         <!-- Декоративные элементы (только для десктопа) -->
         <div class="hidden md:block absolute inset-0 overflow-hidden">
             <div class="absolute -right-20 -top-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float"></div>
@@ -1188,7 +1340,7 @@
         
         <div class="container px-4 mx-auto relative z-10">
             <div class="font-bold text-center mb-12 md:mb-24" data-aos="fade-up">
-                <span class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 leading-tight">
+                <span class="inline-block py-1.5 px-3 mb-3 md:mb-4 text-xs md:text-sm font-semibold text-primary-light bg-primary-dark/20 rounded-full backdrop-blur-md border border-primary/30 shadow-lg shadow-primary/10 tracking-wider">
                     <h1> Наша История: </h1>
                 </span>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 md:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 leading-tight">
@@ -1204,9 +1356,8 @@
                         <p class="text-base md:text-xl text-gray-300/90 leading-relaxed bg-gray-900/40 backdrop-blur-sm p-4 md:p-6 rounded-2xl border border-gray-800/50 shadow-lg hover:shadow-primary/10 transition-all duration-500 hover:border-primary/30">
                             Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
                         </p>
-                        <br></br>
-
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
                             Сначала - помощь друзьям, несколько первых клиентов, индивидуальный подход.
                         </p>
                         
@@ -1230,14 +1381,13 @@
                         </ul>
 
                         <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые готовы им действительно подходили. Многие говорили: "Я даже не знал, что сколько адекватных и красивых девушек вообще есть - без вас я вряд ли с ними познакомился!"
+                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые действительно им подходили. Многие говорили: "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я вряд ли с ними познакомился!"
                         </p>
-
-                        <br></br>
-
-                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2">
-                            Для кого-то наш сервис - способ перебороть внутренние зажимы. Для других - экономия колоссального количества времени. <b>Но для ВСЕХ - это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
+                        
+                        <p class="text-base md:text-xl text-gray-300/90 font-medium px-1 md:px-2 mt-2">
+                            Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. <b>Но для ВСЕХ — это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
                         </p>
+                        
                         <div class="pt-2" data-aos="fade-up" data-aos-delay="300">
                             <a href="#cta" class="custom-link font-bold inline-flex items-center px-10 py-5 bg-gradient-to-r from-primary to-primary-dark rounded-full font-semibold text-lg shadow-2xl hover:shadow-primary/40 transition-all duration-500 group transform hover:-translate-y-1">
                                 <span>Возможно, следующий шаг — твой?</span>
@@ -1251,7 +1401,7 @@
     </section>
 
     <!-- Отзывы -->
-    <section class="reviews-container">
+    <section id="rewiews" class="reviews-container">
         <h2 class="section-title">Реальные истории наших клиентов</h2>
 
         <!-- Навигационные кнопки -->
@@ -1456,7 +1606,7 @@
     <section id="cta" class="cta">
         <div class="container">
             <h2 class="cta-title" data-aos="fade-up">Готов автоматизировать свой дейтинг?</h2>
-            <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">Напиши нам!</p>
+            <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100" style="font-size: 1.5rem;">Напиши нам!</p>
             <div class="text-cent">
                 <a href="https://t.me/dating_automation" class="btn btn-primary" style="padding: 1.2rem 3rem; font-size: 1.1rem;">Telegram</a>
             </div>
@@ -1468,7 +1618,7 @@
         <div class="icon-wrapper">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
         </div>
-        <span class="telegram-label">Перейти</span>
+        <span class="telegram-label">Перейти в TG</span>
     </a>
 
     <script>
@@ -1578,17 +1728,16 @@
         });
 
         /*
-        ====================================================================================================
-        
-        
-    
+        =========================================================================================================================
         
         
         
         
-        ====================================================================================================
+        =========================================================================================================================
         */
-        
+
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const storiesContainer = document.getElementById('stories');
             const stories = Array.from(document.querySelectorAll('.story-card'));
@@ -1813,6 +1962,50 @@
             
             // Инициализация
             init();
+        });
+            
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollHint = document.getElementById('scrollHint');
+            const content = document.querySelector('.content');
+            
+            // Плавный скролл при клике на подсказку
+            scrollHint.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Анимация "пульсации" при клике
+                this.style.transform = 'translateX(-50%) scale(0.9)';
+                setTimeout(() => {
+                    this.style.transform = 'translateX(-50%) scale(1)';
+                }, 300);
+                
+                // Плавный скролл
+                window.scrollBy({
+                    top: window.innerHeight - 100,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Параллакс-эффект для контента при скролле
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                content.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+                
+                // Исчезновение подсказки при скролле вниз
+                if (scrollPosition > 100) {
+                    scrollHint.style.opacity = '0';
+                    scrollHint.style.visibility = 'hidden';
+                    scrollHint.style.transition = 'all 0.5s ease';
+                } else {
+                    scrollHint.style.opacity = '1';
+                    scrollHint.style.visibility = 'visible';
+                }
+            });
+            
+            // Анимация при загрузке страницы
+            setTimeout(() => {
+                content.style.transition = 'all 0.5s ease';
+                scrollHint.style.transition = 'all 0.5s ease';
+            }, 500);
         });
     </script>
 </body>
