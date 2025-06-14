@@ -1777,8 +1777,6 @@
         =========================================================================================================================
         */
 
-
-
         document.addEventListener('DOMContentLoaded', () => {
             const storiesContainer = document.getElementById('stories');
             const stories = Array.from(document.querySelectorAll('.story-card'));
@@ -1796,6 +1794,8 @@
             let isTouchMoving = false;
             let touchStartX = 0;
             let touchStartY = 0;
+            let horizontalScrollLock = false;
+            let verticalScrollLock = false;
             
             // Инициализация
             function init() {
@@ -1836,39 +1836,90 @@
                 // Клавиатура
                 document.addEventListener('keydown', handleKeyDown);
                 
-                // Колесо мыши для вертикального скролла
+                // Колесо мыши с приоритетом горизонтального скролла
                 storiesContainer.addEventListener('wheel', handleWheel, { passive: false });
             }
             
             // Настройка текстовых контейнеров
             function setupTextContainers() {
                 textContainers.forEach((container, index) => {
-                    // Инициализация скролла
                     container.scrollTop = 0;
                     
                     container.addEventListener('scroll', () => {
+                        // Разблокируем вертикальный скролл после горизонтального
+                        if (horizontalScrollLock && container.scrollTop > 0) {
+                            horizontalScrollLock = false;
+                        }
+                        
                         // Автопереход при достижении конца текста
                         if (container.scrollTop + container.clientHeight >= container.scrollHeight - 20) {
                             if (index < stories.length - 1) {
                                 goToStory(index + 1);
                             }
                         }
-                        // Автопереход вверх при достижении начала текста
-                        else if (container.scrollTop <= 20 && index > 0) {
-                            goToStory(index - 1);
-                        }
                     });
                 });
             }
             
-            // Обработка колеса мыши
+            // Обработка колеса мыши с приоритетом горизонтального скролла
             function handleWheel(e) {
-                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                    // Вертикальный скролл
+                const currentTextContainer = textContainers[currentIndex];
+                const isScrollableVertically = currentTextContainer.scrollHeight > currentTextContainer.clientHeight;
+                
+                // Если горизонтальный скролл не заблокирован и есть куда скроллить по горизонтали
+                if (!horizontalScrollLock && !verticalScrollLock) {
+                    // Определяем направление скролла
+                    const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+                    
+                    if (!isHorizontal) {
+                        // Вертикальный скролл - только если текст можно скроллить
+                        if (isScrollableVertically) {
+                            // Если в самом верху и скроллим вверх - переключаем на предыдущую историю
+                            if (currentTextContainer.scrollTop <= 0 && e.deltaY < 0 && currentIndex > 0) {
+                                e.preventDefault();
+                                goToStory(currentIndex - 1);
+                                return;
+                            }
+                            
+                            // Если в самом низу и скроллим вниз - переключаем на следующую историю
+                            if (currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
+                                currentTextContainer.scrollHeight - 1 && e.deltaY > 0 && currentIndex < stories.length - 1) {
+                                e.preventDefault();
+                                goToStory(currentIndex + 1);
+                                return;
+                            }
+                            
+                            // Обычный вертикальный скролл
+                            if (isScrollableVertically) {
+                                e.preventDefault();
+                                currentTextContainer.scrollBy({
+                                    top: e.deltaY,
+                                    behavior: 'auto'
+                                });
+                            }
+                        } else {
+                            // Если текст нельзя скроллить вертикально - переключаем истории
+                            e.preventDefault();
+                            if (e.deltaY > 0 && currentIndex < stories.length - 1) {
+                                goToStory(currentIndex + 1);
+                            } else if (e.deltaY < 0 && currentIndex > 0) {
+                                goToStory(currentIndex - 1);
+                            }
+                        }
+                    } else {
+                        // Горизонтальный скролл
+                        e.preventDefault();
+                        storiesContainer.scrollBy({
+                            left: e.deltaX,
+                            behavior: 'auto'
+                        });
+                    }
+                } else if (verticalScrollLock && isScrollableVertically) {
+                    // Если вертикальный скролл разблокирован
                     e.preventDefault();
-                    textContainers[currentIndex].scrollBy({
+                    currentTextContainer.scrollBy({
                         top: e.deltaY,
-                        behavior: 'smooth'
+                        behavior: 'auto'
                     });
                 }
             }
@@ -1890,6 +1941,12 @@
                     container.scrollTop = 0;
                 });
                 
+                // Блокируем вертикальный скролл на короткое время после перехода
+                horizontalScrollLock = true;
+                setTimeout(() => {
+                    horizontalScrollLock = false;
+                }, 300);
+                
                 updateActiveStory();
                 updateNavigation();
                 updateDots();
@@ -1897,35 +1954,12 @@
             
             // Следующая история
             function goToNextStory() {
-                const currentTextContainer = textContainers[currentIndex];
-                const isAtBottom = currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
-                                currentTextContainer.scrollHeight - 20;
-                
-                if (isAtBottom || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
-                    goToStory(currentIndex + 1);
-                } else {
-                    // Прокрутка вниз текущего текста
-                    currentTextContainer.scrollBy({
-                        top: currentTextContainer.clientHeight * 0.8,
-                        behavior: 'smooth'
-                    });
-                }
+                goToStory(currentIndex + 1);
             }
             
             // Предыдущая история
             function goToPrevStory() {
-                const currentTextContainer = textContainers[currentIndex];
-                const isAtTop = currentTextContainer.scrollTop <= 20;
-                
-                if (isAtTop || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
-                    goToStory(currentIndex - 1);
-                } else {
-                    // Прокрутка вверх текущего текста
-                    currentTextContainer.scrollBy({
-                        top: -currentTextContainer.clientHeight * 0.8,
-                        behavior: 'smooth'
-                    });
-                }
+                goToStory(currentIndex - 1);
             }
             
             // Обновление активной истории
@@ -2030,14 +2064,23 @@
                     const xDiff = Math.abs(e.touches[0].clientX - touchStartX);
                     const yDiff = Math.abs(e.touches[0].clientY - touchStartY);
                     
-                    // Определяем направление движения (горизонтальное или вертикальное)
-                    if (xDiff > yDiff && xDiff > 10) {
+                    // Определяем направление (горизонтальное имеет приоритет)
+                    if (xDiff > yDiff && xDiff > 5) {
                         isTouchMoving = true;
+                        horizontalScrollLock = true;
+                    } else if (yDiff > xDiff && yDiff > 5) {
+                        isTouchMoving = true;
+                        verticalScrollLock = true;
                     }
                 }
                 
                 if (isTouchMoving) {
-                    e.preventDefault();
+                    if (horizontalScrollLock) {
+                        e.preventDefault();
+                        const x = e.touches[0].clientX;
+                        const walk = (x - touchStartX) * 2;
+                        storiesContainer.scrollLeft = scrollLeft - walk;
+                    }
                 }
             }
             
@@ -2046,10 +2089,15 @@
                 isTouchMoving = false;
                 storiesContainer.style.scrollBehavior = 'smooth';
                 
-                // Определяем ближайшую историю
-                const storyWidth = storiesContainer.offsetWidth;
-                const newIndex = Math.round(storiesContainer.scrollLeft / storyWidth);
-                goToStory(newIndex);
+                if (horizontalScrollLock) {
+                    // Определяем ближайшую историю
+                    const storyWidth = storiesContainer.offsetWidth;
+                    const newIndex = Math.round(storiesContainer.scrollLeft / storyWidth);
+                    goToStory(newIndex);
+                }
+                
+                horizontalScrollLock = false;
+                verticalScrollLock = false;
             }
             
             // Автоматическое скрытие подсказки
