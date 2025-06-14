@@ -1803,10 +1803,9 @@
             let isDragging = false;
             let startX = 0;
             let scrollLeft = 0;
-            let isScrolling = false;
-            let scrollTimeout;
-            let touchStartX = 0;
             let isTouchMoving = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
             
             // Инициализация
             function init() {
@@ -1846,11 +1845,17 @@
                 
                 // Клавиатура
                 document.addEventListener('keydown', handleKeyDown);
+                
+                // Колесо мыши для вертикального скролла
+                storiesContainer.addEventListener('wheel', handleWheel, { passive: false });
             }
             
             // Настройка текстовых контейнеров
             function setupTextContainers() {
                 textContainers.forEach((container, index) => {
+                    // Инициализация скролла
+                    container.scrollTop = 0;
+                    
                     container.addEventListener('scroll', () => {
                         // Автопереход при достижении конца текста
                         if (container.scrollTop + container.clientHeight >= container.scrollHeight - 20) {
@@ -1858,8 +1863,24 @@
                                 goToStory(index + 1);
                             }
                         }
+                        // Автопереход вверх при достижении начала текста
+                        else if (container.scrollTop <= 20 && index > 0) {
+                            goToStory(index - 1);
+                        }
                     });
                 });
+            }
+            
+            // Обработка колеса мыши
+            function handleWheel(e) {
+                if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    // Вертикальный скролл
+                    e.preventDefault();
+                    textContainers[currentIndex].scrollBy({
+                        top: e.deltaY,
+                        behavior: 'smooth'
+                    });
+                }
             }
             
             // Переход к конкретной истории
@@ -1874,6 +1895,11 @@
                     behavior: 'smooth'
                 });
                 
+                // Сброс скролла текста при переходе
+                textContainers.forEach(container => {
+                    container.scrollTop = 0;
+                });
+                
                 updateActiveStory();
                 updateNavigation();
                 updateDots();
@@ -1881,12 +1907,35 @@
             
             // Следующая история
             function goToNextStory() {
-                goToStory(currentIndex + 1);
+                const currentTextContainer = textContainers[currentIndex];
+                const isAtBottom = currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
+                                currentTextContainer.scrollHeight - 20;
+                
+                if (isAtBottom || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
+                    goToStory(currentIndex + 1);
+                } else {
+                    // Прокрутка вниз текущего текста
+                    currentTextContainer.scrollBy({
+                        top: currentTextContainer.clientHeight * 0.8,
+                        behavior: 'smooth'
+                    });
+                }
             }
             
             // Предыдущая история
             function goToPrevStory() {
-                goToStory(currentIndex - 1);
+                const currentTextContainer = textContainers[currentIndex];
+                const isAtTop = currentTextContainer.scrollTop <= 20;
+                
+                if (isAtTop || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
+                    goToStory(currentIndex - 1);
+                } else {
+                    // Прокрутка вверх текущего текста
+                    currentTextContainer.scrollBy({
+                        top: -currentTextContainer.clientHeight * 0.8,
+                        behavior: 'smooth'
+                    });
+                }
             }
             
             // Обновление активной истории
@@ -1934,14 +1983,19 @@
             
             // Обработка клавиатуры
             function handleKeyDown(e) {
-                if (e.key === 'ArrowRight') {
-                    goToNextStory();
-                } else if (e.key === 'ArrowLeft') {
-                    goToPrevStory();
-                } else if (e.key === 'ArrowDown') {
-                    textContainers[currentIndex].scrollBy({ top: 100, behavior: 'smooth' });
-                } else if (e.key === 'ArrowUp') {
-                    textContainers[currentIndex].scrollBy({ top: -100, behavior: 'smooth' });
+                switch(e.key) {
+                    case 'ArrowRight':
+                        goToNextStory();
+                        break;
+                    case 'ArrowLeft':
+                        goToPrevStory();
+                        break;
+                    case 'ArrowDown':
+                        textContainers[currentIndex].scrollBy({ top: 100, behavior: 'smooth' });
+                        break;
+                    case 'ArrowUp':
+                        textContainers[currentIndex].scrollBy({ top: -100, behavior: 'smooth' });
+                        break;
                 }
             }
             
@@ -1976,13 +2030,24 @@
             // Обработка тач событий
             function handleTouchStart(e) {
                 touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
                 isTouchMoving = false;
                 storiesContainer.style.scrollBehavior = 'auto';
             }
             
             function handleTouchMove(e) {
-                if (!isTouchMoving && Math.abs(e.touches[0].clientX - touchStartX) > 10) {
-                    isTouchMoving = true;
+                if (!isTouchMoving) {
+                    const xDiff = Math.abs(e.touches[0].clientX - touchStartX);
+                    const yDiff = Math.abs(e.touches[0].clientY - touchStartY);
+                    
+                    // Определяем направление движения (горизонтальное или вертикальное)
+                    if (xDiff > yDiff && xDiff > 10) {
+                        isTouchMoving = true;
+                    }
+                }
+                
+                if (isTouchMoving) {
+                    e.preventDefault();
                 }
             }
             
