@@ -401,6 +401,9 @@
 
         /* Карточка истории */
         .story-card {
+            flex-shrink: 0;
+            flex-direction: column;
+            overflow: hidden;
             flex: 0 0 100%;
             scroll-snap-align: start;
             position: relative;
@@ -1877,6 +1880,7 @@
 
             // ========== ТАЧ ==========
             function onTouchStart(e) {
+                if (e.touches.length !== 1) return;
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 scrollStart = storiesContainer.scrollLeft;
@@ -1884,13 +1888,26 @@
             }
 
             function onTouchMove(e) {
-                const dx = e.touches[0].clientX - touchStartX;
-                const dy = e.touches[0].clientY - touchStartY;
+                if (!isTouching) return;
 
-                if (Math.abs(dx) > Math.abs(dy)) {
+                const touch = e.touches[0];
+                const dx = touch.clientX - touchStartX;
+                const dy = touch.clientY - touchStartY;
+                const absDx = Math.abs(dx);
+                const absDy = Math.abs(dy);
+
+                const block = textBlocks[currentIndex];
+
+                if (absDx > absDy) {
+                    // горизонтальный свайп
                     e.preventDefault();
-                    scrollLockHorizontal = true;
                     storiesContainer.scrollLeft = scrollStart - dx;
+                } else {
+                    // вертикальный свайп — скроллим текст внутри блока
+                    if (block.scrollHeight <= block.clientHeight) {
+                        // если скролла нет — листаем истории
+                        e.preventDefault();
+                    }
                 }
             }
 
@@ -1899,7 +1916,6 @@
                 isTouching = false;
                 const index = Math.round(storiesContainer.scrollLeft / storiesContainer.offsetWidth);
                 goToStory(index);
-                scrollLockHorizontal = false;
             }
 
             // ========== КЛАВИАТУРА ==========
@@ -1934,11 +1950,16 @@
                     storiesContainer.scrollBy({ left: e.deltaX, behavior: 'auto' });
                 }
             }
-
+            
+            // Привязка событий
+            storiesContainer.addEventListener("touchstart", onTouchStart, { passive: false });
+            storiesContainer.addEventListener("touchmove", onTouchMove, { passive: false });
+            storiesContainer.addEventListener("touchend", onTouchEnd);
             // Запуск
             init();
         });
-            
+
+     
         /*
         ==========================================================================
 
