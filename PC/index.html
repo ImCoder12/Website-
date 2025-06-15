@@ -123,6 +123,8 @@
             margin: 0 auto;
             padding: 0 15px;
             max-width: 100%;
+            text-align: center;
+   
         }
 
         section {
@@ -448,6 +450,13 @@
         }
 
         /* FAQ */
+        .faq {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;  
+        }
+
         .faq-item {
             background: var(--glass);
             backdrop-filter: blur(10px);
@@ -1139,7 +1148,7 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="bg-dark">
+    <section class="faq bg-dark">
         <div class="container">
             <h2 class="text-center mb-4" data-aos="fade-up" style="padding-bottom: 2px;">Часто задаваемые вопросы</h2>
             <p class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100"></p>
