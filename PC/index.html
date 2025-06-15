@@ -208,8 +208,8 @@
 
         .card-text {
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 0.5;
         }
 
         /* Сетки */
@@ -349,6 +349,24 @@
         }
 
         /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .faq-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 1024px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }  
+
         .faq {
             background: var(--darker);
         }
@@ -653,12 +671,12 @@
         </div>
     </section>
 
-    <!-- FAQ -->
     <section class="faq">
         <div class="container">
             <h2 class="text-center mb-12" data-aos="fade-up">Часто задаваемые вопросы</h2>
             
-            <div class="max-w-3xl mx-auto">
+            <div class="faq-grid">
+                <!-- Колонка 1 -->
                 <div class="faq-item" data-aos="fade-up">
                     <div class="faq-question">
                         <span>Что конкретно входит в сервис?</span>
@@ -712,10 +730,11 @@
                         Ты расскажешь нам свои предпочтения. Мы делаем 100+ мэтчей, фильтруем самых интересных и показываем тебе. Из них ты выбираешь 10 лучших, с которыми встречаешься в течение месяца.
                     </div>
                 </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
+
+                <!-- Колонка 2 -->
+                <div class="faq-item" data-aos="fade-up">
                     <div class="faq-question">
-                        <span>Что делать, когда я получу контакты девушки? Как готовиться к свиданию?</span>
+                        <span>Что делать, когда я получу контакты девушки?</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
                     </div>
                     <div class="faq-answer">
@@ -723,7 +742,7 @@
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="600">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="faq-question">
                         <span>Что, если девушка откажется от свидания?</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
@@ -733,7 +752,7 @@
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="700">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="faq-question">
                         <span>Девушки точно не поймут, что общаются не со мной?</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
@@ -743,7 +762,7 @@
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="800">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
                     <div class="faq-question">
                         <span>Это вообще законно?</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
@@ -754,7 +773,7 @@
                     </div>
                 </div>
                 
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="900">
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
                     <div class="faq-question">
                         <span>Что делать на самом свидании? :)</span>
                         <i class="fas fa-chevron-down faq-icon"></i>
@@ -763,9 +782,54 @@
                         Будь собой, расслабься и получай удовольствие. Всё получится! :)
                     </div>
                 </div>
+
+                <!-- 11-й пункт на всю ширину -->
+                <div class="faq-item full-width" data-aos="fade-up" data-aos-delay="500">
+                    <div class="faq-question">
+                        <span>Наша История</span>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p style="background: rgba(15, 23, 42, 0.7); padding: 2rem; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                            Наш проект начался как отчаянный эксперимент на Авито в 2024 году. 💔 Уход девушки после двух лет отношений иногда помогает расширить горизонты. Было больно — но из этой боли родилась идея: помогать таким же — состоявшимся мужчинам, уставшим от бесконечного дейтинга.
+                        </p>
+                        
+                        <p style="margin-top: 1.5rem; font-weight: 500;">
+                            Сначала - помощь друзьям, несколько первых клиентов, индивидуальный подход.
+                        </p>
+                        
+                        <ul style="margin-top: 1.5rem; list-style: none;">
+                            <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(225, 29, 72, 0.2); border-radius: 50%; margin-right: 1rem; font-size: 1.2rem;">✨</span>
+                                <span>Один нашёл своё счастье</span>
+                            </li>
+                            <li style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(225, 29, 72, 0.2); border-radius: 50%; margin-right: 1rem; font-size: 1.2rem;">🔥</span>
+                                <span>Второй прошёл 30 свиданий за месяц</span>
+                            </li>
+                            <li style="display: flex; align-items: center;">
+                                <span style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: rgba(225, 29, 72, 0.2); border-radius: 50%; margin-right: 1rem; font-size: 1.2rem;">🙌</span>
+                                <span>Третий — просто вернул веру в себя</span>
+                            </li>
+                        </ul>
+
+                        <p style="margin-top: 2rem; font-weight: 500;">
+                            За полтора года мы помогли более 60 мужчинам познакомиться с девушками, которые действительно им подходили. Многие говорили: "Я даже не знал, что столько адекватных и красивых девушек вообще есть — без вас я вряд ли с ними познакомился!"
+                        </p>
+                        
+                        <p style="margin-top: 1.5rem; font-weight: 500;">
+                            Для кого-то наш сервис — способ перебороть внутренние зажимы. Для других — экономия колоссального количества времени. <b>Но для ВСЕХ — это просто взлом системы</b>, чтобы получить доступ к широкой, качественной воронке знакомств.
+                        </p>
+                        
+                        <div style="text-align: center; margin-top: 2.5rem;">
+                            <a href="#cta" style="display: inline-block; padding: 1rem 2rem; background: linear-gradient(45deg, #e11d48, #9f1239); color: white; border-radius: 50px; font-weight: 600; text-decoration: none; transition: transform 0.3s;">
+                                Возможно, следующий шаг — твой? 🚀
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <!-- CTA -->
     <section id="cta" class="cta">
