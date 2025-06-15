@@ -1753,11 +1753,6 @@
         
         =========================================================================================================================
         */
-
-        /**
-         * Вспомогательные функции вынесены в начало файла
-         * чтобы избежать повторного объявления
-         */
         const getFullWidth = (elem) => Math.max(elem.offsetWidth, elem.scrollWidth);
         const getFullHeight = (elem) => Math.max(elem.offsetHeight, elem.scrollHeight);
         const clearTextSelection = () => {
@@ -1793,8 +1788,8 @@
 
             // Проверка обязательных параметров
             if (!this.props.viewport || !this.props.content) {
-            console.error('Необходимо указать viewport и content');
-            return;
+                console.error('Необходимо указать viewport и content');
+                return;
             }
 
             // Инициализация состояния
@@ -1813,13 +1808,13 @@
         // Обновление размеров элементов
         updateMetrics() {
             this.viewport = {
-            width: this.props.viewport.clientWidth,
-            height: this.props.viewport.clientHeight
+                width: this.props.viewport.clientWidth,
+                height: this.props.viewport.clientHeight
             };
             
             this.content = {
-            width: getFullWidth(this.props.content),
-            height: getFullHeight(this.props.content)
+                width: getFullWidth(this.props.content),
+                height: getFullHeight(this.props.content)
             };
             
             this.props.onUpdate(this.getState());
@@ -1829,10 +1824,10 @@
         setupEventListeners() {
             // Кнопки навигации
             if (this.props.prevBtn) {
-            this.props.prevBtn.addEventListener('click', () => this.goToPrevStory());
+                this.props.prevBtn.addEventListener('click', () => this.goToPrevStory());
             }
             if (this.props.nextBtn) {
-            this.props.nextBtn.addEventListener('click', () => this.goToNextStory());
+                this.props.nextBtn.addEventListener('click', () => this.goToNextStory());
             }
 
             // События мыши/тача
@@ -1892,8 +1887,8 @@
             }
         }
 
-        /**
-        * Обработчик движения при перетаскивании
+        /*
+            Обработчик движения при перетаскивании
         */
         handlePointerMove(e) {
             if (!this.isDragging) return;
