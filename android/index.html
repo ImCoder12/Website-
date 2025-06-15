@@ -268,7 +268,7 @@
         }
 
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--light);
@@ -1370,7 +1370,7 @@
                 <div class="card" data-aos="fade-up" data-aos-delay="300">
                     <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3 class="card-title" style="margin-top: 10px;">Без 18+ услуг</h3>
-                    <p class="card-text" style="line-height: 1.8; padding: 1px; display: block; position: relative;">мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</p>
+                    <p class="card-text" style="line-height: 1.8; padding: 1px; display: block; position: relative;">Мы не предоставляем интим-услуг. Только реальные знакомства и живое общение.</p>
                 </div>
             </div>
         </div>
@@ -1764,460 +1764,460 @@
         };
 
         class StoriesScroller {
-        constructor(options = {}) {
-            // Настройки по умолчанию
-            const defaults = {
-            viewport: null,        // Контейнер
-            content: null,         // Контент
-            storyCards: [],        // Карточки историй
-            textContainers: [],    // Контейнеры текста
-            dots: [],              // Точки навигации
-            prevBtn: null,         // Кнопка "Назад"
-            nextBtn: null,         // Кнопка "Вперед"
-            progressBar: null,     // Прогресс-бар
-            currentIndex: 0,       // Текущий индекс
-            friction: 0.15,        // Сила трения
-            bounceForce: 0.1,      // Сила отскока
-            bounce: true,          // Включить отскок
-            textSelection: false,  // Разрешить выделение текста
-            onUpdate: () => {},    // Коллбек при обновлении
-            onStoryChange: () => {} // Коллбек при смене истории
-            };
+            constructor(options = {}) {
+                // Настройки по умолчанию
+                const defaults = {
+                viewport: null,        // Контейнер
+                content: null,         // Контент
+                storyCards: [],        // Карточки историй
+                textContainers: [],    // Контейнеры текста
+                dots: [],              // Точки навигации
+                prevBtn: null,         // Кнопка "Назад"
+                nextBtn: null,         // Кнопка "Вперед"
+                progressBar: null,     // Прогресс-бар
+                currentIndex: 0,       // Текущий индекс
+                friction: 0.15,        // Сила трения
+                bounceForce: 0.1,      // Сила отскока
+                bounce: true,          // Включить отскок
+                textSelection: false,  // Разрешить выделение текста
+                onUpdate: () => {},    // Коллбек при обновлении
+                onStoryChange: () => {} // Коллбек при смене истории
+                };
 
-            this.props = { ...defaults, ...options };
+                this.props = { ...defaults, ...options };
 
-            // Проверка обязательных параметров
-            if (!this.props.viewport || !this.props.content) {
-                console.error('Необходимо указать viewport и content');
-                return;
-            }
-
-            // Инициализация состояния
-            this.isDragging = false;
-            this.isRunning = false;
-            this.position = { x: 0, y: 0 };
-            this.velocity = { x: 0, y: 0 };
-            this.viewport = { width: 0, height: 0 };
-            this.content = { width: 0, height: 0 };
-
-            this.updateMetrics();
-            this.setupEventListeners();
-            this.goToStory(this.props.currentIndex);
-        }
-
-        // Обновление размеров элементов
-        updateMetrics() {
-            this.viewport = {
-                width: this.props.viewport.clientWidth,
-                height: this.props.viewport.clientHeight
-            };
-            
-            this.content = {
-                width: getFullWidth(this.props.content),
-                height: getFullHeight(this.props.content)
-            };
-            
-            this.props.onUpdate(this.getState());
-        }
-
-        // Настройка событий
-        setupEventListeners() {
-            // Кнопки навигации
-            if (this.props.prevBtn) {
-                this.props.prevBtn.addEventListener('click', () => this.goToPrevStory());
-            }
-            if (this.props.nextBtn) {
-                this.props.nextBtn.addEventListener('click', () => this.goToNextStory());
-            }
-
-            // События мыши/тача
-            this.props.viewport.addEventListener('mousedown', this.handlePointerDown.bind(this));
-            window.addEventListener('mousemove', this.handlePointerMove.bind(this));
-            window.addEventListener('mouseup', this.handlePointerUp.bind(this));
-            this.props.viewport.addEventListener('touchstart', this.handlePointerDown.bind(this), { passive: false });
-            window.addEventListener('touchmove', this.handlePointerMove.bind(this), { passive: false });
-            window.addEventListener('touchend', this.handlePointerUp.bind(this));
-
-            // Ресайз
-            window.addEventListener('resize', () => this.updateMetrics());
-        }
-
-        // Обработчики событий...
-        handlePointerDown(e) {
-            const isTouch = e.touches?.length > 0;
-            if (!isTouch && !this.props.textSelection) clearTextSelection();
-            
-            this.isDragging = true;
-            this.startAnimationLoop();
-            if (e.cancelable) e.preventDefault();
-        }
-
-        /**
-        * Обработчик начала перетаскивания
-        */
-        handlePointerDown(e) {
-            // Определяем тип события (тач или мышь)
-            const isTouch = e.touches && e.touches[0];
-            const event = isTouch ? e.touches[0] : e;
-                
-            // Запрещаем выделение текста при драге
-            if (!this.props.textSelection) {
-                clearTextSelection();
-            }
-                
-            // Устанавливаем флаги
-            this.isDragging = true;
-            this.isTouchMoving = false;
-            this.horizontalScrollLock = false;
-                
-            // Запоминаем начальные позиции
-            this.dragStartPosition = { ...this.position };
-            this.dragOffset = { x: 0, y: 0 };
-            this.dragPosition = { ...this.position };
-                
-            // Сбрасываем скорость
-            this.velocity = { x: 0, y: 0 };
-                
-            // Запускаем анимацию
-            this.startAnimationLoop();
-                
-            // Предотвращаем стандартное поведение
-            if (!isTouch && e.cancelable) {
-                e.preventDefault();
-            }
-        }
-
-        /*
-            Обработчик движения при перетаскивании
-        */
-        handlePointerMove(e) {
-            if (!this.isDragging) return;
-                
-            // Определяем тип события
-            const isTouch = e.touches && e.touches[0];
-            const event = isTouch ? e.touches[0] : e;
-                
-            // Для тача отмечаем начало движения
-            if (isTouch && !this.isTouchMoving) {
-                this.isTouchMoving = true;
-            }
-                
-            // Вычисляем смещение
-            this.dragOffset.x = event.pageX - this.dragStartPosition.x;
-            this.dragOffset.y = event.pageY - this.dragStartPosition.y;
-                
-            // Блокируем горизонтальный скролл после небольшого смещения
-            if (!this.horizontalScrollLock && Math.abs(this.dragOffset.x) > 5) {
-                this.horizontalScrollLock = true;
-            }
-                
-            // Обновляем позицию перетаскивания
-            if (this.horizontalScrollLock) {
-                // Только горизонтальное перемещение
-                this.dragPosition.x = this.dragStartPosition.x + this.dragOffset.x;
-                this.dragPosition.y = this.dragStartPosition.y;
-            } else {
-                // Вертикальный скролл только если контент можно скроллить
-                const currentTextContainer = this.props.textContainers[this.props.currentIndex];
-                if (currentTextContainer && currentTextContainer.scrollHeight > currentTextContainer.clientHeight) {
-                    currentTextContainer.scrollTop -= this.dragOffset.y;
-                    this.dragPosition.y = this.dragStartPosition.y;
+                // Проверка обязательных параметров
+                if (!this.props.viewport || !this.props.content) {
+                    console.error('Необходимо указать viewport и content');
+                    return;
                 }
-            }
-                
-            // Предотвращаем стандартное поведение
-            if (e.cancelable) {
-                e.preventDefault();
-            }
-        }
 
-        /**
-        * Обработчик окончания перетаскивания
-        */
-        handlePointerUp(e) {
-            if (!this.isDragging) return;
-                // Сбрасываем флаги
+                // Инициализация состояния
                 this.isDragging = false;
-                this.isTouchMoving = false;
-                
-                // Переходим к ближайшей сторис
-                const storyWidth = this.viewport.width;
-                const newIndex = Math.round(-this.position.x / storyWidth);
-                this.goToStory(newIndex);
+                this.isRunning = false;
+                this.position = { x: 0, y: 0 };
+                this.velocity = { x: 0, y: 0 };
+                this.viewport = { width: 0, height: 0 };
+                this.content = { width: 0, height: 0 };
+
+                this.updateMetrics();
+                this.setupEventListeners();
+                this.goToStory(this.props.currentIndex);
             }
 
-        /**
-        * Обработчик колеса мыши/трекпада
-        */
-        handleWheel(e) {
-            const currentTextContainer = this.props.textContainers[this.props.currentIndex];
-            const isScrollableVertically = currentTextContainer && currentTextContainer.scrollHeight > currentTextContainer.clientHeight;
+            // Обновление размеров элементов
+            updateMetrics() {
+                this.viewport = {
+                    width: this.props.viewport.clientWidth,
+                    height: this.props.viewport.clientHeight
+                };
                 
-            // Приоритет горизонтальному скроллу или если вертикальный скролл невозможен
-            if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || !isScrollableVertically) {
-                e.preventDefault();
-                this.velocity.x += e.deltaX * 0.5;
+                this.content = {
+                    width: getFullWidth(this.props.content),
+                    height: getFullHeight(this.props.content)
+                };
+                
+                this.props.onUpdate(this.getState());
+            }
+
+            // Настройка событий
+            setupEventListeners() {
+                // Кнопки навигации
+                if (this.props.prevBtn) {
+                    this.props.prevBtn.addEventListener('click', () => this.goToPrevStory());
+                }
+                if (this.props.nextBtn) {
+                    this.props.nextBtn.addEventListener('click', () => this.goToNextStory());
+                }
+
+                // События мыши/тача
+                this.props.viewport.addEventListener('mousedown', this.handlePointerDown.bind(this));
+                window.addEventListener('mousemove', this.handlePointerMove.bind(this));
+                window.addEventListener('mouseup', this.handlePointerUp.bind(this));
+                this.props.viewport.addEventListener('touchstart', this.handlePointerDown.bind(this), { passive: false });
+                window.addEventListener('touchmove', this.handlePointerMove.bind(this), { passive: false });
+                window.addEventListener('touchend', this.handlePointerUp.bind(this));
+
+                // Ресайз
+                window.addEventListener('resize', () => this.updateMetrics());
+            }
+
+            // Обработчики событий...
+            handlePointerDown(e) {
+                const isTouch = e.touches?.length > 0;
+                if (!isTouch && !this.props.textSelection) clearTextSelection();
+                
+                this.isDragging = true;
                 this.startAnimationLoop();
-            } else {
-                // Вертикальный скролл
-                e.preventDefault();
-                currentTextContainer.scrollBy({
-                    top: e.deltaY,
-                    behavior: 'smooth'
-                });
-                
-                // Проверяем достижение границ
-                if (e.deltaY > 0 && 
-                    currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
-                    currentTextContainer.scrollHeight - 10) {
-                    // Достигли низа - переходим к следующей сторис
-                    if (this.props.currentIndex < this.props.storyCards.length - 1) {
-                    this.goToStory(this.props.currentIndex + 1);
-                    }
-                } else if (e.deltaY < 0 && currentTextContainer.scrollTop <= 10) {
-                    // Достигли верха - переходим к предыдущей сторис
-                    if (this.props.currentIndex > 0) {
-                    this.goToStory(this.props.currentIndex - 1);
-                    }
+                if (e.cancelable) e.preventDefault();
+            }
+
+            /**
+            * Обработчик начала перетаскивания
+            */
+            handlePointerDown(e) {
+                // Определяем тип события (тач или мышь)
+                const isTouch = e.touches && e.touches[0];
+                const event = isTouch ? e.touches[0] : e;
+                    
+                // Запрещаем выделение текста при драге
+                if (!this.props.textSelection) {
+                    clearTextSelection();
+                }
+                    
+                // Устанавливаем флаги
+                this.isDragging = true;
+                this.isTouchMoving = false;
+                this.horizontalScrollLock = false;
+                    
+                // Запоминаем начальные позиции
+                this.dragStartPosition = { ...this.position };
+                this.dragOffset = { x: 0, y: 0 };
+                this.dragPosition = { ...this.position };
+                    
+                // Сбрасываем скорость
+                this.velocity = { x: 0, y: 0 };
+                    
+                // Запускаем анимацию
+                this.startAnimationLoop();
+                    
+                // Предотвращаем стандартное поведение
+                if (!isTouch && e.cancelable) {
+                    e.preventDefault();
                 }
             }
-        }
 
-        // Основной цикл анимации
-        animate() {
-            if (!this.isRunning) return;
-            
-            this.updateScrollPosition();
-            this.props.onUpdate(this.getState());
-            
-            if (this.isMoving()) {
-            this.rafID = requestAnimationFrame(() => this.animate());
-            } else {
-            this.isRunning = false;
-            }
-        }
-
-        // Навигация по историям
-        goToStory(index) {
-            if (index < 0 || index >= this.props.storyCards.length) return;
-            
-            this.props.currentIndex = index;
-            this.position.x = -this.viewport.width * index;
-            this.velocity.x = 0;
-            
-            // Сброс скролла текста
-            if (this.props.textContainers[index]) {
-            this.props.textContainers[index].scrollTop = 0;
-            }
-            
-            this.updateUI();
-            this.startAnimationLoop();
-            this.props.onStoryChange(index);
-        }
-
-        // Обновление UI
-        updateUI() {
-            // Активная карточка
-            this.props.storyCards.forEach((card, i) => {
-            card.classList.toggle('active', i === this.props.currentIndex);
-            });
-            
-            // Кнопки навигации
-            if (this.props.prevBtn) {
-            this.props.prevBtn.disabled = this.props.currentIndex === 0;
-            }
-            if (this.props.nextBtn) {
-            this.props.nextBtn.disabled = this.props.currentIndex === this.props.storyCards.length - 1;
-            }
-            
-            // Точки навигации
-            this.props.dots?.forEach((dot, i) => {
-            dot.classList.toggle('active', i === this.props.currentIndex);
-            });
-        }
-
-        /**
-        * Обновляет позицию скролла на основе физики
-        */
-        updateScrollPosition() {
-            // Применяем силы (отскок, перетаскивание)
-            this.applyEdgeForce();
-            this.applyDragForce();
-                
-            // Применяем трение
-            const inverseFriction = 1 - this.props.friction;
-            this.velocity.x *= inverseFriction;
-            this.velocity.y *= inverseFriction;
-                
-            // Обновляем позицию
-            this.position.x += this.velocity.x;
-                
-            // Ограничиваем выход за границы (если не включен отскок)
-            if ((!this.props.bounce || !this.isDragging) && !this.isTouchMoving) {
-                this.position.x = Math.max(Math.min(this.position.x, this.edgeX.to), this.edgeX.from);
-            }
-        }
-
-        /**
-        * Применяет силу отскока от границ
-        */
-        applyEdgeForce() {
-            if (!this.props.bounce || this.isDragging) return;
-                
-            const beyondXFrom = this.position.x < this.edgeX.from;
-            const beyondXTo = this.position.x > this.edgeX.to;
-                
-            if (!beyondXFrom && !beyondXTo) return;
-            
-            const edgeX = beyondXFrom ? this.edgeX.from : this.edgeX.to;
-            const distanceToEdge = edgeX - this.position.x;
-            const force = distanceToEdge * this.props.bounceForce;
-                
-            this.velocity.x += force;
-        }
-
-        /**
-        * Применяет силу перетаскивания
-        */
-        applyDragForce() {
-            if (!this.isDragging) return;
-                
-            const dragVelocity = {
-                x: this.dragPosition.x - this.position.x,
-                y: this.dragPosition.y - this.position.y
-            };
-                
-            this.velocity.x += dragVelocity.x - this.velocity.x;
-        }
-
-        /**
-        * Проверяет, происходит ли движение
-        */
-        isMoving() {
-            return this.isDragging || Math.abs(this.velocity.x) >= 0.1;
-        }
-
-        /**
-        * Запускает цикл анимации
-        */
-        startAnimationLoop() {
-            if (this.isRunning) return;
-            this.isRunning = true;
-            cancelAnimationFrame(this.rafID);
-            this.rafID = requestAnimationFrame(() => this.animate());
-        }
-
-        /**
-        * Переходит к указанной сторис
-        */
-        goToStory(index) {
-            // Проверяем границы
-            if (index < 0 || index >= (this.props.storyCards?.length || 1)) return;
-                
-            // Обновляем текущий индекс
-            this.props.currentIndex = index;
-            const storyWidth = this.viewport.width;
-                
-            // Устанавливаем новую позицию
-            this.position.x = -storyWidth * index;
-            this.velocity.x = 0;
-                
-            // Сбрасываем скролл текста в новой сторис
-            if (this.props.textContainers && this.props.textContainers[index]) {
-                this.props.textContainers[index].scrollTop = 0;
-            }
-                
-            // Обновляем UI
-            this.updateActiveStory();
-            this.updateNavigation();
-            this.updateDots();
-                
-            // Запускаем анимацию и коллбэк
-            this.startAnimationLoop();
-            this.props.onStoryChange(index);
-        }
-
-        /**
-        * Переходит к следующей сторис
-        */
-        goToNextStory() {
-            const currentTextContainer = this.props.textContainers[this.props.currentIndex];
-            const isAtBottom = currentTextContainer && 
-                            (currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
-                            currentTextContainer.scrollHeight - 20);
-                
-            // Если достигли низа или контент не скроллится - переходим к следующей сторис
-            if (isAtBottom || !currentTextContainer || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
-                    this.goToStory(this.props.currentIndex + 1);
-            } else {
-                // Иначе скроллим текст вниз
-                currentTextContainer.scrollBy({
-                    top: currentTextContainer.clientHeight * 0.8,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        /**
-        * Переходит к предыдущей сторис
-        */
-        goToPrevStory() {
-            const currentTextContainer = this.props.textContainers[this.props.currentIndex];
-            const isAtTop = currentTextContainer && currentTextContainer.scrollTop <= 20;
-                
-            // Если достигли верха или контент не скроллится - переходим к предыдущей сторис
-            if (isAtTop || !currentTextContainer || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
-                    this.goToStory(this.props.currentIndex - 1);
-            } else {
-                // Иначе скроллим текст вверх
-                currentTextContainer.scrollBy({
-                    top: -currentTextContainer.clientHeight * 0.8,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        /**
-        * Обновляет активную сторис в UI
-        */
-        updateActiveStory() {
-            if (!this.props.storyCards) return;
-                
-            this.props.storyCards.forEach((story, index) => {
-                if (index === this.props.currentIndex) {
-                    story.classList.add('active');
+            /*
+                Обработчик движения при перетаскивании
+            */
+            handlePointerMove(e) {
+                if (!this.isDragging) return;
+                    
+                // Определяем тип события
+                const isTouch = e.touches && e.touches[0];
+                const event = isTouch ? e.touches[0] : e;
+                    
+                // Для тача отмечаем начало движения
+                if (isTouch && !this.isTouchMoving) {
+                    this.isTouchMoving = true;
+                }
+                    
+                // Вычисляем смещение
+                this.dragOffset.x = event.pageX - this.dragStartPosition.x;
+                this.dragOffset.y = event.pageY - this.dragStartPosition.y;
+                    
+                // Блокируем горизонтальный скролл после небольшого смещения
+                if (!this.horizontalScrollLock && Math.abs(this.dragOffset.x) > 5) {
+                    this.horizontalScrollLock = true;
+                }
+                    
+                // Обновляем позицию перетаскивания
+                if (this.horizontalScrollLock) {
+                    // Только горизонтальное перемещение
+                    this.dragPosition.x = this.dragStartPosition.x + this.dragOffset.x;
+                    this.dragPosition.y = this.dragStartPosition.y;
                 } else {
-                    story.classList.remove('active');
+                    // Вертикальный скролл только если контент можно скроллить
+                    const currentTextContainer = this.props.textContainers[this.props.currentIndex];
+                    if (currentTextContainer && currentTextContainer.scrollHeight > currentTextContainer.clientHeight) {
+                        currentTextContainer.scrollTop -= this.dragOffset.y;
+                        this.dragPosition.y = this.dragStartPosition.y;
+                    }
                 }
-            });
-        }
+                    
+                // Предотвращаем стандартное поведение
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+            }
 
-        /**
-        * Обновляет состояние кнопок навигации
-        */
-        updateNavigation() {
-            if (this.props.prevBtn) {
+            /**
+            * Обработчик окончания перетаскивания
+            */
+            handlePointerUp(e) {
+                if (!this.isDragging) return;
+                    // Сбрасываем флаги
+                    this.isDragging = false;
+                    this.isTouchMoving = false;
+                    
+                    // Переходим к ближайшей сторис
+                    const storyWidth = this.viewport.width;
+                    const newIndex = Math.round(-this.position.x / storyWidth);
+                    this.goToStory(newIndex);
+                }
+
+            /**
+            * Обработчик колеса мыши/трекпада
+            */
+            handleWheel(e) {
+                const currentTextContainer = this.props.textContainers[this.props.currentIndex];
+                const isScrollableVertically = currentTextContainer && currentTextContainer.scrollHeight > currentTextContainer.clientHeight;
+                    
+                // Приоритет горизонтальному скроллу или если вертикальный скролл невозможен
+                if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || !isScrollableVertically) {
+                    e.preventDefault();
+                    this.velocity.x += e.deltaX * 0.5;
+                    this.startAnimationLoop();
+                } else {
+                    // Вертикальный скролл
+                    e.preventDefault();
+                    currentTextContainer.scrollBy({
+                        top: e.deltaY,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Проверяем достижение границ
+                    if (e.deltaY > 0 && 
+                        currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
+                        currentTextContainer.scrollHeight - 10) {
+                        // Достигли низа - переходим к следующей сторис
+                        if (this.props.currentIndex < this.props.storyCards.length - 1) {
+                        this.goToStory(this.props.currentIndex + 1);
+                        }
+                    } else if (e.deltaY < 0 && currentTextContainer.scrollTop <= 10) {
+                        // Достигли верха - переходим к предыдущей сторис
+                        if (this.props.currentIndex > 0) {
+                        this.goToStory(this.props.currentIndex - 1);
+                        }
+                    }
+                }
+            }
+
+            // Основной цикл анимации
+            animate() {
+                if (!this.isRunning) return;
+                
+                this.updateScrollPosition();
+                this.props.onUpdate(this.getState());
+                
+                if (this.isMoving()) {
+                this.rafID = requestAnimationFrame(() => this.animate());
+                } else {
+                this.isRunning = false;
+                }
+            }
+
+            // Навигация по историям
+            goToStory(index) {
+                if (index < 0 || index >= this.props.storyCards.length) return;
+                
+                this.props.currentIndex = index;
+                this.position.x = -this.viewport.width * index;
+                this.velocity.x = 0;
+                
+                // Сброс скролла текста
+                if (this.props.textContainers[index]) {
+                this.props.textContainers[index].scrollTop = 0;
+                }
+                
+                this.updateUI();
+                this.startAnimationLoop();
+                this.props.onStoryChange(index);
+            }
+
+            // Обновление UI
+            updateUI() {
+                // Активная карточка
+                this.props.storyCards.forEach((card, i) => {
+                card.classList.toggle('active', i === this.props.currentIndex);
+                });
+                
+                // Кнопки навигации
+                if (this.props.prevBtn) {
                 this.props.prevBtn.disabled = this.props.currentIndex === 0;
+                }
+                if (this.props.nextBtn) {
+                this.props.nextBtn.disabled = this.props.currentIndex === this.props.storyCards.length - 1;
+                }
+                
+                // Точки навигации
+                this.props.dots?.forEach((dot, i) => {
+                dot.classList.toggle('active', i === this.props.currentIndex);
+                });
             }
-            if (this.props.nextBtn) {
-                this.props.nextBtn.disabled = this.props.currentIndex === (this.props.storyCards?.length - 1 || 0);
+
+            /**
+            * Обновляет позицию скролла на основе физики
+            */
+            updateScrollPosition() {
+                // Применяем силы (отскок, перетаскивание)
+                this.applyEdgeForce();
+                this.applyDragForce();
+                    
+                // Применяем трение
+                const inverseFriction = 1 - this.props.friction;
+                this.velocity.x *= inverseFriction;
+                this.velocity.y *= inverseFriction;
+                    
+                // Обновляем позицию
+                this.position.x += this.velocity.x;
+                    
+                // Ограничиваем выход за границы (если не включен отскок)
+                if ((!this.props.bounce || !this.isDragging) && !this.isTouchMoving) {
+                    this.position.x = Math.max(Math.min(this.position.x, this.edgeX.to), this.edgeX.from);
+                }
             }
-        }
 
-        // Получение текущего состояния
-        getState() {
-            return {
-            position: { x: -this.position.x, y: -this.position.y },
-            currentIndex: this.props.currentIndex,
-            isDragging: this.isDragging
-            };
-        }
+            /**
+            * Применяет силу отскока от границ
+            */
+            applyEdgeForce() {
+                if (!this.props.bounce || this.isDragging) return;
+                    
+                const beyondXFrom = this.position.x < this.edgeX.from;
+                const beyondXTo = this.position.x > this.edgeX.to;
+                    
+                if (!beyondXFrom && !beyondXTo) return;
+                
+                const edgeX = beyondXFrom ? this.edgeX.from : this.edgeX.to;
+                const distanceToEdge = edgeX - this.position.x;
+                const force = distanceToEdge * this.props.bounceForce;
+                    
+                this.velocity.x += force;
+            }
 
-        // Уничтожение
-        destroy() {
-            cancelAnimationFrame(this.rafID);
-            // Удаление всех событий
-        }
+            /**
+            * Применяет силу перетаскивания
+            */
+            applyDragForce() {
+                if (!this.isDragging) return;
+                    
+                const dragVelocity = {
+                    x: this.dragPosition.x - this.position.x,
+                    y: this.dragPosition.y - this.position.y
+                };
+                    
+                this.velocity.x += dragVelocity.x - this.velocity.x;
+            }
+
+            /**
+            * Проверяет, происходит ли движение
+            */
+            isMoving() {
+                return this.isDragging || Math.abs(this.velocity.x) >= 0.1;
+            }
+
+            /**
+            * Запускает цикл анимации
+            */
+            startAnimationLoop() {
+                if (this.isRunning) return;
+                this.isRunning = true;
+                cancelAnimationFrame(this.rafID);
+                this.rafID = requestAnimationFrame(() => this.animate());
+            }
+
+            /**
+            * Переходит к указанной сторис
+            */
+            goToStory(index) {
+                // Проверяем границы
+                if (index < 0 || index >= (this.props.storyCards?.length || 1)) return;
+                    
+                // Обновляем текущий индекс
+                this.props.currentIndex = index;
+                const storyWidth = this.viewport.width;
+                    
+                // Устанавливаем новую позицию
+                this.position.x = -storyWidth * index;
+                this.velocity.x = 0;
+                    
+                // Сбрасываем скролл текста в новой сторис
+                if (this.props.textContainers && this.props.textContainers[index]) {
+                    this.props.textContainers[index].scrollTop = 0;
+                }
+                    
+                // Обновляем UI
+                this.updateActiveStory();
+                this.updateNavigation();
+                this.updateDots();
+                    
+                // Запускаем анимацию и коллбэк
+                this.startAnimationLoop();
+                this.props.onStoryChange(index);
+            }
+
+            /**
+            * Переходит к следующей сторис
+            */
+            goToNextStory() {
+                const currentTextContainer = this.props.textContainers[this.props.currentIndex];
+                const isAtBottom = currentTextContainer && 
+                                (currentTextContainer.scrollTop + currentTextContainer.clientHeight >= 
+                                currentTextContainer.scrollHeight - 20);
+                    
+                // Если достигли низа или контент не скроллится - переходим к следующей сторис
+                if (isAtBottom || !currentTextContainer || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
+                        this.goToStory(this.props.currentIndex + 1);
+                } else {
+                    // Иначе скроллим текст вниз
+                    currentTextContainer.scrollBy({
+                        top: currentTextContainer.clientHeight * 0.8,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            /**
+            * Переходит к предыдущей сторис
+            */
+            goToPrevStory() {
+                const currentTextContainer = this.props.textContainers[this.props.currentIndex];
+                const isAtTop = currentTextContainer && currentTextContainer.scrollTop <= 20;
+                    
+                // Если достигли верха или контент не скроллится - переходим к предыдущей сторис
+                if (isAtTop || !currentTextContainer || currentTextContainer.scrollHeight <= currentTextContainer.clientHeight) {
+                        this.goToStory(this.props.currentIndex - 1);
+                } else {
+                    // Иначе скроллим текст вверх
+                    currentTextContainer.scrollBy({
+                        top: -currentTextContainer.clientHeight * 0.8,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            /**
+            * Обновляет активную сторис в UI
+            */
+            updateActiveStory() {
+                if (!this.props.storyCards) return;
+                    
+                this.props.storyCards.forEach((story, index) => {
+                    if (index === this.props.currentIndex) {
+                        story.classList.add('active');
+                    } else {
+                        story.classList.remove('active');
+                    }
+                });
+            }
+
+            /**
+            * Обновляет состояние кнопок навигации
+            */
+            updateNavigation() {
+                if (this.props.prevBtn) {
+                    this.props.prevBtn.disabled = this.props.currentIndex === 0;
+                }
+                if (this.props.nextBtn) {
+                    this.props.nextBtn.disabled = this.props.currentIndex === (this.props.storyCards?.length - 1 || 0);
+                }
+            }
+
+            // Получение текущего состояния
+            getState() {
+                return {
+                    position: { x: -this.position.x, y: -this.position.y },
+                    currentIndex: this.props.currentIndex,
+                    isDragging: this.isDragging
+                };
+            }
+
+            // Уничтожение
+            destroy() {
+                cancelAnimationFrame(this.rafID);
+                // Удаление всех событий
+            }
         }
         /*
         ==========================================================================
